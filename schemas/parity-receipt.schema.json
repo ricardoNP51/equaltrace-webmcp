@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://equaltrace.dev/schemas/parity-receipt.schema.json",
+  "title": "EqualTrace Parity Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "runId",
+    "scenarioId",
+    "scenarioVersion",
+    "seed",
+    "passed",
+    "score",
+    "invariantResults",
+    "traceDigests",
+    "generatedAt",
+    "receiptDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "runId": { "type": "string", "minLength": 1 },
+    "scenarioId": { "type": "string", "minLength": 1 },
+    "scenarioVersion": { "type": "string", "minLength": 1 },
+    "seed": { "type": "string", "minLength": 1 },
+    "passed": { "type": "boolean" },
+    "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "invariantResults": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome", "disclosure", "consent", "feedback", "reversibility", "recovery"],
+      "properties": {
+        "outcome": { "type": "boolean" },
+        "disclosure": { "type": "boolean" },
+        "consent": { "type": "boolean" },
+        "feedback": { "type": "boolean" },
+        "reversibility": { "type": "boolean" },
+        "recovery": { "type": "boolean" }
+      }
+    },
+    "traceDigests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["visual", "assistive", "agent"],
+      "properties": {
+        "visual": { "$ref": "#/$defs/digest" },
+        "assistive": { "$ref": "#/$defs/digest" },
+        "agent": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "receiptDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}
