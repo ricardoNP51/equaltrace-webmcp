@@ -4,7 +4,7 @@ Last updated: 2026-08-26 (America/La_Paz)
 
 ## Current phase
 
-Phase 0 — documentation and cross-PC handoff package.
+Phase 0 complete — product boundary, prioritization, architecture, technical specification, autonomous build checklist, and continuation package. Phase 1 implementation has not started.
 
 ## Completed
 
@@ -15,6 +15,11 @@ Phase 0 — documentation and cross-PC handoff package.
 - [x] Comparator, lifecycle, UI, and WebMCP contracts specified for future implementation.
 - [x] Cross-PC workflow documented.
 - [x] MIT license and future CI requirements defined.
+- [x] Competitive findings translated into an explicit P0/P1 priority order.
+- [x] Judge-facing priority fixed around cross-route protection bypass.
+- [x] Phase-gated roadmap extended through adversarial review and immutable submission.
+- [x] Guided hackathon scope, PRD, technical specification, and twelve-item build checklist completed.
+- [x] Autonomous speed-run preferences and mandatory native/external verification pauses recorded.
 
 ## Required after implementation begins and before any “native WebMCP works” claim
 
@@ -30,9 +35,9 @@ Phase 0 — documentation and cross-PC handoff package.
 
 ## Current blockers
 
-- GitHub CLI account `ricardoNP51` is configured but its token was invalid on 2026-08-26. Re-authentication is required before remote creation/push.
+- GitHub CLI is not installed on the current continuation machine; repository-local Git identity is configured and HTTPS `origin` is available for normal Git pushes.
 - Native WebMCP validation requires ChatGPT's built-in browser or a supported Chrome build.
 
 ## Next action
 
-Publish this documentation repository after GitHub re-authentication. On the continuation PC, read the handoff files and begin Gate 1 in `docs/ROADMAP.md`.
+Run `$build-project` and execute item 1 in `docs/hackathon-build/checklist.md`: scaffold the reproducible TypeScript application and quality spine. Continue in order; prove native registration at item 4 before expanding the judge interface.

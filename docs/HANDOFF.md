@@ -23,13 +23,13 @@ node --version
 npm --version
 ```
 
-The repository is documentation-only at this checkpoint. Gate 1 creates the application scaffold and lockfile. After that, recreate dependencies from `package-lock.json`; never copy `node_modules`.
+The repository is documentation-only at this checkpoint. Planning is complete through `docs/hackathon-build/checklist.md`; the saved Devpost workflow points to `$build-project`. Phase 1 creates the application scaffold and lockfile. After that, recreate dependencies from `package-lock.json`; never copy `node_modules`.
 
 ## First continuation prompt
 
 Use this exact prompt with Codex on the next PC:
 
-> Continue EqualTrace from the checked-out documentation repository. First read AGENTS.md, docs/STATUS.md, docs/WINNING_STANDARD.md, docs/ARCHITECTURE.md, and docs/ROADMAP.md. Verify the current branch and commit. Begin Gate 1 by scaffolding the smallest TypeScript application that proves native WebMCP registration before expanding the UI. Create and commit the lockfile and one-command quality gate. Do not claim native WebMCP validation from mocks or a polyfill. Update STATUS.md and HANDOFF.md with exact evidence and commit before stopping.
+> Continue EqualTrace from the checked-out documentation repository. First read AGENTS.md, docs/STATUS.md, docs/PRIORITIZATION.md, docs/WINNING_STANDARD.md, docs/ARCHITECTURE.md, docs/ROADMAP.md, and every file in docs/hackathon-build/. Verify the current branch and commit. Resume the saved `$build-project` flow in autonomous mode, beginning with the first unchecked item in docs/hackathon-build/checklist.md. Do not skip verification gates or claim native WebMCP validation from mocks or a polyfill. Update the checklist, STATUS.md, HANDOFF.md, and build-notes.md with exact evidence before stopping.
 
 ## GitHub authentication if needed
 

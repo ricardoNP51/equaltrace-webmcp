@@ -28,7 +28,7 @@ It is a runtime verifier for a specific invariant:
 
 > An agent must not be able to bypass a protection that constrains the equivalent human action.
 
-See [Winning standard](docs/WINNING_STANDARD.md), [architecture](docs/ARCHITECTURE.md), [roadmap](docs/ROADMAP.md), and [cross-PC handoff](docs/HANDOFF.md).
+See [product prioritization](docs/PRIORITIZATION.md), [winning standard](docs/WINNING_STANDARD.md), [architecture](docs/ARCHITECTURE.md), [roadmap](docs/ROADMAP.md), and [cross-PC handoff](docs/HANDOFF.md).
 
 ## Current repository scope
 
@@ -37,6 +37,7 @@ This is the documentation and planning repository for continuing the build on an
 It includes:
 
 - the exact competition thesis and non-goals;
+- the winner-critical priority order and feature admission test;
 - the winning scorecard and eight non-negotiable gates;
 - architecture, trace contracts, capability lifetime, and threat model;
 - a deterministic account-deletion golden scenario specification;
@@ -45,7 +46,7 @@ It includes:
 - a JSON Schema for the future parity receipt;
 - exact cross-PC continuation instructions.
 
-Implementation starts with Gate 1 in `docs/ROADMAP.md`. No native WebMCP claim has been made.
+Implementation starts with Phase 1 in `docs/ROADMAP.md`. No native WebMCP claim has been made.
 
 ## Native WebMCP validation
 

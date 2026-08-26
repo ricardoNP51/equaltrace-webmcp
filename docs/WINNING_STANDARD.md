@@ -4,9 +4,13 @@ This document defines what “advanced enough to contend for a prize” means. I
 
 ## Judge-facing thesis
 
-EqualTrace proves a new invariant for the agentic web:
+EqualTrace leads with the failure, then proves the invariant:
+
+> EqualTrace discovers when an agent reaches the correct final state while bypassing protections that constrained the equivalent human action.
 
 > A consequential action must preserve equivalent protections across visual, assistive, and WebMCP agent routes.
+
+Human approval and temporary capability lifetime are required mechanisms, not the headline. The defensible product is the complete chain from three-route capture through first divergence, bounded repair, rerun, and receipt.
 
 The demonstration must make the risk understandable in 20 seconds and the technical novelty undeniable in under three minutes.
 
@@ -34,6 +38,8 @@ These are internal planning targets, not predicted judge scores.
 8. **Submission quality** — public URL, public source, license, clean setup, evidence, and a sub-three-minute narrated video.
 
 If any of gates 1, 3, 5, or 7 fails, the project is not submission-ready. If two other gates fail, it is not winner-ready.
+
+Priority order and feature admission rules are defined in [product prioritization](PRIORITIZATION.md). A high score cannot compensate for an incomplete winner-critical chain.
 
 ## Golden demo beats
 

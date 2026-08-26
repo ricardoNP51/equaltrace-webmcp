@@ -12,6 +12,16 @@ Runtime protection parity for agent-operable websites.
 - Accessibility scanners answer: **Does this interface violate known rules?**
 - EqualTrace answers: **Did the agent bypass a protection that constrained the equivalent human action?**
 
+## Competitive reality
+
+Human approval, expiring capabilities, WebMCP inspection, replay, and evidence export already appear in other challenge projects. EqualTrace must not claim that any one of these mechanisms is unique.
+
+Its defendable distinction is the complete chain:
+
+> Three real routes → semantic protection comparison → first divergence → human-approved repair → three-route rerun → parity receipt.
+
+The visual route establishes the normal product contract. The assistive route proves the protections are semantic rather than merely visual. The agent route reveals the bypass. The repair lifecycle preserves human authority. The rerun proves the bypass was actually removed.
+
 ## Defensibility
 
 EqualTrace combines four layers that are usually separate:
