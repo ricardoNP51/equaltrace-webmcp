@@ -12,37 +12,37 @@
 
 ## Checklist
 
-- [ ] **1. Scaffold the reproducible application and quality spine**
+- [x] **1. Scaffold the reproducible application and quality spine**
   Spec ref: `spec.md > Stack` and `spec.md > Implementation Order > Gate A — Scaffold and native spine`
   What to build: Create the strict React/TypeScript/Vite application, plain-CSS entry shell, pinned npm lockfile, ESLint/Vitest/Playwright configuration, test adapters, CI workflow, Pages workflow skeleton, and fail-fast `npm run check` command. Keep the app static, subpath-safe, and free of backend or secret dependencies.
   Acceptance: PRD Story 2.2 and Story 9.1 — a clean install starts one clearly fictional scenario without accounts or hidden prerequisites; every visible control is either functional or explains its blocker.
   Verify: Run `npm ci`, `npm run typecheck`, `npm test -- --run`, and `npm run build`; confirm the production output uses relative/subpath-safe assets.
 
-- [ ] **2. Implement the deterministic domain, trace ledger, and fail-closed comparator**
+- [x] **2. Implement the deterministic domain, trace ledger, and fail-closed comparator**
   Spec ref: `spec.md > Architecture > Domain engine`, `Semantic trace ledger`, and `Protection comparator`
   What to build: Define immutable scenario/run contracts, account-deletion fixture, shared domain commands, deterministic event IDs, source enforcement, runtime validation, and comparison across outcome, disclosure, consent, feedback, reversibility, and recovery. Include the intentionally broken agent policy and repaired policy.
   Acceptance: PRD Story 2.1, Story 5.1, and Story 5.2 — equivalent seeds produce stable evidence; equal final outcome with a missing or reordered protection fails at the earliest checkpoint; incomplete or mismatched evidence never passes.
   Verify: Run focused Vitest suites covering repeated seeds, route/source mismatch, missing/reordered/duplicated/conflicting evidence, mismatched seed/version, expected baseline divergence, repaired pass, and seeded regression.
 
-- [ ] **3. Build the shared state machine and honest minimal workbench shell**
+- [x] **3. Build the shared state machine and honest minimal workbench shell**
   Spec ref: `spec.md > Architecture > Workbench state machine` and `spec.md > Data Flow > Input-to-display lifecycle`
   What to build: Implement `WorkbenchStore`, immutable subscriptions, injected clock/digest/WebMCP ports, reset/cancellation rules, isolated comparable route slots, explicit phases, provenance labels, and a minimal visible shell whose status is updated through the same store used by tool handlers.
   Acceptance: PRD Story 1.2, Story 2.1, and Story 9.1 — preview/recorded/native/unsupported/incomplete states are explicit; reset invalidates active work and authority; invalid transitions fail closed and surface the next action.
   Verify: Run store tests for every allowed transition plus reset, reload/new-session semantics, stale command rejection, incompatible route contexts, and immutable snapshot behavior; run the minimal shell component tests.
 
-- [ ] **4. Prove the native WebMCP spine before expanding the interface**
+- [x] **4. Prove the native WebMCP spine before expanding the interface**
   Spec ref: `spec.md > Architecture > Native WebMCP adapter` and `spec.md > Implementation Order > Gate A — Scaffold and native spine`
   What to build: Add current `document.modelContext.registerTool` declarations, production feature detection, abort-driven registration, constant bounded schemas, `equaltrace_get_status`, `equaltrace_run_agent_route`, `equaltrace_run_audit`, and `equaltrace_stage_repair`. Inject a fake port only in tests and never polyfill the production global.
   Acceptance: PRD Story 4.1 and Story 4.2 — a supported client discovers stable tools and their calls update the same visible state; unsupported clients remain useful but incomplete; mock or preview evidence cannot satisfy native acceptance.
   Verify: Run schema/handler/cancellation tests and a Playwright simulated-port test labelled simulated. Then perform the first supported-client discovery and visible-state-change smoke test; record client, version, origin, and commit under `evidence/native/` before Gate B UI expansion.
 
-- [ ] **5. Complete real visual and keyboard/assistive baseline routes**
+- [x] **5. Complete real visual and keyboard/assistive baseline routes**
   Spec ref: `spec.md > Data Flow > Baseline capture` and `spec.md > Components And Responsibilities > Scenario and domain commands`
   What to build: Implement the pointer-origin visual journey and keyboard-origin assistive journey over the same domain commands, including consequence disclosure, exact consent, completion feedback, cancellation window, recovery guidance, focus management, and concise live announcements. Run the native broken agent route against an isolated context from the same seed.
   Acceptance: PRD Story 3.1, Story 3.2, and Story 4.1 — each human route is completed by its real input path and emits independent evidence; the native agent reaches the same deletion outcome while omitting the intended earliest protection.
   Verify: Run component and Playwright pointer-only/keyboard-only journeys; assert source provenance, focus order, announcements, shared scenario identity, equal outcome, and the exact broken checkpoint.
 
-- [ ] **6. Deliver the judge-first baseline verdict and evidence experience**
+- [x] **6. Deliver the judge-first baseline verdict and evidence experience**
   Spec ref: `spec.md > Architecture > Judge-facing UI`
   What to build: Implement the forensic-premium hero, scenario header, three-route summary, first-divergence comparison, progressive evidence drawer, blocking guidance, responsive tokens, visible focus, and honest native provenance. Lead with the plain-language failure before dense evidence.
   Acceptance: PRD Epic 1, Story 5.2, and Story 9.2 — a fresh visitor understands in twenty seconds that outcome success hid a protection failure; expected and observed evidence are linked; target viewports remain legible with no color-only status or horizontal page scroll.

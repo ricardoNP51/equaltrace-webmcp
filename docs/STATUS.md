@@ -1,10 +1,10 @@
 # Project status
 
-Last updated: 2026-08-26 (America/La_Paz)
+Last updated: 2026-08-28 (America/La_Paz)
 
 ## Current phase
 
-Phase 0 complete — product boundary, prioritization, architecture, technical specification, autonomous build checklist, and continuation package. Phase 1 implementation has not started.
+Phase 1 active — checklist items 1–6 are complete. EqualTrace now captures real pointer, keyboard/assistive, and native WebMCP routes from one deterministic scenario, proves equal deletion outcome, fails at the agent's first missing disclosure, and presents that bypass through a responsive judge-first evidence experience. Bounded repair staging and the human-only approval boundary are next.
 
 ## Completed
 
@@ -20,24 +20,38 @@ Phase 0 complete — product boundary, prioritization, architecture, technical s
 - [x] Phase-gated roadmap extended through adversarial review and immutable submission.
 - [x] Guided hackathon scope, PRD, technical specification, and twelve-item build checklist completed.
 - [x] Autonomous speed-run preferences and mandatory native/external verification pauses recorded.
+- [x] Application scaffold and pinned npm lockfile created with no runtime service dependency.
+- [x] Unit, browser, lint, format, typecheck, production-build, CI, and Pages foundations created.
+- [x] `npm ci`, `npm run typecheck`, `npm test -- --run`, `npm run build`, and `npm run check` pass locally.
+- [x] Broken and repaired policies execute through the same deterministic domain commands.
+- [x] Comparator proves equal outcome is still a failure when protections are missing, reordered, duplicated, fabricated, or incomparable.
+- [x] Shared store rejects stale epochs, incompatible scenarios, invalid provenance, and native claims without native support.
+- [x] Four stable, bounded Site tools register through the browser-provided `document.modelContext` with abort-driven lifetime.
+- [x] Native discovery and invocation changed the same visible store on implementation commit `0062715887c5b6f86ee9903ab5e2717315c464df`.
+- [x] Native evidence records the client, version, origin, commit, discovered surface, response, visible state, and limits under `evidence/native/`.
+- [x] Simulated Vitest and Playwright coverage remains isolated from the production global and cannot satisfy native acceptance.
+- [x] Visual evidence is emitted only by a primary pointer journey through the shared domain commands.
+- [x] Assistive evidence is emitted only by keyboard activation, with ordered focus and concise live announcements.
+- [x] A native three-route baseline on commit `347db59c3c90588299881fb67059241f2864663c` proved equal outcome and the intended first divergence at `agent / disclosure.consequences`.
+- [x] On implementation commit `d8f85295d21ff9e603995a168495c5c6dc1bfa24`, the opening view explains the outcome-success/protection-failure conflict before dense evidence, labels the known fixture preview honestly, and links expected human evidence to the agent's first observed commit event.
+- [x] Route summaries, scenario identity, blocking guidance, a collapsed semantic ledger, visible focus, reduced-motion handling, and responsive behavior pass at 390×844, 1440×900, and 1920×1080 without horizontal page overflow.
 
 ## Required after implementation begins and before any “native WebMCP works” claim
 
-- [ ] Application scaffold and lockfile created on the continuation PC.
-- [ ] Dependencies installed from the committed lockfile.
+- [x] Application scaffold and lockfile created on the continuation PC.
+- [x] Dependencies installed from the committed lockfile.
 - [ ] `npm run check` passes on a clean clone.
-- [ ] Stable tools discovered in ChatGPT's built-in browser.
-- [ ] Stable tool invocation visibly changes the same page.
-- [ ] Commit tool is absent before human approval.
+- [x] Stable tools discovered in ChatGPT's built-in browser.
+- [x] Stable tool invocation visibly changes the same page.
+- [x] Commit tool is absent before human approval.
 - [ ] Commit tool appears after exact visible approval.
 - [ ] Commit tool disappears after one use, reset, expiry, and changed intent.
-- [ ] Native evidence recorded without a polyfill or mock registry.
+- [x] Native evidence recorded without a polyfill or mock registry.
 
 ## Current blockers
 
-- GitHub CLI is not installed on the current continuation machine; repository-local Git identity is configured and HTTPS `origin` is available for normal Git pushes.
-- Native WebMCP validation requires ChatGPT's built-in browser or a supported Chrome build.
+- No blocker for build item 7. GitHub synchronization is still blocked until the current GitHub credential receives `workflow` scope; this does not block local implementation.
 
 ## Next action
 
-Run `$build-project` and execute item 1 in `docs/hackathon-build/checklist.md`: scaffold the reproducible TypeScript application and quality spine. Continue in order; prove native registration at item 4 before expanding the judge interface.
+Continue `$build-project` with item 7 in `docs/hackathon-build/checklist.md`: derive one bounded repair from the current first divergence and implement the visible human-only approval boundary without exposing approval through WebMCP, URL state, fixture content, or generic dispatch.
