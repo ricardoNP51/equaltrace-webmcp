@@ -32,7 +32,7 @@ See [product prioritization](docs/PRIORITIZATION.md), [winning standard](docs/WI
 
 ## Current repository scope
 
-Phase 1 implementation is active. The repository now includes a static React/TypeScript/Vite scaffold, pinned npm lockfile, deterministic domain, semantic trace ledger, fail-closed comparator, shared workbench store, automated unit/browser tests, and the one-command quality gate. The native WebMCP spine is the next implementation gate.
+Phase 1 implementation is active. The repository now includes a static React/TypeScript/Vite application, pinned npm lockfile, deterministic domain, semantic trace ledger, fail-closed comparator, shared workbench store, native WebMCP spine, three real route captures, judge-first evidence UI, deterministic bounded repair, and a visible human-only approval boundary. The temporary single-use repair capability is the next implementation gate.
 
 It includes:
 
@@ -46,7 +46,7 @@ It includes:
 - a JSON Schema for the future parity receipt;
 - exact cross-PC continuation instructions.
 
-No native WebMCP claim has been made.
+Local native WebMCP discovery, invocation, and same-page three-route evidence are recorded under `evidence/native/`. Public release and dynamic capability-lifetime claims remain incomplete.
 
 ## Local verification
 
@@ -56,7 +56,7 @@ npm run check
 npm run dev
 ```
 
-The current shell is intentionally incomplete: it proves the static build, honest evidence labels, and quality spine before domain and WebMCP logic are admitted.
+The current build is intentionally incomplete: it proves the broken three-route baseline and exact human authority boundary, but does not yet register or execute the consequential repair capability.
 
 ## Native WebMCP validation
 

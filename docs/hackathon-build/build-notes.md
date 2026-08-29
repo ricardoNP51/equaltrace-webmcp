@@ -263,3 +263,30 @@
 
 - Checklist item 6 passed. The baseline failure is now scannable and evidence-linked without conflating fixture, simulated, recorded, or native provenance.
 - Item 7 is now the earliest admissible work: bounded repair staging and the human-only approval boundary.
+
+## 2026-08-28 — Build item 7: bounded repair and human-only approval
+
+### Implemented
+
+- Added canonical JSON serialization, a production Web Crypto SHA-256 service, injected clock/digest dependencies, and a deterministic repair derivation module.
+- Bound the single proposal to the current missing agent checkpoint, scenario, version, seed, requested outcome, evidence IDs, approval epoch, two-minute expiry, stable repair ID, and digest.
+- Added `repair_staged` and `repair_approved` states with immutable authority records; reset, rejection, close, revocation, mismatch, cancellation, baseline drift, expiry, and new-session paths fail closed.
+- Added a responsive Repair Center that shows the exact fictional action, tool, checkpoint change, consequence, scenario/seed, expiry, identity, and digest before visible approval.
+- Kept `equaltrace_apply_approved_repair` absent before and after item 7 approval. Stable tools may report or stage the proposal but expose no approval command, actor override, URL route, or generic dispatch.
+
+### Verification evidence
+
+- Implementation commit: `b2112b07ae66ca2df72d466e5d8d4c2a74e5c8f0`.
+- `npm run check` passed Prettier, ESLint, strict TypeScript, 43 Vitest tests across 11 files, production build, and 9 Playwright journeys.
+- Repair tests cover stable digest/scope, hostile evidence text, exact-match approval, claimed-actor tool input, rejection, close, revocation, pre- and post-approval expiry, reset/seed drift, cancellation-safe staging, and new-session invalidation.
+- The new Playwright journey proves URL approval parameters do nothing, staging occurs through the isolated simulated WebMCP port, visible approval records exact authority, and the consequential apply tool remains absent. This is automated simulated evidence, not native acceptance.
+- A headed Playwright CLI inspection found no application console error; the only console entry was React's development-tools informational message.
+
+### Security decision
+
+- Item 7 deliberately stops after recording exact human authority. Dynamic registration, execution, concurrency, and teardown belong to item 8 so automated/UI state cannot be misrepresented as native discoverability.
+
+### Gate decision
+
+- Checklist item 7 passed. The human-authority winner gate has deterministic automated proof, while native capability appearance/removal remains unclaimed.
+- Item 8 is now the earliest admissible work: exact temporary single-use repair capability registration and teardown.

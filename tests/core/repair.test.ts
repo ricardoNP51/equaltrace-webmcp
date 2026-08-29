@@ -13,13 +13,16 @@ import { createWorkbenchStore } from "../../src/state/initialState";
 import { FakeClock } from "../../src/test/fakeClock";
 import { FakeDigestService } from "../../src/test/fakeDigest";
 
-function controlledStore(now = 1_800_000_000_000) {
+function controlledStore(
+  now = 1_800_000_000_000,
+  digestService = new FakeDigestService(),
+) {
   const clock = new FakeClock(now);
   return {
     clock,
     store: createWorkbenchStore({
       clock,
-      digestService: new FakeDigestService(),
+      digestService,
     }),
   };
 }
@@ -180,5 +183,40 @@ describe("human-only repair authority", () => {
     ).toThrow(/stale/i);
     expect(reset.store.getSnapshot().approvedRepair).toBeNull();
     expect(controlledStore().store.getSnapshot().approvedRepair).toBeNull();
+  });
+
+  it("does not publish a proposal when staging is cancelled during digest work", async () => {
+    let resolveDigest!: (value: string) => void;
+    const pendingDigest = new Promise<string>((resolve) => {
+      resolveDigest = resolve;
+    });
+    const digestService = { sha256: () => pendingDigest };
+    const { store } = controlledStore(1_800_000_000_000, digestService);
+    store.reset();
+    const epoch = store.getSnapshot().epoch;
+    store.recordRun(buildFixtureRun("visual", "protected"), "recorded", epoch);
+    store.recordRun(
+      buildFixtureRun("assistive", "protected"),
+      "recorded",
+      epoch,
+    );
+    store.recordRun(
+      buildFixtureRun("agent", "broken-agent"),
+      "simulated",
+      epoch,
+    );
+    store.audit(epoch);
+
+    const controller = new AbortController();
+    const staging = store.stageRepair(epoch, controller.signal);
+    controller.abort(new DOMException("Cancelled", "AbortError"));
+    resolveDigest("cancelled-digest");
+
+    await expect(staging).rejects.toMatchObject({ name: "AbortError" });
+    expect(store.getSnapshot()).toMatchObject({
+      phase: "baseline_failed",
+      stagedRepair: null,
+      approvedRepair: null,
+    });
   });
 });

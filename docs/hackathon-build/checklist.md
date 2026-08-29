@@ -48,7 +48,7 @@
   Acceptance: PRD Epic 1, Story 5.2, and Story 9.2 — a fresh visitor understands in twenty seconds that outcome success hid a protection failure; expected and observed evidence are linked; target viewports remain legible with no color-only status or horizontal page scroll.
   Verify: Run UI tests and Playwright checks at 390×844, 1440×900, and 1920×1080; manually time fresh load to first comprehensible verdict and confirm the known fixture is labelled preview until current evidence exists.
 
-- [ ] **7. Implement bounded repair staging and the human-only approval boundary**
+- [x] **7. Implement bounded repair staging and the human-only approval boundary**
   Spec ref: `spec.md > Architecture > Repair proposal and authority`
   What to build: Derive one immutable proposal from the current first divergence; canonicalize and digest it; show exact action, change, consequences, identity, and expiry; expose visible approve/reject/revoke controls whose approval command is unreachable from tools, URL parameters, fixture text, generic dispatch, or claimed actor identity.
   Acceptance: PRD Story 6.1 and Story 6.2 — staging changes neither policy nor capability; only visible exact human approval grants authority; rejection, close, edit, seed drift, scenario drift, and expiry require new approval.

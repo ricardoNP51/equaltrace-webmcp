@@ -4,7 +4,7 @@ Last updated: 2026-08-28 (America/La_Paz)
 
 ## Current phase
 
-Phase 1 active — checklist items 1–6 are complete. EqualTrace now captures real pointer, keyboard/assistive, and native WebMCP routes from one deterministic scenario, proves equal deletion outcome, fails at the agent's first missing disclosure, and presents that bypass through a responsive judge-first evidence experience. Bounded repair staging and the human-only approval boundary are next.
+Phase 1 active — checklist items 1–7 are complete. EqualTrace now captures real pointer, keyboard/assistive, and native WebMCP routes from one deterministic scenario, proves equal deletion outcome, fails at the agent's first missing disclosure, derives one digest-bound repair, and reserves approval for an exact visible human decision. The temporary single-use WebMCP capability lifecycle is next.
 
 ## Completed
 
@@ -35,6 +35,9 @@ Phase 1 active — checklist items 1–6 are complete. EqualTrace now captures r
 - [x] A native three-route baseline on commit `347db59c3c90588299881fb67059241f2864663c` proved equal outcome and the intended first divergence at `agent / disclosure.consequences`.
 - [x] On implementation commit `d8f85295d21ff9e603995a168495c5c6dc1bfa24`, the opening view explains the outcome-success/protection-failure conflict before dense evidence, labels the known fixture preview honestly, and links expected human evidence to the agent's first observed commit event.
 - [x] Route summaries, scenario identity, blocking guidance, a collapsed semantic ledger, visible focus, reduced-motion handling, and responsive behavior pass at 390×844, 1440×900, and 1920×1080 without horizontal page overflow.
+- [x] One immutable repair is derived only from the current missing agent checkpoint and bound to scenario, version, seed, evidence IDs, epoch, expiry, and deterministic digest.
+- [x] The visible Repair Center shows the exact action, change, consequence, identity, digest, and expiry; approve, reject, close, revoke, reset, mismatch, and expiry paths fail closed.
+- [x] Stable WebMCP tools can stage and inspect the proposal but cannot approve it; URL parameters, claimed actor fields, hostile evidence text, and generic tool input cannot cross the human boundary.
 
 ## Required after implementation begins and before any “native WebMCP works” claim
 
@@ -50,8 +53,8 @@ Phase 1 active — checklist items 1–6 are complete. EqualTrace now captures r
 
 ## Current blockers
 
-- No blocker for build item 7. GitHub synchronization is still blocked until the current GitHub credential receives `workflow` scope; this does not block local implementation.
+- No blocker for build item 8. Native absence/appearance/use/removal evidence remains a required pause after the dynamic capability implementation is complete.
 
 ## Next action
 
-Continue `$build-project` with item 7 in `docs/hackathon-build/checklist.md`: derive one bounded repair from the current first divergence and implement the visible human-only approval boundary without exposing approval through WebMCP, URL state, fixture content, or generic dispatch.
+Continue `$build-project` with item 8 in `docs/hackathon-build/checklist.md`: register `equaltrace_apply_approved_repair` only for exact current human authority, apply it at most once, and remove it on use or every invalidating transition.
