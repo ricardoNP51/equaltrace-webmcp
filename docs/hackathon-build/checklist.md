@@ -54,7 +54,7 @@
   Acceptance: PRD Story 6.1 and Story 6.2 — staging changes neither policy nor capability; only visible exact human approval grants authority; rejection, close, edit, seed drift, scenario drift, and expiry require new approval.
   Verify: Run repair/store/component tests for stable digest, bounded scope, agent self-approval attempts, proposal drift, rejection, close, expiry, changed intent, hostile fixture text, and new-session invalidation.
 
-- [ ] **8. Enforce the temporary single-use repair capability lifecycle**
+- [x] **8. Enforce the temporary single-use repair capability lifecycle**
   Spec ref: `spec.md > Architecture > Dynamic WebMCP capability lifetime`
   What to build: Register `equaltrace_apply_approved_repair` only for exact current authority, bind its closure to repair/digest/seed/version/epoch/nonce/expiry, atomically guard concurrent execution, apply the repaired policy once, and abort registration on success or every invalidating transition. Show capability scope and validity without claiming discoverability from UI state alone.
   Acceptance: PRD Story 7.1 and Story 7.2 — the tool is absent before approval, only the exact tool appears after approval, and it disappears after use, expiry, reset, revocation, edit, drift, cancellation, or failure; replay and concurrency yield at most one success.

@@ -4,7 +4,7 @@ Last updated: 2026-08-28 (America/La_Paz)
 
 ## Current phase
 
-Phase 1 active — checklist items 1–7 are complete. EqualTrace now captures real pointer, keyboard/assistive, and native WebMCP routes from one deterministic scenario, proves equal deletion outcome, fails at the agent's first missing disclosure, derives one digest-bound repair, and reserves approval for an exact visible human decision. The temporary single-use WebMCP capability lifecycle is next.
+Phase 1 active — checklist items 1–8 are complete. EqualTrace now captures real pointer, keyboard/assistive, and native WebMCP routes from one deterministic scenario, proves equal deletion outcome, fails at the agent's first missing disclosure, derives one digest-bound repair, reserves approval for an exact visible human decision, and exposes the approved repair through a native one-use capability that removes itself. The repaired three-route proof and deterministic receipt are next.
 
 ## Completed
 
@@ -38,6 +38,9 @@ Phase 1 active — checklist items 1–7 are complete. EqualTrace now captures r
 - [x] One immutable repair is derived only from the current missing agent checkpoint and bound to scenario, version, seed, evidence IDs, epoch, expiry, and deterministic digest.
 - [x] The visible Repair Center shows the exact action, change, consequence, identity, digest, and expiry; approve, reject, close, revoke, reset, mismatch, and expiry paths fail closed.
 - [x] Stable WebMCP tools can stage and inspect the proposal but cannot approve it; URL parameters, claimed actor fields, hostile evidence text, and generic tool input cannot cross the human boundary.
+- [x] `equaltrace_apply_approved_repair` binds the exact authority to repair/digest/scenario/version/seed/epoch/nonce/expiry and atomically applies the repaired agent policy at most once.
+- [x] Automated lifecycle coverage removes authority on use, replay, concurrent calls, cancellation, expiry, reset, revocation, edit, drift, registration failure, and invalidation during pending registration.
+- [x] Native validation on implementation commit `7fc5e8c99161d10f1fdc664dcf56ca1272cfd086` proved four tools before approval, five after approval, one successful apply, immediate return to four, and stale-handle replay rejection.
 
 ## Required after implementation begins and before any “native WebMCP works” claim
 
@@ -47,14 +50,14 @@ Phase 1 active — checklist items 1–7 are complete. EqualTrace now captures r
 - [x] Stable tools discovered in ChatGPT's built-in browser.
 - [x] Stable tool invocation visibly changes the same page.
 - [x] Commit tool is absent before human approval.
-- [ ] Commit tool appears after exact visible approval.
-- [ ] Commit tool disappears after one use, reset, expiry, and changed intent.
+- [x] Commit tool appears after exact visible approval.
+- [x] Commit tool disappears after one native use; reset, expiry, and changed-intent teardown also pass the isolated lifecycle suite.
 - [x] Native evidence recorded without a polyfill or mock registry.
 
 ## Current blockers
 
-- No blocker for build item 8. Native absence/appearance/use/removal evidence remains a required pause after the dynamic capability implementation is complete.
+- No blocker for build item 9. A policy change is not a green verdict; all three routes must be rerun from the same seed before a receipt can exist.
 
 ## Next action
 
-Continue `$build-project` with item 8 in `docs/hackathon-build/checklist.md`: register `equaltrace_apply_approved_repair` only for exact current human authority, apply it at most once, and remove it on use or every invalidating transition.
+Continue `$build-project` with item 9 in `docs/hackathon-build/checklist.md`: preserve only the applied repair identity, rerun all three isolated routes under the repaired policy, and generate a canonical deterministic parity receipt only from complete passing evidence.

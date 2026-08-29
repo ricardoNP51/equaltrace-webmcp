@@ -290,3 +290,33 @@
 
 - Checklist item 7 passed. The human-authority winner gate has deterministic automated proof, while native capability appearance/removal remains unclaimed.
 - Item 8 is now the earliest admissible work: exact temporary single-use repair capability registration and teardown.
+
+## 2026-08-28 — Build item 8: temporary single-use repair capability
+
+### Implemented
+
+- Added a dedicated dynamic WebMCP lifecycle manager that registers only `equaltrace_apply_approved_repair` after exact current human authority exists and binds registration lifetime to an `AbortController`.
+- Added a session-unique approval nonce and closure binding across repair ID, digest, scenario, version, seed, epoch, nonce, and expiry; the store independently revalidates the same authority before policy mutation.
+- Added a synchronous single-use/in-flight guard. Success changes the shared agent policy to `repaired-agent`, records the applied identity, and aborts registration immediately; replay and concurrent attempts yield at most one success.
+- Made reset, expiry, revocation, proposal edit, seed/scenario/intent drift, cancellation, execution failure, registration failure, pending-registration invalidation, and page teardown fail closed.
+- Replaced the hard-coded capability label with honest `absent`, `registering`, `registration reported`, and `registration failed` states. The visible copy explicitly says adapter acceptance is not agent discovery proof.
+- Updated the stable status tool and agent route to report lifecycle state and use the shared repaired policy only after the consequential capability succeeds.
+
+### Verification evidence
+
+- Implementation commit: `7fc5e8c99161d10f1fdc664dcf56ca1272cfd086`.
+- `npm run check` passed formatting, ESLint, strict TypeScript, 58 Vitest tests across 12 files, production build, and 9 Playwright journeys.
+- The dedicated lifecycle suite passed 14 cases covering exact registration, stale closures, wrong digest, use, replay/concurrency, cancellation, expiry, reset, revocation, proposal/seed/scenario/intent drift, registration failure, and invalidation while registration was pending.
+- Native Codex in-app-browser validation at `http://127.0.0.1:5173/` discovered four stable tools before approval, exactly five after visible approval, returned `policy: repaired-agent` from the one exact apply call, returned immediately to four tools, and rejected replay through the stale handle.
+- Exact native environment, proposal identity, response, discovered surfaces, and limitations are recorded in `evidence/native/2026-08-28-repair-capability-lifecycle.md`.
+
+### Security decision
+
+- Registration success in the page state is deliberately called `registration reported`; only the supported client's fresh tool fetch satisfies native discovery.
+- Any first execution attempt ends the authority, including invalid input or cancellation. Recovery requires a fresh visible approval rather than keeping a possibly probed capability alive.
+- A store subscription aborts the registration signal synchronously on invalidation, including while the browser's registration promise is still pending.
+
+### Gate decision
+
+- Checklist item 8 passed with both automated adversarial coverage and the required native absence/appearance/use/disappearance sequence.
+- Item 9 is now the earliest admissible work: recreate all three isolated routes under the applied policy and issue the deterministic evidence-backed parity receipt.
