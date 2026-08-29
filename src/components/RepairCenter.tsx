@@ -14,6 +14,7 @@ export function RepairCenter({
   readonly store: WorkbenchStore;
 }) {
   const repair = snapshot.stagedRepair;
+  const applied = snapshot.phase === "repair_applied";
 
   useEffect(() => {
     if (!repair) return;
@@ -40,14 +41,18 @@ export function RepairCenter({
         <div>
           <p className="section-label">Human authority boundary</p>
           <h2 id="repair-center-title">
-            {approved
-              ? "Exact repair approved by a person"
-              : "Review the exact bounded repair"}
+            {applied
+              ? "Bounded repair applied exactly once"
+              : approved
+                ? "Exact repair approved by a person"
+                : "Review the exact bounded repair"}
           </h2>
           <p>
-            {approved
-              ? "Approval is bound to this digest, scenario, seed, epoch, and expiry. The consequential WebMCP capability remains absent until the next implementation gate."
-              : "Staging changed neither policy nor capability. Only these visible controls can approve or reject the exact proposal."}
+            {applied
+              ? "The repaired agent policy is active. The single-use capability removed itself immediately; the repaired three-route proof is the next gate."
+              : approved
+                ? "Approval is bound to this digest, scenario, seed, epoch, nonce, and expiry. Registration state below is informative; native discoverability still requires an agent-side check."
+                : "Staging changed neither policy nor capability. Only these visible controls can approve or reject the exact proposal."}
           </p>
         </div>
       </div>
@@ -107,17 +112,28 @@ export function RepairCenter({
         </div>
       </dl>
 
-      <div className="capability-absence" role="status" aria-live="polite">
-        <strong>Repair capability: absent</strong>
+      <div className="capability-status" role="status" aria-live="polite">
+        <strong>
+          Repair capability:{" "}
+          {snapshot.repairCapability.status.replaceAll("_", " ")}
+        </strong>
         <span>
-          {approved
-            ? "Human authority is recorded, but no apply tool is registered in this phase."
-            : "The agent can inspect this proposal but cannot approve or apply it."}
+          {snapshot.repairCapability.status === "registration_reported"
+            ? `${snapshot.repairCapability.provenance === "native" ? "The native adapter" : "The simulated test adapter"} accepted the exact temporary registration. This UI state alone is not proof that an agent discovered it.`
+            : snapshot.repairCapability.status === "registering"
+              ? "The exact approval is being registered. No discoverability claim is made until a supported agent checks the live page."
+              : snapshot.repairCapability.status === "registration_failed"
+                ? `Registration failed safely: ${snapshot.repairCapability.error ?? "unknown error"} Reapprove to retry.`
+                : applied
+                  ? "Removed immediately after the one successful policy application."
+                  : approved
+                    ? "Human authority exists, but the registration has not been reported as accepted."
+                    : "The agent can inspect this proposal but cannot approve or apply it."}
         </span>
       </div>
 
       <div className="repair-actions">
-        {approved ? (
+        {applied ? null : approved ? (
           <button
             type="button"
             className="button-secondary"

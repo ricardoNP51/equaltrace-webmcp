@@ -40,10 +40,16 @@ export function NextActionPanel({
       "The proposal is bound to the current failure, scenario, seed, digest, and expiry. No agent-accessible path can approve it.";
     detail = "Review the exact change above, then approve, reject, or close.";
   } else if (snapshot.phase === "repair_approved") {
-    title = "Human authority recorded. Capability remains absent.";
+    title = "Human authority recorded. Temporary registration is bounded.";
     copy =
-      "The approval boundary passed without exposing an apply action. The next gate will bind a temporary single-use WebMCP capability to this exact authority.";
-    detail = "Next gate: enforce capability appearance and teardown.";
+      "The apply capability is tied to the exact digest, nonce, scenario, seed, epoch, and expiry. UI registration state is not native discovery evidence.";
+    detail =
+      "Ask the supported agent to discover and invoke the exact repair tool.";
+  } else if (snapshot.phase === "repair_applied") {
+    title = "Repair applied once. Capability removed.";
+    copy =
+      "The shared agent policy is repaired and the approval can no longer be replayed. A complete three-route rerun is still required before any green verdict.";
+    detail = "Next gate: rerun all three routes and issue the parity receipt.";
   }
 
   return (

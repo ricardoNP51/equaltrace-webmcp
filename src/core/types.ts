@@ -125,5 +125,8 @@ export type RepairAuthority = {
   readonly targetScenarioVersion: string;
   readonly seed: string;
   readonly approvalEpoch: number;
+  readonly nonce: string;
   readonly expiresAt: number;
 };
+
+export type AgentPolicy = "broken-agent" | "repaired-agent";

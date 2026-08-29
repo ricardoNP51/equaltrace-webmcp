@@ -577,7 +577,8 @@ h3 {
 .repair-facts .repair-identity {
   grid-column: 1 / -1;
 }
-.capability-absence {
+.capability-absence,
+.capability-status {
   display: grid;
   gap: 0.25rem;
   margin-top: 1rem;
@@ -586,7 +587,8 @@ h3 {
   color: var(--amber-soft);
   background: rgb(255 200 107 / 7%);
 }
-.capability-absence span {
+.capability-absence span,
+.capability-status span {
   color: var(--text-soft);
   line-height: 1.5;
 }

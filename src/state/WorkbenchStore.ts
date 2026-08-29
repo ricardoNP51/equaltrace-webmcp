@@ -2,6 +2,7 @@ import { compareProtectionParity } from "../core/compare";
 import type { Clock, DigestService } from "../core/digest";
 import { deriveStagedRepair, REPAIR_APPROVAL_WINDOW_MS } from "../core/repair";
 import type {
+  AgentPolicy,
   ComparisonResult,
   RepairAuthority,
   Route,
@@ -17,10 +18,37 @@ export type WorkbenchPhase =
   | "baseline_capture"
   | "baseline_failed"
   | "repair_staged"
-  | "repair_approved";
+  | "repair_approved"
+  | "repair_applied";
 export type EvidenceProvenance = "recorded" | "native" | "simulated";
 export type NativeSupport =
   "unknown" | "unsupported" | "registration_failed" | "available";
+
+export type RepairCapabilityStatus =
+  "absent" | "registering" | "registration_reported" | "registration_failed";
+
+export type RepairCapabilityState = {
+  readonly status: RepairCapabilityStatus;
+  readonly provenance: "native" | "simulated" | null;
+  readonly authorityNonce: string | null;
+  readonly reason:
+    | "not_approved"
+    | "awaiting_registration"
+    | "registration_in_progress"
+    | "registration_reported"
+    | "used"
+    | "expired"
+    | "reset"
+    | "revoked"
+    | "proposal_edit"
+    | "seed_drift"
+    | "scenario_drift"
+    | "intent_drift"
+    | "cancelled"
+    | "execution_failed"
+    | "registration_failed";
+  readonly error: string | null;
+};
 
 export type RouteEvidence = {
   readonly run: RunSnapshot;
@@ -37,6 +65,9 @@ export type WorkbenchSnapshot = {
   readonly nativeInvoked: boolean;
   readonly stagedRepair: StagedRepair | null;
   readonly approvedRepair: RepairAuthority | null;
+  readonly appliedRepair: RepairAuthority | null;
+  readonly agentPolicy: AgentPolicy;
+  readonly repairCapability: RepairCapabilityState;
 };
 
 export type WorkbenchDependencies = {
@@ -75,7 +106,40 @@ function freezeSnapshot(snapshot: WorkbenchSnapshot): WorkbenchSnapshot {
     approvedRepair: snapshot.approvedRepair
       ? Object.freeze({ ...snapshot.approvedRepair })
       : null,
+    appliedRepair: snapshot.appliedRepair
+      ? Object.freeze({ ...snapshot.appliedRepair })
+      : null,
+    repairCapability: Object.freeze({ ...snapshot.repairCapability }),
   });
+}
+
+function absentCapability(
+  reason: RepairCapabilityState["reason"] = "not_approved",
+): RepairCapabilityState {
+  return {
+    status: "absent",
+    provenance: null,
+    authorityNonce: null,
+    reason,
+    error: null,
+  };
+}
+
+function sameAuthority(
+  left: RepairAuthority | null,
+  right: RepairAuthority,
+): boolean {
+  return (
+    left !== null &&
+    left.repairId === right.repairId &&
+    left.repairDigest === right.repairDigest &&
+    left.targetScenarioId === right.targetScenarioId &&
+    left.targetScenarioVersion === right.targetScenarioVersion &&
+    left.seed === right.seed &&
+    left.approvalEpoch === right.approvalEpoch &&
+    left.nonce === right.nonce &&
+    left.expiresAt === right.expiresAt
+  );
 }
 
 function assertEvidenceProvenance(
@@ -97,6 +161,8 @@ function assertEvidenceProvenance(
 export class WorkbenchStore {
   private readonly listeners = new Set<Listener>();
   private snapshot: WorkbenchSnapshot;
+  private approvalNonceSequence = 0;
+  private repairApplicationInFlight = false;
 
   constructor(
     private readonly scenario: ScenarioDefinition,
@@ -112,6 +178,9 @@ export class WorkbenchStore {
       nativeInvoked: false,
       stagedRepair: null,
       approvedRepair: null,
+      appliedRepair: null,
+      agentPolicy: "broken-agent",
+      repairCapability: absentCapability(),
     });
   }
 
@@ -133,6 +202,9 @@ export class WorkbenchStore {
       nativeInvoked: false,
       stagedRepair: null,
       approvedRepair: null,
+      appliedRepair: null,
+      agentPolicy: "broken-agent",
+      repairCapability: absentCapability("reset"),
     });
   }
 
@@ -190,7 +262,8 @@ export class WorkbenchStore {
     }
     if (
       this.snapshot.phase === "repair_staged" ||
-      this.snapshot.phase === "repair_approved"
+      this.snapshot.phase === "repair_approved" ||
+      this.snapshot.phase === "repair_applied"
     ) {
       throw new Error("Repair review must be resolved before another audit.");
     }
@@ -311,12 +384,15 @@ export class WorkbenchStore {
       targetScenarioVersion: repair.targetScenarioVersion,
       seed: repair.seed,
       approvalEpoch: repair.approvalEpoch,
+      nonce: `approval-${repair.approvalEpoch}-${++this.approvalNonceSequence}`,
       expiresAt: repair.expiresAt,
     });
     this.publish({
       ...this.snapshot,
       phase: "repair_approved",
       approvedRepair: authority,
+      appliedRepair: null,
+      repairCapability: absentCapability("awaiting_registration"),
     });
     return authority;
   }
@@ -350,22 +426,178 @@ export class WorkbenchStore {
       phase: expired ? "baseline_failed" : "repair_staged",
       stagedRepair: expired ? null : this.snapshot.stagedRepair,
       approvedRepair: null,
+      repairCapability: absentCapability(expired ? "expired" : "revoked"),
     });
   }
 
   repairExpiryDelay(): number | null {
+    if (
+      this.snapshot.phase !== "repair_staged" &&
+      this.snapshot.phase !== "repair_approved"
+    ) {
+      return null;
+    }
     const repair = this.snapshot.stagedRepair;
     if (!repair) return null;
     return Math.max(0, repair.expiresAt - this.dependencies.clock.now());
   }
 
   expireRepairIfNeeded(): boolean {
+    if (
+      this.snapshot.phase !== "repair_staged" &&
+      this.snapshot.phase !== "repair_approved"
+    ) {
+      return false;
+    }
     const repair = this.snapshot.stagedRepair;
     if (!repair || this.dependencies.clock.now() < repair.expiresAt) {
       return false;
     }
-    this.discardRepair("baseline_failed");
+    this.discardRepair("baseline_failed", "expired");
     return true;
+  }
+
+  reportRepairCapabilityRegistering(
+    authority: RepairAuthority,
+    provenance: "native" | "simulated",
+  ): boolean {
+    if (!this.hasCurrentAuthority(authority)) return false;
+    this.publish({
+      ...this.snapshot,
+      repairCapability: {
+        status: "registering",
+        provenance,
+        authorityNonce: authority.nonce,
+        reason: "registration_in_progress",
+        error: null,
+      },
+    });
+    return true;
+  }
+
+  reportRepairCapabilityRegistered(
+    authority: RepairAuthority,
+    provenance: "native" | "simulated",
+  ): boolean {
+    if (!this.hasCurrentAuthority(authority)) return false;
+    this.publish({
+      ...this.snapshot,
+      repairCapability: {
+        status: "registration_reported",
+        provenance,
+        authorityNonce: authority.nonce,
+        reason: "registration_reported",
+        error: null,
+      },
+    });
+    return true;
+  }
+
+  reportRepairCapabilityRegistrationFailure(
+    authority: RepairAuthority,
+    error: string,
+  ): boolean {
+    if (!this.hasCurrentAuthority(authority)) return false;
+    const expired = this.dependencies.clock.now() >= authority.expiresAt;
+    this.publish({
+      ...this.snapshot,
+      phase: expired ? "baseline_failed" : "repair_staged",
+      stagedRepair: expired ? null : this.snapshot.stagedRepair,
+      approvedRepair: null,
+      repairCapability: {
+        status: "registration_failed",
+        provenance: null,
+        authorityNonce: null,
+        reason: "registration_failed",
+        error,
+      },
+    });
+    return true;
+  }
+
+  invalidateRepairCapabilityExecution(
+    authority: RepairAuthority,
+    reason: "cancelled" | "execution_failed",
+  ): boolean {
+    if (!this.hasCurrentAuthority(authority)) return false;
+    const expired = this.dependencies.clock.now() >= authority.expiresAt;
+    this.publish({
+      ...this.snapshot,
+      phase: expired ? "baseline_failed" : "repair_staged",
+      stagedRepair: expired ? null : this.snapshot.stagedRepair,
+      approvedRepair: null,
+      repairCapability: absentCapability(expired ? "expired" : reason),
+    });
+    return true;
+  }
+
+  applyApprovedRepairFromCapability(
+    authority: RepairAuthority,
+    exactRepair: {
+      readonly repairId: string;
+      readonly repairDigest: string;
+    },
+    signal: AbortSignal,
+  ): RepairAuthority {
+    if (this.repairApplicationInFlight) {
+      throw new Error("Another repair application is already in flight.");
+    }
+    this.repairApplicationInFlight = true;
+    try {
+      if (signal.aborted) {
+        throw signal.reason instanceof Error
+          ? signal.reason
+          : new DOMException("Repair application was cancelled.", "AbortError");
+      }
+      if (!this.hasCurrentAuthority(authority)) {
+        throw new Error("The repair capability authority is stale or invalid.");
+      }
+      if (
+        exactRepair.repairId !== authority.repairId ||
+        exactRepair.repairDigest !== authority.repairDigest
+      ) {
+        throw new Error("Repair input does not match the approved authority.");
+      }
+      if (this.dependencies.clock.now() >= authority.expiresAt) {
+        this.discardRepair("baseline_failed", "expired");
+        throw new Error("The approved repair capability expired.");
+      }
+      if (
+        this.snapshot.repairCapability.status !== "registration_reported" ||
+        this.snapshot.repairCapability.authorityNonce !== authority.nonce ||
+        this.snapshot.agentPolicy !== "broken-agent"
+      ) {
+        throw new Error("The repair capability is not currently valid.");
+      }
+
+      this.publish({
+        ...this.snapshot,
+        phase: "repair_applied",
+        approvedRepair: null,
+        appliedRepair: authority,
+        agentPolicy: "repaired-agent",
+        repairCapability: absentCapability("used"),
+      });
+      return authority;
+    } finally {
+      this.repairApplicationInFlight = false;
+    }
+  }
+
+  invalidateRepairForProposalEdit(epoch: number) {
+    this.invalidateRepairForDrift(epoch, "proposal_edit");
+  }
+
+  invalidateRepairForSeedDrift(epoch: number) {
+    this.invalidateRepairForDrift(epoch, "seed_drift");
+  }
+
+  invalidateRepairForScenarioDrift(epoch: number) {
+    this.invalidateRepairForDrift(epoch, "scenario_drift");
+  }
+
+  invalidateRepairForIntentDrift(epoch: number) {
+    this.invalidateRepairForDrift(epoch, "intent_drift");
   }
 
   private assertCurrentHumanReview(epoch: number, action: string) {
@@ -377,13 +609,49 @@ export class WorkbenchStore {
     }
   }
 
-  private discardRepair(phase: "baseline_failed") {
+  private discardRepair(
+    phase: "baseline_failed",
+    reason: RepairCapabilityState["reason"] = "not_approved",
+  ) {
     this.publish({
       ...this.snapshot,
       phase,
       stagedRepair: null,
       approvedRepair: null,
+      repairCapability: absentCapability(reason),
     });
+  }
+
+  private hasCurrentAuthority(authority: RepairAuthority): boolean {
+    return (
+      this.snapshot.phase === "repair_approved" &&
+      sameAuthority(this.snapshot.approvedRepair, authority) &&
+      this.snapshot.stagedRepair?.repairId === authority.repairId &&
+      this.snapshot.stagedRepair.repairDigest === authority.repairDigest &&
+      this.snapshot.stagedRepair.expiresAt === authority.expiresAt &&
+      authority.targetScenarioId === this.scenario.id &&
+      authority.targetScenarioVersion === this.scenario.version &&
+      authority.seed === this.scenario.seed &&
+      authority.approvalEpoch === this.snapshot.epoch
+    );
+  }
+
+  private invalidateRepairForDrift(
+    epoch: number,
+    reason: "proposal_edit" | "seed_drift" | "scenario_drift" | "intent_drift",
+  ) {
+    if (epoch !== this.snapshot.epoch) {
+      throw new Error(
+        "A stale transition cannot invalidate current authority.",
+      );
+    }
+    if (
+      this.snapshot.phase !== "repair_staged" &&
+      this.snapshot.phase !== "repair_approved"
+    ) {
+      throw new Error("No current repair is available to invalidate.");
+    }
+    this.discardRepair("baseline_failed", reason);
   }
 
   private assertCompatibleRun(run: RunSnapshot) {

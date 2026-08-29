@@ -49,7 +49,7 @@ export function createStableTools(
     name: "equaltrace_get_status",
     title: "Get EqualTrace status",
     description:
-      "Read the current EqualTrace phase, deterministic scenario identity, completed routes, audit status, and repair-capability absence.",
+      "Read the current EqualTrace phase, deterministic scenario identity, completed routes, audit status, and reported repair-capability lifecycle state.",
     inputSchema: EMPTY_INPUT_SCHEMA,
     annotations: { readOnlyHint: true, untrustedContentHint: true },
     execute: async (input, options) => {
@@ -68,12 +68,14 @@ export function createStableTools(
         comparison: snapshot.comparison?.status ?? "not_run",
         nativeSupport: snapshot.nativeSupport,
         repairReview:
-          snapshot.phase === "repair_approved"
-            ? "human_approved"
-            : snapshot.phase === "repair_staged"
-              ? "awaiting_human"
-              : "not_staged",
-        repairCapability: "absent",
+          snapshot.phase === "repair_applied"
+            ? "applied"
+            : snapshot.phase === "repair_approved"
+              ? "human_approved"
+              : snapshot.phase === "repair_staged"
+                ? "awaiting_human"
+                : "not_staged",
+        repairCapability: snapshot.repairCapability,
       });
     },
   };
@@ -82,7 +84,7 @@ export function createStableTools(
     name: "equaltrace_run_agent_route",
     title: "Run the EqualTrace agent route",
     description:
-      "Execute the intentionally broken agent policy for the exact active fictional scenario and record its WebMCP-origin evidence in the shared workbench.",
+      "Execute the current broken or human-repaired agent policy for the exact active fictional scenario and record its WebMCP-origin evidence in the shared workbench.",
     inputSchema: RUN_AGENT_INPUT_SCHEMA,
     annotations: { untrustedContentHint: true },
     execute: async (input, options) => {
@@ -102,8 +104,10 @@ export function createStableTools(
 
       const run = executeAgentRoute(
         snapshot.scenario,
-        "broken-agent",
-        "current-baseline-agent",
+        snapshot.agentPolicy,
+        snapshot.agentPolicy === "broken-agent"
+          ? "current-baseline-agent"
+          : "current-repaired-agent",
       );
       assertNotAborted(signal);
       store.recordRun(run, provenance, snapshot.epoch);

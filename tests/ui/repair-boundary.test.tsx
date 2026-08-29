@@ -7,6 +7,11 @@ import { buildFixtureRun } from "../../src/fixtures/accountDeletion";
 import { createWorkbenchStore } from "../../src/state/initialState";
 import { FakeClock } from "../../src/test/fakeClock";
 import { FakeDigestService } from "../../src/test/fakeDigest";
+import { FakeWebMcpPort } from "../../src/test/fakeWebMcpPort";
+import {
+  APPLY_APPROVED_REPAIR_TOOL_NAME,
+  startRepairCapabilityLifecycle,
+} from "../../src/webmcp/repairCapability";
 
 async function stagedStore() {
   const store = createWorkbenchStore({
@@ -55,7 +60,7 @@ describe("visible human repair boundary", () => {
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/no apply tool is registered/i),
+      screen.getByText(/human authority exists, but the registration has not/i),
     ).toBeInTheDocument();
 
     await user.click(
@@ -65,6 +70,40 @@ describe("visible human repair boundary", () => {
     expect(
       screen.getByRole("button", { name: /approve this exact repair/i }),
     ).toBeInTheDocument();
+  });
+
+  it("shows reported scope honestly and then the one-use removal", async () => {
+    const user = userEvent.setup();
+    const store = await stagedStore();
+    const port = new FakeWebMcpPort();
+    const lifecycle = startRepairCapabilityLifecycle(port, store);
+    const repair = store.getSnapshot().stagedRepair!;
+    render(<App store={store} />);
+
+    await user.click(
+      screen.getByRole("button", { name: /approve this exact repair/i }),
+    );
+    await lifecycle.whenIdle();
+
+    expect(
+      screen.getByText(/repair capability: registration reported/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/not proof that an agent discovered it/i),
+    ).toBeInTheDocument();
+
+    await port.invoke(APPLY_APPROVED_REPAIR_TOOL_NAME, {
+      repairId: repair.repairId,
+      repairDigest: repair.repairDigest,
+    });
+    await lifecycle.whenIdle();
+
+    expect(
+      screen.getByRole("heading", { name: /repair applied exactly once/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/removed immediately after/i)).toBeInTheDocument();
+    expect(port.registered.has(APPLY_APPROVED_REPAIR_TOOL_NAME)).toBe(false);
+    lifecycle.dispose();
   });
 
   it("offers rejection and close without inventing hidden approval state", async () => {

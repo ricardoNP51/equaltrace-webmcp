@@ -14,7 +14,11 @@ export class FakeWebMcpPort implements WebMcpPort {
     this.registered.set(tool.name, tool);
     options?.signal?.addEventListener(
       "abort",
-      () => this.registered.delete(tool.name),
+      () => {
+        if (this.registered.get(tool.name) === tool) {
+          this.registered.delete(tool.name);
+        }
+      },
       { once: true },
     );
   }

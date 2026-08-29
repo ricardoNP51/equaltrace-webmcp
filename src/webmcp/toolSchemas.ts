@@ -18,6 +18,16 @@ export const RUN_AGENT_INPUT_SCHEMA = Object.freeze({
   additionalProperties: false,
 });
 
+export const APPLY_REPAIR_INPUT_SCHEMA = Object.freeze({
+  type: "object",
+  properties: Object.freeze({
+    repairId: boundedString(256),
+    repairDigest: boundedString(256),
+  }),
+  required: Object.freeze(["repairId", "repairDigest"]),
+  additionalProperties: false,
+});
+
 type ScenarioToolInput = {
   readonly scenarioId: string;
   readonly scenarioVersion: string;
@@ -63,4 +73,33 @@ export function parseScenarioToolInput(input: unknown): ScenarioToolInput {
   }
 
   return { scenarioId, scenarioVersion, seed };
+}
+
+export function parseApplyRepairInput(input: unknown): {
+  readonly repairId: string;
+  readonly repairDigest: string;
+} {
+  if (!isRecord(input)) {
+    throw new Error("Repair tool input must be an object.");
+  }
+
+  const keys = Object.keys(input);
+  const allowed = new Set(["repairId", "repairDigest"]);
+  if (keys.length !== 2 || keys.some((key) => !allowed.has(key))) {
+    throw new Error("Repair input contains missing or unsupported fields.");
+  }
+
+  const { repairId, repairDigest } = input;
+  const valid =
+    typeof repairId === "string" &&
+    repairId.length >= 1 &&
+    repairId.length <= 256 &&
+    typeof repairDigest === "string" &&
+    repairDigest.length >= 1 &&
+    repairDigest.length <= 256;
+  if (!valid) {
+    throw new Error("Repair identity fields must be bounded strings.");
+  }
+
+  return { repairId, repairDigest };
 }

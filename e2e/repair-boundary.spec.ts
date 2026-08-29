@@ -30,14 +30,22 @@ test("staging stays agent-bounded while exact approval stays visible and human-o
   await page.keyboard.press("Enter");
 
   const toolState = await page.evaluate(async () => {
-    const [{ workbenchStore }, { FakeWebMcpPort }, { registerStableTools }] =
-      await Promise.all([
-        import("/src/state/initialState.ts"),
-        import("/src/test/fakeWebMcpPort.ts"),
-        import("/src/webmcp/stableTools.ts"),
-      ]);
+    const [
+      { workbenchStore },
+      { FakeWebMcpPort },
+      { registerStableTools },
+      { startRepairCapabilityLifecycle },
+    ] = await Promise.all([
+      import("/src/state/initialState.ts"),
+      import("/src/test/fakeWebMcpPort.ts"),
+      import("/src/webmcp/stableTools.ts"),
+      import("/src/webmcp/repairCapability.ts"),
+    ]);
     const port = new FakeWebMcpPort();
     await registerStableTools(port, workbenchStore);
+    const lifecycle = startRepairCapabilityLifecycle(port, workbenchStore);
+    Reflect.set(globalThis, "__equalTraceTestPort", port);
+    Reflect.set(globalThis, "__equalTraceTestLifecycle", lifecycle);
     const scenario = workbenchStore.getSnapshot().scenario;
     await port.invoke("equaltrace_run_agent_route", {
       scenarioId: scenario.id,
@@ -65,10 +73,19 @@ test("staging stays agent-bounded while exact approval stays visible and human-o
 
   const approval = await page.evaluate(async () => {
     const { workbenchStore } = await import("/src/state/initialState.ts");
+    const port = Reflect.get(globalThis, "__equalTraceTestPort") as {
+      registered: Map<string, unknown>;
+    };
+    const lifecycle = Reflect.get(globalThis, "__equalTraceTestLifecycle") as {
+      whenIdle(): Promise<void>;
+    };
+    await lifecycle.whenIdle();
     const snapshot = workbenchStore.getSnapshot();
     return {
       phase: snapshot.phase,
       approvedRepair: snapshot.approvedRepair,
+      capability: snapshot.repairCapability,
+      tools: [...port.registered.keys()],
     };
   });
   expect(approval.phase).toBe("repair_approved");
@@ -76,5 +93,38 @@ test("staging stays agent-bounded while exact approval stays visible and human-o
     targetScenarioId: "fictional-cloud-account-deletion",
     seed: "equaltrace-golden-01",
   });
-  await expect(page.getByText(/no apply tool is registered/i)).toBeVisible();
+  expect(approval.capability).toMatchObject({
+    status: "registration_reported",
+    provenance: "simulated",
+  });
+  expect(approval.tools).toContain("equaltrace_apply_approved_repair");
+  await expect(
+    page.getByText(/not proof that an agent discovered it/i),
+  ).toBeVisible();
+
+  const applied = await page.evaluate(async () => {
+    const { workbenchStore } = await import("/src/state/initialState.ts");
+    const port = Reflect.get(globalThis, "__equalTraceTestPort") as {
+      registered: Map<string, unknown>;
+      invoke(name: string, input: unknown): Promise<unknown>;
+    };
+    const repair = workbenchStore.getSnapshot().stagedRepair!;
+    await port.invoke("equaltrace_apply_approved_repair", {
+      repairId: repair.repairId,
+      repairDigest: repair.repairDigest,
+    });
+    return {
+      snapshot: workbenchStore.getSnapshot(),
+      tools: [...port.registered.keys()],
+    };
+  });
+  expect(applied.snapshot).toMatchObject({
+    phase: "repair_applied",
+    agentPolicy: "repaired-agent",
+    repairCapability: { status: "absent", reason: "used" },
+  });
+  expect(applied.tools).not.toContain("equaltrace_apply_approved_repair");
+  await expect(
+    page.getByRole("heading", { name: /repair applied exactly once/i }),
+  ).toBeVisible();
 });
