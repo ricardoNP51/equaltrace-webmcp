@@ -125,6 +125,7 @@ a {
 .scenario-bar,
 .workbench-section,
 .divergence-panel,
+.repair-center,
 .next-action,
 .evidence-section {
   border: 1px solid var(--border);
@@ -392,6 +393,7 @@ h3 {
 
 .workbench-section,
 .divergence-panel,
+.repair-center,
 .evidence-section {
   margin-top: 1rem;
   border-radius: var(--radius-lg);
@@ -527,6 +529,72 @@ h3 {
 .divergence-panel {
   border-color: #755a32;
   background: linear-gradient(155deg, rgb(24 24 23 / 96%), rgb(11 20 32 / 96%));
+}
+.repair-center {
+  margin-top: 1rem;
+  border-color: #406277;
+  border-radius: var(--radius-lg);
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  background: linear-gradient(150deg, rgb(10 28 43 / 98%), rgb(8 16 28 / 98%));
+}
+.repair-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  max-width: 68rem;
+}
+.repair-heading p:last-child {
+  margin: 0.75rem 0 0;
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+.repair-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1.5rem 0 0;
+}
+.repair-facts > div {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 0.7rem;
+  padding: 0.9rem 1rem;
+  background: rgb(3 10 18 / 45%);
+}
+.repair-facts dt {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.repair-facts dd {
+  margin: 0.42rem 0 0;
+  color: var(--text-soft);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.repair-facts .repair-identity {
+  grid-column: 1 / -1;
+}
+.capability-absence {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 1rem;
+  border-left: 3px solid var(--amber);
+  padding: 0.85rem 1rem;
+  color: var(--amber-soft);
+  background: rgb(255 200 107 / 7%);
+}
+.capability-absence span {
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+.repair-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
 }
 .divergence-heading {
   align-items: flex-start;
@@ -802,7 +870,8 @@ code {
   }
   .route-grid,
   .human-journeys,
-  .comparison-grid {
+  .comparison-grid,
+  .repair-facts {
     grid-template-columns: 1fr;
   }
   .route-card {
@@ -812,6 +881,13 @@ code {
     margin-top: 0.25rem;
   }
   .audit-control button {
+    width: 100%;
+  }
+  .repair-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .repair-actions button {
     width: 100%;
   }
   .divergence-heading {
@@ -831,6 +907,7 @@ code {
   .hero,
   .workbench-section,
   .divergence-panel,
+  .repair-center,
   .evidence-section {
     padding: 1.05rem;
   }

@@ -67,6 +67,12 @@ export function createStableTools(
         completedRoutes: completedRoutes(store),
         comparison: snapshot.comparison?.status ?? "not_run",
         nativeSupport: snapshot.nativeSupport,
+        repairReview:
+          snapshot.phase === "repair_approved"
+            ? "human_approved"
+            : snapshot.phase === "repair_staged"
+              ? "awaiting_human"
+              : "not_staged",
         repairCapability: "absent",
       });
     },
@@ -144,7 +150,7 @@ export function createStableTools(
       parseEmptyInput(input);
       assertNotAborted(signal);
       const snapshot = store.getSnapshot();
-      const repair = store.stageRepair(snapshot.epoch);
+      const repair = await store.stageRepair(snapshot.epoch, signal);
       return response({ status: "staged", repair });
     },
   };

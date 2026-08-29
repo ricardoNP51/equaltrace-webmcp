@@ -110,6 +110,20 @@ export type StagedRepair = {
   readonly targetScenarioVersion: string;
   readonly targetToolName: "equaltrace_run_agent_route";
   readonly seed: string;
+  readonly requestedOutcome: "account_deleted";
   readonly addsCheckpoints: readonly Checkpoint[];
   readonly evidenceIds: readonly string[];
+  readonly repairDigest: string;
+  readonly approvalEpoch: number;
+  readonly expiresAt: number;
+};
+
+export type RepairAuthority = {
+  readonly repairId: string;
+  readonly repairDigest: string;
+  readonly targetScenarioId: string;
+  readonly targetScenarioVersion: string;
+  readonly seed: string;
+  readonly approvalEpoch: number;
+  readonly expiresAt: number;
 };

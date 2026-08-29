@@ -2,6 +2,7 @@ import { EvidenceDrawer } from "./components/EvidenceDrawer";
 import { FirstDivergencePanel } from "./components/FirstDivergencePanel";
 import { HumanRouteJourney } from "./components/HumanRouteJourney";
 import { NextActionPanel } from "./components/NextActionPanel";
+import { RepairCenter } from "./components/RepairCenter";
 import { RouteSummaryGrid } from "./components/RouteSummaryGrid";
 import { ScenarioHeader } from "./components/ScenarioHeader";
 import { VerdictHero } from "./components/VerdictHero";
@@ -87,6 +88,7 @@ export function App({ store = workbenchStore }: AppProps) {
         </section>
 
         <FirstDivergencePanel snapshot={snapshot} />
+        <RepairCenter snapshot={snapshot} store={store} />
         <NextActionPanel snapshot={snapshot} />
         <EvidenceDrawer snapshot={snapshot} />
 

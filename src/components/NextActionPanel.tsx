@@ -29,14 +29,21 @@ export function NextActionPanel({
     copy =
       "Run the baseline audit to align each semantic checkpoint and reveal the earliest protection mismatch.";
     detail = "Use Audit baseline evidence above.";
-  } else if (
-    snapshot.phase === "baseline_failed" ||
-    snapshot.phase === "repair_staged"
-  ) {
+  } else if (snapshot.phase === "baseline_failed") {
     title = "Bypass proven. Preserve human authority next.";
     copy =
-      "The next phase stages one bounded repair for the missing disclosure. Staging cannot approve or apply it.";
-    detail = "Next gate: exact, visible human review and approval.";
+      "The agent may now stage one bounded repair for the missing disclosure. Staging cannot approve or apply it.";
+    detail = "Invoke equaltrace_stage_repair through WebMCP.";
+  } else if (snapshot.phase === "repair_staged") {
+    title = "Exact repair staged. Human decision required.";
+    copy =
+      "The proposal is bound to the current failure, scenario, seed, digest, and expiry. No agent-accessible path can approve it.";
+    detail = "Review the exact change above, then approve, reject, or close.";
+  } else if (snapshot.phase === "repair_approved") {
+    title = "Human authority recorded. Capability remains absent.";
+    copy =
+      "The approval boundary passed without exposing an apply action. The next gate will bind a temporary single-use WebMCP capability to this exact authority.";
+    detail = "Next gate: enforce capability appearance and teardown.";
   }
 
   return (

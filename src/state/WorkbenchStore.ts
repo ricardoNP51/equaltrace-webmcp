@@ -1,6 +1,9 @@
 import { compareProtectionParity } from "../core/compare";
+import type { Clock, DigestService } from "../core/digest";
+import { deriveStagedRepair, REPAIR_APPROVAL_WINDOW_MS } from "../core/repair";
 import type {
   ComparisonResult,
+  RepairAuthority,
   Route,
   RunSnapshot,
   ScenarioDefinition,
@@ -10,7 +13,11 @@ import type {
 import { sourceForRoute } from "../core/validation";
 
 export type WorkbenchPhase =
-  "preview" | "baseline_capture" | "baseline_failed" | "repair_staged";
+  | "preview"
+  | "baseline_capture"
+  | "baseline_failed"
+  | "repair_staged"
+  | "repair_approved";
 export type EvidenceProvenance = "recorded" | "native" | "simulated";
 export type NativeSupport =
   "unknown" | "unsupported" | "registration_failed" | "available";
@@ -29,6 +36,12 @@ export type WorkbenchSnapshot = {
   readonly nativeSupport: NativeSupport;
   readonly nativeInvoked: boolean;
   readonly stagedRepair: StagedRepair | null;
+  readonly approvedRepair: RepairAuthority | null;
+};
+
+export type WorkbenchDependencies = {
+  readonly clock: Clock;
+  readonly digestService: DigestService;
 };
 
 type Listener = () => void;
@@ -59,6 +72,9 @@ function freezeSnapshot(snapshot: WorkbenchSnapshot): WorkbenchSnapshot {
           evidenceIds: Object.freeze([...snapshot.stagedRepair.evidenceIds]),
         })
       : null,
+    approvedRepair: snapshot.approvedRepair
+      ? Object.freeze({ ...snapshot.approvedRepair })
+      : null,
   });
 }
 
@@ -82,7 +98,10 @@ export class WorkbenchStore {
   private readonly listeners = new Set<Listener>();
   private snapshot: WorkbenchSnapshot;
 
-  constructor(private readonly scenario: ScenarioDefinition) {
+  constructor(
+    private readonly scenario: ScenarioDefinition,
+    private readonly dependencies: WorkbenchDependencies,
+  ) {
     this.snapshot = freezeSnapshot({
       phase: "preview",
       epoch: 0,
@@ -92,6 +111,7 @@ export class WorkbenchStore {
       nativeSupport: "unknown",
       nativeInvoked: false,
       stagedRepair: null,
+      approvedRepair: null,
     });
   }
 
@@ -112,6 +132,7 @@ export class WorkbenchStore {
       nativeSupport: this.snapshot.nativeSupport,
       nativeInvoked: false,
       stagedRepair: null,
+      approvedRepair: null,
     });
   }
 
@@ -167,6 +188,12 @@ export class WorkbenchStore {
     if (this.snapshot.phase === "preview") {
       throw new Error("Begin or reset the baseline before auditing evidence.");
     }
+    if (
+      this.snapshot.phase === "repair_staged" ||
+      this.snapshot.phase === "repair_approved"
+    ) {
+      throw new Error("Repair review must be resolved before another audit.");
+    }
 
     const runs: Partial<Record<Route, RunSnapshot>> = {};
     for (const [route, evidence] of Object.entries(
@@ -188,7 +215,10 @@ export class WorkbenchStore {
     return comparison;
   }
 
-  stageRepair(epoch: number): StagedRepair {
+  async stageRepair(
+    epoch: number,
+    signal?: AbortSignal,
+  ): Promise<StagedRepair> {
     if (epoch !== this.snapshot.epoch) {
       throw new Error("A stale request cannot stage a repair.");
     }
@@ -207,25 +237,153 @@ export class WorkbenchStore {
       throw new Error("The current divergence is not eligible for repair.");
     }
 
-    const repair = Object.freeze({
-      repairId: `repair-${this.scenario.version}-${divergence.checkpoint}`,
-      targetScenarioId: this.scenario.id,
-      targetScenarioVersion: this.scenario.version,
-      targetToolName: "equaltrace_run_agent_route" as const,
-      seed: this.scenario.seed,
-      addsCheckpoints: Object.freeze([divergence.checkpoint]),
-      evidenceIds: Object.freeze([
-        ...divergence.expectedEvidenceIds,
-        ...divergence.observedEvidenceIds,
-      ]),
+    const baselineSnapshot = this.snapshot;
+    const repair = await deriveStagedRepair({
+      scenario: this.scenario,
+      divergence,
+      approvalEpoch: epoch,
+      expiresAt: this.dependencies.clock.now() + REPAIR_APPROVAL_WINDOW_MS,
+      digestService: this.dependencies.digestService,
     });
+
+    if (signal?.aborted) {
+      throw signal.reason instanceof Error
+        ? signal.reason
+        : new DOMException("Repair staging was cancelled.", "AbortError");
+    }
+    if (this.snapshot !== baselineSnapshot) {
+      throw new Error(
+        "The baseline changed while the repair was being staged.",
+      );
+    }
 
     this.publish({
       ...this.snapshot,
       phase: "repair_staged",
       stagedRepair: repair,
+      approvedRepair: null,
     });
     return repair;
+  }
+
+  approveRepairFromHumanInteraction(
+    exactRepair: {
+      readonly repairId: string;
+      readonly repairDigest: string;
+      readonly expiresAt: number;
+    },
+    epoch: number,
+  ): RepairAuthority {
+    if (epoch !== this.snapshot.epoch) {
+      throw new Error("A stale human decision cannot approve a repair.");
+    }
+    if (this.snapshot.phase !== "repair_staged") {
+      throw new Error("A visible staged repair is required for approval.");
+    }
+
+    const repair = this.snapshot.stagedRepair;
+    if (!repair) {
+      throw new Error("No exact repair is available for human approval.");
+    }
+    if (this.dependencies.clock.now() >= repair.expiresAt) {
+      this.discardRepair("baseline_failed");
+      throw new Error("The repair review expired and must be staged again.");
+    }
+
+    const exactMatch =
+      repair.repairId === exactRepair.repairId &&
+      repair.repairDigest === exactRepair.repairDigest &&
+      repair.expiresAt === exactRepair.expiresAt &&
+      repair.approvalEpoch === epoch &&
+      repair.targetScenarioId === this.scenario.id &&
+      repair.targetScenarioVersion === this.scenario.version &&
+      repair.seed === this.scenario.seed;
+    if (!exactMatch) {
+      throw new Error(
+        "Human approval does not match the visible exact repair.",
+      );
+    }
+
+    const authority = Object.freeze({
+      repairId: repair.repairId,
+      repairDigest: repair.repairDigest,
+      targetScenarioId: repair.targetScenarioId,
+      targetScenarioVersion: repair.targetScenarioVersion,
+      seed: repair.seed,
+      approvalEpoch: repair.approvalEpoch,
+      expiresAt: repair.expiresAt,
+    });
+    this.publish({
+      ...this.snapshot,
+      phase: "repair_approved",
+      approvedRepair: authority,
+    });
+    return authority;
+  }
+
+  rejectRepairFromHumanInteraction(epoch: number) {
+    this.assertCurrentHumanReview(epoch, "reject");
+    this.discardRepair("baseline_failed");
+  }
+
+  closeRepairReviewFromHumanInteraction(epoch: number) {
+    this.assertCurrentHumanReview(epoch, "close");
+    this.discardRepair("baseline_failed");
+  }
+
+  revokeRepairApprovalFromHumanInteraction(epoch: number) {
+    if (epoch !== this.snapshot.epoch) {
+      throw new Error("A stale human decision cannot revoke approval.");
+    }
+    if (
+      this.snapshot.phase !== "repair_approved" ||
+      !this.snapshot.stagedRepair ||
+      !this.snapshot.approvedRepair
+    ) {
+      throw new Error("No current human approval is available to revoke.");
+    }
+
+    const expired =
+      this.dependencies.clock.now() >= this.snapshot.stagedRepair.expiresAt;
+    this.publish({
+      ...this.snapshot,
+      phase: expired ? "baseline_failed" : "repair_staged",
+      stagedRepair: expired ? null : this.snapshot.stagedRepair,
+      approvedRepair: null,
+    });
+  }
+
+  repairExpiryDelay(): number | null {
+    const repair = this.snapshot.stagedRepair;
+    if (!repair) return null;
+    return Math.max(0, repair.expiresAt - this.dependencies.clock.now());
+  }
+
+  expireRepairIfNeeded(): boolean {
+    const repair = this.snapshot.stagedRepair;
+    if (!repair || this.dependencies.clock.now() < repair.expiresAt) {
+      return false;
+    }
+    this.discardRepair("baseline_failed");
+    return true;
+  }
+
+  private assertCurrentHumanReview(epoch: number, action: string) {
+    if (epoch !== this.snapshot.epoch) {
+      throw new Error(`A stale human decision cannot ${action} a repair.`);
+    }
+    if (this.snapshot.phase !== "repair_staged") {
+      throw new Error("No current staged repair is awaiting human review.");
+    }
+  }
+
+  private discardRepair(phase: "baseline_failed") {
+    this.publish({
+      ...this.snapshot,
+      phase,
+      stagedRepair: null,
+      approvedRepair: null,
+    });
   }
 
   private assertCompatibleRun(run: RunSnapshot) {

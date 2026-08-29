@@ -162,6 +162,14 @@ describe("stable WebMCP tools", () => {
     });
     expect(store.getSnapshot()).toMatchObject({ phase: "repair_staged" });
     expect(port.registered.has("equaltrace_apply_approved_repair")).toBe(false);
+
+    await expect(
+      port.invoke("equaltrace_stage_repair", {
+        actor: "human",
+        approve: true,
+      }),
+    ).rejects.toThrow(/empty object/i);
+    expect(store.getSnapshot().approvedRepair).toBeNull();
   });
 
   it("keeps audit incomplete when real human routes are missing", async () => {
