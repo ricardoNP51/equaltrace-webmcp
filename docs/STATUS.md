@@ -4,7 +4,7 @@ Last updated: 2026-08-30 (America/La_Paz)
 
 ## Current phase
 
-Phase 1 active — checklist items 1–10 are complete. EqualTrace now completes the full broken-to-repaired winner chain and its release gate includes targeted authority coverage, automated axe checks, keyboard/skip-link focus, reduced motion, 200% text resize, long hostile content, three viewports, receipt verification, native-evidence manifest verification, CI, Pages deployment workflow, and a clean-clone pass. Public HTTPS release proof is next.
+Phase 1 active — checklist items 1–11 are complete. Release `challenge-v1.0.0` is live over HTTPS from exact commit `20ccacc499fcb8f7fed126f10af38e820c95b335`. Five consecutive public native golden runs reproduced the complete broken-to-repaired capability lifecycle and the same receipt. Submission handoff preparation is next; submission itself still requires explicit confirmation.
 
 ## Completed
 
@@ -48,6 +48,11 @@ Phase 1 active — checklist items 1–10 are complete. EqualTrace now completes
 - [x] Implementation commit `97ee5b7` adds targeted coverage thresholds over comparator/authority code, axe-based browser checks, reduced-motion and 200% text-resize checks, hostile long-content overflow protection, a machine-verified native-evidence manifest, and exact-revision CI/Pages workflows.
 - [x] `npm run check` passes in the working tree with 66 Vitest tests, targeted coverage at 84.55% statements / 77.41% branches / 97.36% functions / 86.98% lines, 12 Playwright journeys, zero serious/critical axe findings, production build, receipt verification, and native-evidence verification.
 - [x] A detached clean clone of commit `97ee5b7` passed `npm ci && npm run check` on 2026-08-30.
+- [x] Release candidate `challenge-v1.0.0` identifies application version `1.0.0` and exact commit `20ccacc499fcb8f7fed126f10af38e820c95b335` in the deployed footer, repository tag, release evidence, and clean-clone record.
+- [x] GitHub Actions quality-gate runs `33294006121` and `33294006735` and Pages run `33294006674` passed for the exact release commit; HTTPS is enforced at `https://ricardonp51.github.io/equaltrace-webmcp/`.
+- [x] A new clone from the public `challenge-v1.0.0` tag resolved to the exact release commit and passed `npm ci && npm run check` with zero dependency vulnerabilities.
+- [x] Five consecutive fresh native runs in Codex In-app Browser `26.825.41651` each proved absence before approval, appearance after visible exact approval, one successful use, absence after use, fresh three-route parity, and receipt `3edf6503b77b0391a2fff20f31d664286a5db9c72d253ea6b0342db0aec44728`.
+- [x] `evidence/native/manifest.json` is frozen as `complete` and machine-verifies exactly five passing release runs with one receipt identity; the detailed bounded record is `evidence/native/2026-08-30-public-release-five-run.md`.
 
 ## Required after implementation begins and before any “native WebMCP works” claim
 
@@ -63,8 +68,8 @@ Phase 1 active — checklist items 1–10 are complete. EqualTrace now completes
 
 ## Current blockers
 
-- No blocker for build item 11. GitHub authentication and workflow scopes are available; public Pages deployment and five fresh native release runs are not yet complete.
+- No blocker for build item 12. A public demo video and final Devpost submission are intentionally not claimed; submission still requires the participant's explicit final confirmation.
 
 ## Next action
 
-Continue `$build-project` with item 11 in `docs/hackathon-build/checklist.md`: freeze the gated release candidate, deploy the exact commit over HTTPS, capture five consecutive fresh native golden runs, verify the public clean-clone instructions, and bind app/repository/evidence/receipt to one release identity.
+Continue `$build-project` with item 12 in `docs/hackathon-build/checklist.md`: prepare the verified Devpost handoff bundle, screenshots, under-three-minute demo plan/video, AI-usage disclosure, judging map, public testing instructions, and release references. Do not submit without explicit final confirmation.

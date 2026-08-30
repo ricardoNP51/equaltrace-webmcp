@@ -1,5 +1,30 @@
 # Hackathon Build Notes
 
+## 2026-08-30 — Build item 11: exact public release and five native golden runs
+
+### Release freeze
+
+- Prepared application version `1.0.0` and release name `challenge-v1.0.0`; the production footer reports the exact build SHA supplied by the release workflow.
+- Exact application commit: `20ccacc499fcb8f7fed126f10af38e820c95b335`.
+- `npm run check` passed in the working tree and in a detached clean clone with that exact SHA injected into the production build.
+- Fast-forwarded both `codex/phase6-continuation` and `main` without force-push, created annotated tag `challenge-v1.0.0`, enabled workflow-based GitHub Pages with enforced HTTPS, and verified successful Actions runs `33294006121`, `33294006735`, and `33294006674`.
+- A separate clone from the public GitHub tag resolved to the exact release commit; `npm ci` reported zero vulnerabilities and its full `npm run check` passed.
+
+### Public native proof
+
+- Public origin: `https://ricardonp51.github.io/equaltrace-webmcp/`.
+- Supported client: Codex In-app Browser, plugin version `26.825.41651`.
+- Five consecutive fresh-reset runs used the browser-provided WebMCP tools, not the test port or a polyfill.
+- Every baseline reproduced equal deletion outcome with the first agent divergence at `disclosure.consequences` and native evidence provenance.
+- In every run, `equaltrace_apply_approved_repair` was absent before the visible human approval, appeared after approval of the exact digest, applied once, reported `removed_after_use`, and was absent again on fresh discovery.
+- Every repaired rerun recreated pointer, keyboard, and native WebMCP evidence, passed all six protection groups plus outcome parity, left the capability absent with reason `used`, and produced receipt `3edf6503b77b0391a2fff20f31d664286a5db9c72d253ea6b0342db0aec44728`.
+- Detailed evidence: `evidence/native/2026-08-30-public-release-five-run.md`; `evidence/native/manifest.json` now requires and verifies the exact five-run record.
+
+### Gate result
+
+- Checklist item 11 passed. The app, repository tag, deployed SHA, evidence record, lifecycle observations, and repeated native receipt are bound to release `challenge-v1.0.0`.
+- Item 12 is now the earliest admissible work: prepare the Devpost handoff materials without performing the final submission.
+
 ## 2026-08-30 — Build item 10: accessibility, adversarial, and clean-clone release gate
 
 ### Implemented

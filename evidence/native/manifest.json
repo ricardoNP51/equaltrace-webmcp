@@ -53,11 +53,42 @@
     }
   ],
   "release": {
-    "status": "pending",
+    "status": "complete",
     "requiredRuns": 5,
-    "releaseCommit": null,
-    "publicOrigin": null,
-    "evidenceFile": null,
-    "runs": []
+    "releaseCommit": "20ccacc499fcb8f7fed126f10af38e820c95b335",
+    "publicOrigin": "https://ricardonp51.github.io/equaltrace-webmcp/",
+    "evidenceFile": "evidence/native/2026-08-30-public-release-five-run.md",
+    "runs": [
+      {
+        "sequence": 1,
+        "status": "pass",
+        "capabilityLifecycle": "absent-appeared-used-absent",
+        "receiptId": "3edf6503b77b0391a2fff20f31d664286a5db9c72d253ea6b0342db0aec44728"
+      },
+      {
+        "sequence": 2,
+        "status": "pass",
+        "capabilityLifecycle": "absent-appeared-used-absent",
+        "receiptId": "3edf6503b77b0391a2fff20f31d664286a5db9c72d253ea6b0342db0aec44728"
+      },
+      {
+        "sequence": 3,
+        "status": "pass",
+        "capabilityLifecycle": "absent-appeared-used-absent",
+        "receiptId": "3edf6503b77b0391a2fff20f31d664286a5db9c72d253ea6b0342db0aec44728"
+      },
+      {
+        "sequence": 4,
+        "status": "pass",
+        "capabilityLifecycle": "absent-appeared-used-absent",
+        "receiptId": "3edf6503b77b0391a2fff20f31d664286a5db9c72d253ea6b0342db0aec44728"
+      },
+      {
+        "sequence": 5,
+        "status": "pass",
+        "capabilityLifecycle": "absent-appeared-used-absent",
+        "receiptId": "3edf6503b77b0391a2fff20f31d664286a5db9c72d253ea6b0342db0aec44728"
+      }
+    ]
   }
 }

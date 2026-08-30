@@ -72,7 +72,7 @@
   Acceptance: PRD Epic 9 and all listed edge cases — the golden path works by pointer and keyboard; missing evidence remains incomplete; no hostile input, stale approval, fabricated trace, or duplicate call creates a false green; clean reset always recovers safely.
   Verify: Run `npm run check` from the working tree, then `npm ci && npm run check` from a clean clone; inspect axe output, keyboard flow, reduced motion, 200% zoom, long evidence, all three viewports, and the seeded mutation suite.
 
-- [ ] **11. Freeze, deploy, and capture repeatable native release evidence**
+- [x] **11. Freeze, deploy, and capture repeatable native release evidence**
   Spec ref: `spec.md > Demo And Submission Flow > Demo preparation` and `spec.md > Demo And Submission Flow > Release identity`
   What to build: Deploy the exact gated commit to GitHub Pages over HTTPS, document native-vs-simulated evidence rules, capture discovery/invocation/visible-change/capability-lifetime observations, complete five fresh native golden runs, verify the public clean-clone instructions, and freeze one release identity across app, repo, evidence, and sample receipt.
   Acceptance: PRD Submission Proof Points — the public build completes the entire broken-to-repaired story without verbal rescue; native evidence identifies the supported client and exact commit; the repair tool lifecycle and deterministic receipt are reproducible five times.
