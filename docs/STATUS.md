@@ -4,7 +4,7 @@ Last updated: 2026-08-30 (America/La_Paz)
 
 ## Current phase
 
-Phase 1 active — checklist items 1–11 are complete. Release `challenge-v1.0.0` is live over HTTPS from exact commit `20ccacc499fcb8f7fed126f10af38e820c95b335`. Five consecutive public native golden runs reproduced the complete broken-to-repaired capability lifecycle and the same receipt. Submission handoff preparation is next; submission itself still requires explicit confirmation.
+Phase 1 guided build complete — checklist items 1–12 are complete. Release `challenge-v1.0.0` is live over HTTPS from exact commit `20ccacc499fcb8f7fed126f10af38e820c95b335`; five consecutive public native golden runs reproduced the complete lifecycle and receipt. The Devpost handoff draft, exact judge instructions, four release screenshots, AI disclosure, official judging map, and recording-ready demo script are prepared. Video publication and Devpost submission remain external gates.
 
 ## Completed
 
@@ -53,6 +53,9 @@ Phase 1 active — checklist items 1–11 are complete. Release `challenge-v1.0.
 - [x] A new clone from the public `challenge-v1.0.0` tag resolved to the exact release commit and passed `npm ci && npm run check` with zero dependency vulnerabilities.
 - [x] Five consecutive fresh native runs in Codex In-app Browser `26.825.41651` each proved absence before approval, appearance after visible exact approval, one successful use, absence after use, fresh three-route parity, and receipt `3edf6503b77b0391a2fff20f31d664286a5db9c72d253ea6b0342db0aec44728`.
 - [x] `evidence/native/manifest.json` is frozen as `complete` and machine-verifies exactly five passing release runs with one receipt identity; the detailed bounded record is `evidence/native/2026-08-30-public-release-five-run.md`.
+- [x] Live Devpost requirements and judging criteria were fetched on 2026-08-30 and mapped to `devpost-submission.md`, including every required custom submission answer.
+- [x] Four public-release screenshots are indexed under `evidence/submission/`, and `docs/DEMO_SCRIPT.md` provides a sub-three-minute recording plan aligned to the exact native winner path.
+- [x] The video path was replayed natively on the public release after the item 12 draft; the temporary capability disappeared after use and the final receipt matched the five-run release identity.
 
 ## Required after implementation begins and before any “native WebMCP works” claim
 
@@ -68,8 +71,8 @@ Phase 1 active — checklist items 1–11 are complete. Release `challenge-v1.0.
 
 ## Current blockers
 
-- No blocker for build item 12. A public demo video and final Devpost submission are intentionally not claimed; submission still requires the participant's explicit final confirmation.
+- Build implementation is unblocked and complete. Remaining external gates are recording/uploading the public narrated YouTube video, confirming personal submission-field answers, and explicit final authorization before Devpost submission.
 
 ## Next action
 
-Continue `$build-project` with item 12 in `docs/hackathon-build/checklist.md`: prepare the verified Devpost handoff bundle, screenshots, under-three-minute demo plan/video, AI-usage disclosure, judging map, public testing instructions, and release references. Do not submit without explicit final confirmation.
+When the participant considers the release ready, run `$prepare-submission` using `devpost-submission.md` and `docs/DEMO_SCRIPT.md`. Do not submit without explicit final confirmation.

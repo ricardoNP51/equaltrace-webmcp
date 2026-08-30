@@ -1,5 +1,25 @@
 # Hackathon Build Notes
 
+## 2026-08-30 — Build item 12: Devpost handoff bundle
+
+### Official requirements and submission story
+
+- Fetched the complete live Devpost submission requirements, four judging criteria, current dates, and latest organizer announcement on 2026-08-30 rather than relying on memory or web search.
+- Confirmed the required live URL, explanatory description, public repository with open-source license, and public narrated YouTube demo under three minutes; captured all twelve current custom submission fields and their IDs in the handoff draft.
+- Drafted `devpost-submission.md` with the English project story, tagline, technology list, exact judge instructions, AI-usage disclosure, learning answers, judging map, claim boundaries, release identity, and personal-field confirmations for `$prepare-submission`.
+
+### Media and demo proof
+
+- Captured four 1440×900 screenshots from the exact public release: opening thesis, current native first divergence, human approval boundary with capability absent, and final deterministic receipt.
+- Indexed the images under `evidence/submission/README.md` with honest fixture/current/native labels and added a concise judge preview to the public README.
+- Created `docs/DEMO_SCRIPT.md`, a recording-ready 2:52 target storyboard that shows the product in the first 10–15 seconds and covers native shared state, first divergence, visible approval, dynamic absent → appeared → used → absent lifetime, repaired rerun, and receipt.
+- Replayed that exact video path against the public release through native WebMCP. The apply response reported `removed_after_use`, fresh discovery excluded the temporary tool, the repaired agent evidence reported native provenance, and the final audit reproduced receipt `3edf6503b77b0391a2fff20f31d664286a5db9c72d253ea6b0342db0aec44728`.
+
+### Gate result
+
+- Checklist item 12 passed as a submission-preparation handoff. The required video plan and assets are ready; recording, public YouTube upload, final personal-field confirmation, and actual Devpost submission remain explicit external gates.
+- The guided build checklist is complete. The next command is `$prepare-submission`; it must not submit without the participant's separate explicit confirmation.
+
 ## 2026-08-30 — Build item 11: exact public release and five native golden runs
 
 ### Release freeze

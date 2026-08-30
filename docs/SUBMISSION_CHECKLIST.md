@@ -2,19 +2,19 @@
 
 ## Eligibility and repository
 
-- [ ] Work attributable to the challenge period is clear in Git history.
+- [x] Work attributable to the challenge period is clear in Git history.
 - [x] Open-source license exists at repository root.
-- [ ] Repository is public and About section exposes the license.
-- [ ] README setup works from a clean clone.
-- [ ] No secrets, private identifiers, or third-party copyrighted assets.
+- [x] Repository is public and GitHub detects the MIT license.
+- [x] README setup works from a clean clone.
+- [x] Tracked files contain no credential/secret file and submission captures use only original application UI.
 
 ## Working project
 
-- [ ] Public HTTPS URL loads without authentication or includes judge credentials.
-- [ ] Native WebMCP tools are discoverable.
-- [ ] Golden flow resets deterministically.
+- [x] Public HTTPS URL loads without authentication.
+- [x] Native WebMCP tools are discoverable in the recorded supported client.
+- [x] Golden flow resets deterministically.
 - [ ] Application behavior matches the video exactly.
-- [ ] Fresh-session smoke test passes.
+- [x] Fresh-session smoke test passes.
 
 ## Demo video
 
@@ -29,15 +29,15 @@
 
 ## Description
 
-- [ ] Why WebMCP is fundamental.
-- [ ] Better human experience.
-- [ ] What person and agent can do together that was previously difficult.
-- [ ] Brief implementation description.
-- [ ] Honest limitations and evidence links.
+- [x] Why WebMCP is fundamental.
+- [x] Better human experience.
+- [x] What person and agent can do together that was previously difficult.
+- [x] Brief implementation description.
+- [x] Honest limitations and evidence links.
 
 ## Final proof
 
-- [ ] `npm ci && npm run check` passes.
-- [ ] Local commit equals remote `main`.
-- [ ] Release tag points to submitted commit.
+- [x] Tagged release clean clone passed `npm ci && npm run check`.
+- [ ] Local handoff commit equals remote `main` after final push.
+- [x] Release tag points to the deployed application commit.
 - [ ] Live URL, repository, and video opened from a fresh session.

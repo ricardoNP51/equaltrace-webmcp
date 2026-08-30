@@ -56,6 +56,14 @@ Automated, local-native, and public-release evidence remain deliberately separat
 
 The public URL is useful in ordinary browsers for the visual and keyboard routes. Native agent acceptance requires ChatGPT's in-app browser or a supported Chrome build with WebMCP enabled.
 
+## Judge preview
+
+| Hidden protection bypass                                                                                                 | Human authority boundary                                                                                                          | Evidence-backed receipt                                                                                                |
+| ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| [![First semantic divergence](evidence/submission/02-first-divergence.png)](evidence/submission/02-first-divergence.png) | [![Exact bounded repair](evidence/submission/03-human-approval-boundary.png)](evidence/submission/03-human-approval-boundary.png) | [![Verified parity receipt](evidence/submission/04-verified-receipt.png)](evidence/submission/04-verified-receipt.png) |
+
+The full screenshot index distinguishes fixture, current-session, and public-native claims in [`evidence/submission/README.md`](evidence/submission/README.md).
+
 ## Local verification
 
 ```bash

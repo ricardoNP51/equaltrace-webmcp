@@ -78,7 +78,7 @@
   Acceptance: PRD Submission Proof Points — the public build completes the entire broken-to-repaired story without verbal rescue; native evidence identifies the supported client and exact commit; the repair tool lifecycle and deterministic receipt are reproducible five times.
   Verify: Run the public URL in the supported agent client five consecutive times from fresh resets, verify the evidence manifest, run `npm run check` on the tagged candidate, and confirm app/repository/evidence/receipt all name the same commit.
 
-- [ ] **12. Prepare the Devpost handoff**
+- [x] **12. Prepare the Devpost handoff**
   Spec ref: `prd.md > Submission Proof Points` and `spec.md > Demo And Submission Flow`
   What to build: Gather the final project story, public live URL, public MIT repository, exact testing instructions, screenshots, native evidence summary, receipt sample, under-three-minute narrated demo plan/video, AI-usage disclosure, judging-criteria mapping, and release identity needed for submission preparation. Do not submit without the participant's explicit final confirmation.
   Acceptance: The participant has enough verified material to run `$prepare-submission`; every public claim maps to a visible behavior or reproducible artifact, and fixture/simulated/native evidence are never conflated.
