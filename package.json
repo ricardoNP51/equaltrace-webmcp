@@ -17,16 +17,18 @@
     "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc -b --pretty false",
     "test": "vitest",
-    "test:run": "vitest run",
+    "test:run": "vitest run --coverage",
     "test:e2e": "playwright test",
     "verify:receipt": "node scripts/verify-receipt.mjs",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test:run && npm run build && npm run test:e2e && npm run verify:receipt"
+    "verify:native-evidence": "node scripts/verify-native-evidence.mjs",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test:run && npm run build && npm run test:e2e && npm run verify:receipt && npm run verify:native-evidence"
   },
   "dependencies": {
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.62.1",
     "@testing-library/jest-dom": "^7.0.1",
@@ -36,6 +38,7 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
     "@vitejs/plugin-react": "^6.1.1",
+    "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^10.9.1",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.5",

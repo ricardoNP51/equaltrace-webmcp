@@ -33,7 +33,7 @@ export function App({ store = workbenchStore }: AppProps) {
       <a className="skip-link" href="#main-content">
         Skip to audit workbench
       </a>
-      <main className="app-shell" id="main-content">
+      <main className="app-shell" id="main-content" tabIndex={-1}>
         <VerdictHero snapshot={snapshot} onReset={() => store.reset()} />
         <ScenarioHeader snapshot={snapshot} onReset={() => store.reset()} />
 

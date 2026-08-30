@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0.0",
+  "policy": "evidence/README.md",
+  "records": [
+    {
+      "id": "local-spine-smoke",
+      "classification": "native-local",
+      "file": "evidence/native/2026-08-28-local-spine-smoke.md",
+      "client": "ChatGPT desktop Codex in-app browser",
+      "clientVersion": "26.825.32147",
+      "origin": "http://127.0.0.1:5174",
+      "commit": "0062715887c5b6f86ee9903ab5e2717315c464df",
+      "claims": ["discovery", "invocation", "visible-state-change"],
+      "limitations": "Local smoke only; not public release evidence."
+    },
+    {
+      "id": "local-three-route-baseline",
+      "classification": "native-local",
+      "file": "evidence/native/2026-08-28-three-route-baseline.md",
+      "client": "ChatGPT desktop Codex in-app browser",
+      "clientVersion": "26.825.32147",
+      "origin": "http://127.0.0.1:5174",
+      "commit": "347db59c3c90588299881fb67059241f2864663c",
+      "claims": ["three-real-routes", "first-divergence"],
+      "limitations": "Local baseline only; repair and public release are excluded."
+    },
+    {
+      "id": "local-capability-lifecycle",
+      "classification": "native-local",
+      "file": "evidence/native/2026-08-28-repair-capability-lifecycle.md",
+      "client": "Codex desktop Codex in-app browser",
+      "clientVersion": "26.825.41651",
+      "origin": "http://127.0.0.1:5173",
+      "commit": "7fc5e8c99161d10f1fdc664dcf56ca1272cfd086",
+      "claims": [
+        "pre-approval-absence",
+        "post-approval-appearance",
+        "single-use-removal",
+        "stale-replay-rejection"
+      ],
+      "limitations": "One local lifecycle run; not the five-run public release proof."
+    },
+    {
+      "id": "local-repaired-receipt",
+      "classification": "native-local",
+      "file": "evidence/native/2026-08-30-repaired-rerun-receipt.md",
+      "client": "Codex desktop in-app browser",
+      "clientVersion": "26.825.41651",
+      "origin": "http://127.0.0.1:5173/",
+      "commit": "25c4276f730b981355d7e70c220dbff22abc3c59",
+      "claims": ["repaired-rerun", "parity-receipt", "deterministic-repeat"],
+      "limitations": "Two equivalent local reruns; public release repetition remains pending."
+    }
+  ],
+  "release": {
+    "status": "pending",
+    "requiredRuns": 5,
+    "releaseCommit": null,
+    "publicOrigin": null,
+    "evidenceFile": null,
+    "runs": []
+  }
+}

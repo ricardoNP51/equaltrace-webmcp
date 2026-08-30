@@ -120,6 +120,7 @@ a {
   width: min(86rem, calc(100% - clamp(1rem, 4vw, 4rem)));
   margin: 0 auto;
   padding: clamp(1rem, 3vw, 2rem) 0 3rem;
+  overflow-wrap: anywhere;
 }
 .hero,
 .scenario-bar,
