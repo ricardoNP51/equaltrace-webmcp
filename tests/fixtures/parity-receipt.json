@@ -1,5 +1,5 @@
 {
-  "applicationVersion": "0.1.0",
+  "applicationVersion": "1.0.0",
   "assertions": [
     {
       "checkpoint": "disclosure.consequences",
@@ -70,7 +70,7 @@
   ],
   "finalOutcome": "account_deleted",
   "outcomeParity": true,
-  "receiptId": "30196aeec258f531340ba675f3545536394d7088bc870e56afb01de373451f42",
+  "receiptId": "08416bf84f72f3ba731e797bdb484c82efdf8847b81a7708935258ed991aa80c",
   "repair": {
     "repairDigest": "6a8e249b57bca0e40533e799654ef059b979293215c7a80e8bfa13a782cddecb",
     "repairId": "repair-disclosure-equaltrace-golden-01"

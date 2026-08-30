@@ -9,6 +9,7 @@ import { RouteSummaryGrid } from "./components/RouteSummaryGrid";
 import { ScenarioHeader } from "./components/ScenarioHeader";
 import { VerdictHero } from "./components/VerdictHero";
 import { ROUTES } from "./core/types";
+import { EQUALTRACE_RELEASE_COMMIT, EQUALTRACE_RELEASE_NAME } from "./release";
 import { workbenchStore } from "./state/initialState";
 import type { WorkbenchStore } from "./state/WorkbenchStore";
 import { useWorkbench } from "./state/useWorkbench";
@@ -116,8 +117,18 @@ export function App({ store = workbenchStore }: AppProps) {
         <EvidenceDrawer snapshot={snapshot} />
 
         <footer className="site-footer">
-          <span>EqualTrace</span>
-          <p>Same action. Same protections. Provable.</p>
+          <div>
+            <span>EqualTrace</span>
+            <p>Same action. Same protections. Provable.</p>
+          </div>
+          <p className="release-identity">
+            Release <code>{EQUALTRACE_RELEASE_NAME}</code> · commit{" "}
+            <code>
+              {EQUALTRACE_RELEASE_COMMIT === "development"
+                ? "development"
+                : EQUALTRACE_RELEASE_COMMIT.slice(0, 12)}
+            </code>
+          </p>
         </footer>
       </main>
     </>

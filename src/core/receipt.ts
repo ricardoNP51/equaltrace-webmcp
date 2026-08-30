@@ -13,7 +13,7 @@ import type {
 import { ROUTES } from "./types";
 
 export const RECEIPT_SCHEMA_VERSION = "1.0.0" as const;
-export const EQUALTRACE_APPLICATION_VERSION = "0.1.0";
+export const EQUALTRACE_APPLICATION_VERSION = "1.0.0";
 
 export type BuildParityReceiptInput = {
   readonly scenario: ScenarioDefinition;

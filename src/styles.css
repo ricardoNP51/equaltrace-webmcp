@@ -896,6 +896,7 @@ code {
 }
 .site-footer {
   display: flex;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
   padding: 2rem 0 0;
@@ -908,6 +909,12 @@ code {
 }
 .site-footer p {
   margin: 0;
+}
+.site-footer div > p {
+  margin-top: 0.35rem;
+}
+.release-identity {
+  text-align: right;
 }
 .sr-only {
   position: absolute;
@@ -1027,6 +1034,9 @@ code {
   }
   .site-footer {
     flex-direction: column;
+  }
+  .release-identity {
+    text-align: left;
   }
 }
 

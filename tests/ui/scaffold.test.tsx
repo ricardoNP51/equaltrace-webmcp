@@ -25,5 +25,7 @@ describe("EqualTrace scaffold", () => {
     expect(
       screen.getByText("Evidence is still incomplete."),
     ).toBeInTheDocument();
+    expect(screen.getByText(/challenge-v1\.0\.0/i)).toBeInTheDocument();
+    expect(screen.getByText(/development/i)).toBeInTheDocument();
   });
 });

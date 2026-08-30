@@ -32,6 +32,8 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Gate the exact revision
         run: npm run check
+        env:
+          VITE_RELEASE_COMMIT: ${{ github.sha }}
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload gated Pages artifact

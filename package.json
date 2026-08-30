@@ -1,7 +1,7 @@
 {
   "name": "equaltrace-webmcp",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "description": "Protection-parity verification workbench for consequential WebMCP actions.",
   "license": "MIT",
