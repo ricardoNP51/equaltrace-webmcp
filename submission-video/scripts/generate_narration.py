@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
@@ -13,22 +14,31 @@ VOICES = ROOT / "models" / "voices-v1.0.bin"
 OUTPUT = ROOT / "public" / "generated"
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input", default="narration.json")
+    parser.add_argument("--voice", default="af_heart")
+    parser.add_argument("--speed", type=float, default=1.04)
+    return parser.parse_args()
+
+
 def main() -> None:
+    args = parse_args()
     if not MODEL.exists() or not VOICES.exists():
         raise SystemExit(
             "Missing Kokoro files. Download kokoro-v1.0.onnx and "
             "voices-v1.0.bin into submission-video/models first."
         )
 
-    scenes = json.loads((ROOT / "narration.json").read_text(encoding="utf-8"))
+    scenes = json.loads((ROOT / args.input).read_text(encoding="utf-8"))
     OUTPUT.mkdir(parents=True, exist_ok=True)
     kokoro = Kokoro(str(MODEL), str(VOICES))
 
     for scene in scenes:
         samples, sample_rate = kokoro.create(
             scene["text"],
-            voice="af_heart",
-            speed=1.04,
+            voice=args.voice,
+            speed=args.speed,
             lang="en-us",
         )
         target = OUTPUT / f"{scene['id']}.wav"

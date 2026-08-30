@@ -6,9 +6,14 @@
   "scripts": {
     "studio": "remotion studio src/index.ts",
     "soundbed": "node scripts/generate-soundbed.mjs",
+    "soundbed:v2": "node scripts/generate-soundbed-v2.mjs",
+    "narration:v2": "python scripts/generate_narration.py --input narration-v2.json --voice af_sarah --speed 1.08",
     "render:draft": "remotion render src/index.ts EqualTraceLaunch out/equaltrace-demo-draft.mp4 --codec h264 --crf 24 --scale 0.6666666666666666",
     "render:final": "remotion render src/index.ts EqualTraceLaunch out/equaltrace-demo-final-raw.mp4 --codec h264 --crf 18 --audio-codec aac --pixel-format yuv420p && node scripts/normalize-video.mjs",
-    "verify": "node scripts/verify-video.mjs out/equaltrace-demo-final.mp4"
+    "render:v2:draft": "remotion render src/index.ts EqualTraceEvidenceCut out/equaltrace-demo-v2-draft.mp4 --codec h264 --crf 24 --scale 0.6666666666666666",
+    "render:v2": "remotion render src/index.ts EqualTraceEvidenceCut out/equaltrace-demo-v2-raw.mp4 --codec h264 --crf 18 --audio-codec aac --pixel-format yuv420p && node scripts/normalize-video.mjs out/equaltrace-demo-v2-raw.mp4 out/equaltrace-demo-v2.mp4",
+    "verify": "node scripts/verify-video.mjs out/equaltrace-demo-final.mp4",
+    "verify:v2": "node scripts/verify-video.mjs out/equaltrace-demo-v2.mp4"
   },
   "dependencies": {
     "@remotion/cli": "4.0.518",

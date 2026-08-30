@@ -1,8 +1,12 @@
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 
-const input = resolve("out", "equaltrace-demo-final-raw.mp4");
-const output = resolve("out", "equaltrace-demo-final.mp4");
+const input = resolve(
+  process.argv[2] ?? resolve("out", "equaltrace-demo-final-raw.mp4"),
+);
+const output = resolve(
+  process.argv[3] ?? resolve("out", "equaltrace-demo-final.mp4"),
+);
 const result = spawnSync(
   "ffmpeg",
   [
