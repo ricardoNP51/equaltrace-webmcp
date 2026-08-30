@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "text": "{\"status\":\"recorded\",\"evidenceProvenance\":\"native\",\"outcome\":\"deleted\",\"evidenceIds\":[\"fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-baseline-agent:event:01\",\"fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-baseline-agent:event:02\",\"fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-baseline-agent:event:03\"]}",
+      "type": "text"
+    }
+  ]
+}

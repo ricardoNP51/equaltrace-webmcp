@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "text": "{\"status\":\"recorded\",\"evidenceProvenance\":\"native\",\"outcome\":\"deleted\",\"evidenceIds\":[\"fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:01\",\"fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:02\",\"fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:03\",\"fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:04\",\"fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:05\",\"fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:06\",\"fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:07\"]}",
+      "type": "text"
+    }
+  ]
+}

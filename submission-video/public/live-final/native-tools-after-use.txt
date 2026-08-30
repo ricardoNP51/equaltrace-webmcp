@@ -1,0 +1,86 @@
+WebMCP tools available in this document:
+[
+  {
+    "name": "equaltrace_get_status",
+    "title": "Get EqualTrace status",
+    "description": "Read the current EqualTrace phase, deterministic scenario identity, completed routes, audit status, and reported repair-capability lifecycle state.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "untrustedContentHint": true
+    },
+    "origin": "https://ricardonp51.github.io",
+    "pageUrl": "https://ricardonp51.github.io/equaltrace-webmcp/"
+  },
+  {
+    "name": "equaltrace_run_agent_route",
+    "title": "Run the EqualTrace agent route",
+    "description": "Execute the current broken or human-repaired agent policy for the exact active fictional scenario and record its WebMCP-origin evidence in the shared workbench.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "scenarioId": {
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        },
+        "scenarioVersion": {
+          "maxLength": 32,
+          "minLength": 1,
+          "type": "string"
+        },
+        "seed": {
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "scenarioId",
+        "scenarioVersion",
+        "seed"
+      ],
+      "type": "object"
+    },
+    "annotations": {
+      "untrustedContentHint": true
+    },
+    "origin": "https://ricardonp51.github.io",
+    "pageUrl": "https://ricardonp51.github.io/equaltrace-webmcp/"
+  },
+  {
+    "name": "equaltrace_run_audit",
+    "title": "Run the EqualTrace audit",
+    "description": "Compare only the currently recorded visual, assistive, and agent evidence; missing routes remain incomplete.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "untrustedContentHint": true
+    },
+    "origin": "https://ricardonp51.github.io",
+    "pageUrl": "https://ricardonp51.github.io/equaltrace-webmcp/"
+  },
+  {
+    "name": "equaltrace_stage_repair",
+    "title": "Stage the bounded EqualTrace repair",
+    "description": "Prepare the one bounded repair allowed by the current agent divergence. This cannot approve, register, or apply a repair.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "annotations": {
+      "untrustedContentHint": true
+    },
+    "origin": "https://ricardonp51.github.io",
+    "pageUrl": "https://ricardonp51.github.io/equaltrace-webmcp/"
+  }
+]
+Call tools.call(name, input) to invoke one.

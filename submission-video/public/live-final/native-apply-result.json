@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "text": "{\"status\":\"applied\",\"repairId\":\"repair-1.0.0-disclosure.consequences\",\"repairDigest\":\"5cd22df014d91689792f353f02db08bcc05fd83de24c8f2d6ef5327de785a18a\",\"policy\":\"repaired-agent\",\"capability\":\"removed_after_use\"}",
+      "type": "text"
+    }
+  ]
+}

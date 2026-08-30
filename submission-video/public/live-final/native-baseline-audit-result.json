@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "text": "{\"status\":\"fail\",\"outcomeParity\":true,\"firstDivergence\":{\"expectedEvidenceIds\":[\"fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-baseline-visual:event:01\",\"fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-baseline-assistive:event:01\"],\"observedEvidenceIds\":[],\"kind\":\"missing_checkpoint\",\"route\":\"agent\",\"invariant\":\"disclosure\",\"checkpoint\":\"disclosure.consequences\",\"explanation\":\"agent reached the outcome without consequences disclosed before commitment.\"},\"receiptId\":null}",
+      "type": "text"
+    }
+  ]
+}

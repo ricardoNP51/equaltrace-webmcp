@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "text": "{\"status\":\"staged\",\"repair\":{\"repairId\":\"repair-1.0.0-disclosure.consequences\",\"targetScenarioId\":\"fictional-cloud-account-deletion\",\"targetScenarioVersion\":\"1.0.0\",\"targetToolName\":\"equaltrace_run_agent_route\",\"seed\":\"equaltrace-golden-01\",\"requestedOutcome\":\"account_deleted\",\"addsCheckpoints\":[\"disclosure.consequences\"],\"evidenceIds\":[\"fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-baseline-visual:event:01\",\"fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-baseline-assistive:event:01\"],\"repairDigest\":\"5cd22df014d91689792f353f02db08bcc05fd83de24c8f2d6ef5327de785a18a\",\"approvalEpoch\":1,\"expiresAt\":1788130582937}}",
+      "type": "text"
+    }
+  ]
+}
