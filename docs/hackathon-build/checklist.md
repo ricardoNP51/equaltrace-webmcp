@@ -83,3 +83,53 @@
   What to build: Gather the final project story, public live URL, public MIT repository, exact testing instructions, screenshots, native evidence summary, receipt sample, under-three-minute narrated demo plan/video, AI-usage disclosure, judging-criteria mapping, and release identity needed for submission preparation. Do not submit without the participant's explicit final confirmation.
   Acceptance: The participant has enough verified material to run `$prepare-submission`; every public claim maps to a visible behavior or reproducible artifact, and fixture/simulated/native evidence are never conflated.
   Verify: Review the handoff bundle against official submission requirements, replay the video path against the release candidate, check the video duration/audio/public visibility, and confirm the next command is `$prepare-submission`.
+
+## B3 final-video sprint
+
+- [x] **13. Lock the emotional hook without changing the claim**
+  Spec ref: `prd.md > Story 1.1` and `spec.md > Risks And Verification > Risk 7 — Judge overload`
+  What to build: Convert the abstract opening into a concrete account-deletion contrast and define a measurable first-ten-second comprehension target.
+  Acceptance: The viewer understands that the agent reached `deleted` while losing four protections before any architecture terminology appears.
+  Verify: Review the B3 plan against the frozen release evidence and the feature-admission test.
+
+- [x] **14. Rewrite the B3 narration and title lockup**
+  Spec ref: `prd.md > Submission Proof Points > Demo and claim integrity`
+  What to build: Write a 90–100 second English narration with complete captions and use `The agent succeeded. The safety contract failed.` as the explanatory title lockup.
+  Acceptance: The script is concrete, presenter-free, under 150 words, and introduces no unsupported claim.
+  Verify: Count words, compare every number and behavior with the release evidence, and confirm every narration beat has a caption cue.
+
+- [x] **15. Put the 6/6–6/6–2/6 contrast inside the first ten seconds**
+  Spec ref: `prd.md > Story 5.2`
+  What to build: Recut the opening so the route disparity is immediately visible and the shared `deleted` outcome cannot be mistaken for parity.
+  Acceptance: A muted first-ten-second review communicates the action, equal outcome, and four missing protections.
+  Verify: Render an opening frame sequence and inspect it at 1920×1080 and contact-sheet scale.
+
+- [x] **16. Reframe human approval as regained control**
+  Spec ref: `prd.md > Epic 6` and `Epic 7`
+  What to build: Preserve exact repair details while making the emotional turn explicit: the agent proposes, but a person decides what becomes discoverable.
+  Acceptance: The repair tool remains absent before approval and authority is never implied to originate from the agent.
+  Verify: Inspect approval and capability frames against the documented `4 → 5 → 4` native lifecycle.
+
+- [x] **17. Build the B3 Remotion composition and sound design**
+  Spec ref: `prd.md > Story 9.2` and `Submission Proof Points`
+  What to build: Add a dedicated B3 composition, narration assets, restrained original soundbed, full captions, and a new output path while preserving V2.
+  Acceptance: No overlay hides required screenshot evidence; motion remains restrained; the video is intelligible without audio.
+  Verify: Typecheck the Remotion project and render the B3 draft.
+
+- [x] **18. Render and technically verify the final B3 master**
+  Spec ref: `spec.md > Demo And Submission Flow`
+  What to build: Produce the normalized 1920×1080 H.264/AAC B3 master below 1:45.
+  Acceptance: The output passes codec, frame size, audio, loudness, peak, duration, and file-size checks.
+  Verify: Run the B3 verifier and inspect ffprobe/loudness output.
+
+- [x] **19. Audit the finished video as a first-time judge**
+  Spec ref: `prd.md > Target User > Challenge-facing user`
+  What to build: Generate a final contact sheet and score the title, first ten seconds, emotional stakes, clarity, credibility, and memorability without credit for implementation effort.
+  Acceptance: No frame looks like generic AI-launch filler; the first divergence and native capability payoff remain legible.
+  Verify: Review the contact sheet and document the B3 audit with limitations.
+
+- [x] **20. Re-run the project gate and update the submission handoff**
+  Spec ref: `spec.md > One-command quality gate` and `prd.md > Demo and claim integrity`
+  What to build: Run the full application quality gate and update status, handoff, video README, and Devpost tagline to point to B3 without changing the public release evidence.
+  Acceptance: All automated checks pass and B3 remains local until human audiovisual acceptance and public upload.
+  Verify: Run `npm run check`, inspect `git diff --check`, and confirm V2 and the public release remain unchanged.

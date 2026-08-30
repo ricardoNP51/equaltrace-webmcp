@@ -1,0 +1,30 @@
+[
+  {
+    "id": "b3-scene-01",
+    "text": "A person sees the consequences, gives exact consent, and gets a recovery path. The agent deletes the same account without four protections."
+  },
+  {
+    "id": "b3-scene-02",
+    "text": "Same account. Same outcome: deleted. Visual: six of six. Assistive: six of six. Native Web M C P: two of six."
+  },
+  {
+    "id": "b3-scene-03",
+    "text": "EqualTrace looks past the green final state. It finds the first break: the agent committed before consequences were disclosed, and links it to runtime evidence."
+  },
+  {
+    "id": "b3-scene-04",
+    "text": "The agent can propose one bounded repair. It cannot approve it. A person reviews the exact action, consequence, seed, digest, and expiry."
+  },
+  {
+    "id": "b3-scene-05",
+    "text": "That decision changes the native tool surface. Four tools become five. The repair runs once. Then five becomes four, and replay is blocked."
+  },
+  {
+    "id": "b3-scene-06",
+    "text": "EqualTrace clears the old traces and reruns every route. All six protections survive. Five native runs produce the same deterministic receipt."
+  },
+  {
+    "id": "b3-scene-07",
+    "text": "EqualTrace. The agent succeeded. The safety contract failed. Now every route gets the same protections. Provable."
+  }
+]

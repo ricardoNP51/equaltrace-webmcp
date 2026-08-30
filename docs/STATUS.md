@@ -4,7 +4,7 @@ Last updated: 2026-08-30 (America/La_Paz)
 
 ## Current phase
 
-Phase 1 guided build complete — checklist items 1–12 are complete. Release `challenge-v1.0.0` is live over HTTPS from exact commit `20ccacc499fcb8f7fed126f10af38e820c95b335`; five consecutive public native golden runs reproduced the complete lifecycle and receipt. The Devpost handoff draft, exact judge instructions, four release screenshots, AI disclosure, official judging map, demo script, and a presenter-free 1:54 evidence-documentary V2 are prepared. Human audiovisual review, public video publication, and Devpost submission remain external gates.
+Phase 1 guided build and the B3 final-video sprint are complete. Release `challenge-v1.0.0` is live over HTTPS from exact commit `20ccacc499fcb8f7fed126f10af38e820c95b335`; five consecutive public native golden runs reproduced the complete lifecycle and receipt. The Devpost handoff draft, exact judge instructions, four release screenshots, AI disclosure, official judging map, demo script, and a presenter-free 1:37 B3 evidence-documentary are prepared. Human audiovisual review, public video publication, and Devpost submission remain external gates.
 
 ## Completed
 
@@ -61,6 +61,8 @@ Phase 1 guided build complete — checklist items 1–12 are complete. Release `
 - [x] The V1 video was audited after participant review and retained only as a comparison cut: its generic dark AI-launch language scored 6.6/10 overall and 4.7/10 for EqualTrace identity.
 - [x] `EqualTraceEvidenceCut` rebuilds the submission video as a 1:54 forensic/editorial evidence documentary with 158 narration words, full synchronized captions, unobstructed release screenshots, a distinct 4→5→4 capability timeline, and no presenter face or recorded participant voice.
 - [x] The local V2 candidate at `submission-video/out/equaltrace-demo-v2.mp4` verifies as 1920×1080 H.264/AAC, 114.1 seconds, -16.2 LUFS, -1.5 dBFS true peak, and 17,967,251 bytes. The current audit and internal scorecard are recorded in `docs/VIDEO_V2_AUDIT_2026-08-30.md`.
+- [x] `EqualTraceB3` front-loads the concrete human loss, makes `6/6 · 6/6 · 2/6` fully visible by 0:10, preserves the exact human-authority and native `4 → 5 → 4` proof, and closes on `The agent succeeded. The safety contract failed.`
+- [x] The local B3 candidate at `submission-video/out/equaltrace-demo-b3.mp4` verifies as 1920×1080 H.264/AAC, 97.1 seconds, 150 narration words, -16.2 LUFS, -1.5 dBTP, and 13,831,203 bytes. SHA-256 is `4723e63798a1a61b201e06f91ab4bf4b3962bf66f9deab4c579c3ea1ec2fb751`; the audit is `docs/VIDEO_B3_AUDIT_2026-08-30.md`.
 
 ## Required after implementation begins and before any “native WebMCP works” claim
 
@@ -76,8 +78,8 @@ Phase 1 guided build complete — checklist items 1–12 are complete. Release `
 
 ## Current blockers
 
-- Build implementation is unblocked and complete. Remaining external gates are watching/listening to the V2 candidate end-to-end, uploading the accepted render to a public YouTube URL, confirming personal submission-field answers, and explicit final authorization before Devpost submission.
+- Build implementation and the B3 final-video sprint are complete. Remaining external gates are watching/listening to the B3 candidate end-to-end, uploading the accepted render to a public YouTube URL, confirming personal submission-field answers, and explicit final authorization before Devpost submission.
 
 ## Next action
 
-Review `submission-video/out/equaltrace-demo-v2.mp4` end-to-end. If accepted, upload that exact render publicly, record the URL in the submission materials, and run `$prepare-submission`. Do not submit without explicit final confirmation.
+Review `submission-video/out/equaltrace-demo-b3.mp4` end-to-end. If accepted, upload that exact render publicly, record the URL in the submission materials, and run `$prepare-submission`. Do not submit without explicit final confirmation.

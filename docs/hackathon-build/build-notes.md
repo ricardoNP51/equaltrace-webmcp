@@ -418,3 +418,37 @@
 
 - Checklist item 9 passed. The complete local winner chain now ends in a fresh, evidence-linked deterministic receipt rather than a policy flag.
 - Item 10 is now the earliest admissible work: accessibility/adversarial hardening, remaining release scripts and coverage thresholds, and the working-tree plus clean-clone gate.
+
+## 2026-08-30 — B3 final-video sprint planned
+
+- Participant explicitly delegated the plan and straight-through execution of a final B3 candidate.
+- The requested active shaping is to raise emotional impact while preserving EqualTrace's evidence-first credibility.
+- The wow moment is now front-loaded: concrete deletion stakes followed by `6/6 · 6/6 · 2/6` inside the first ten seconds.
+- Eight bounded checklist items (13–20) cover script, composition, sound, render, judge audit, quality gate, and handoff.
+- No new product feature, native claim, external dependency, generated person, or public submission action is admitted.
+
+## 2026-08-30 — B3 final-video sprint complete
+
+### Implemented
+
+- Added a dedicated `EqualTraceB3` Remotion composition while preserving the V2 and V1 compositions and outputs.
+- Replaced the abstract opening with a concrete protection-loss contrast: a person receives consequences, exact consent, a cancellation window, and recovery; the agent reaches the same deleted outcome without four protections.
+- Made the complete `Visual 6/6 · Assistive 6/6 · Agent 2/6` comparison fully visible by 0:10.
+- Preserved the first runtime divergence, exact visible human review, native `4 → 5 → 4` capability lifetime, fresh three-route rerun, five native runs, and deterministic receipt.
+- Added a 150-word English B3 narration, synchronized captions, a 97-second original soundbed, B3 render/verify commands, a final 3×3 contact sheet, and a first-time-judge audit.
+- Changed the Devpost tagline to `The agent succeeded. The safety contract failed.` and updated status, handoff, and video reproduction instructions.
+
+### Verification evidence
+
+- `npx tsc --noEmit` passed in `submission-video/`.
+- `npm run verify:b3` passed: 1920×1080 H.264/AAC, 97.1 seconds, 13,831,203 bytes.
+- FFmpeg measured -16.2 LUFS integrated loudness and -1.5 dBTP true peak.
+- Final MP4 SHA-256: `4723e63798a1a61b201e06f91ab4bf4b3962bf66f9deab4c579c3ea1ec2fb751`.
+- Contact-sheet review covers human loss, 6/6–6/6–2/6, first divergence, visible approval, absent/available-once/removed capability, receipt, and close.
+- Root `npm run check` passed with 66 Vitest tests, 12 Playwright journeys, production build, receipt verification, and native-evidence verification.
+
+### Gate decision
+
+- Checklist items 13–20 pass. B3 is the strongest local video candidate and the B3 sprint is complete.
+- The remaining audiovisual watch/listen, YouTube upload, personal Devpost fields, and final submission confirmation remain external human gates.
+- No new native acceptance claim was created, and the frozen `challenge-v1.0.0` deployment remains unchanged.

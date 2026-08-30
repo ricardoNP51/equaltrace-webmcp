@@ -7,7 +7,7 @@ Official requirements snapshot: The WebMCP Challenge submission requirements, ju
 ## Project identity
 
 - **Name:** EqualTrace
-- **Tagline:** Prove when a WebMCP agent gets the right outcome by skipping protections—and repair the bypass without surrendering human authority.
+- **Tagline:** The agent succeeded. The safety contract failed.
 - **Live app:** https://ricardonp51.github.io/equaltrace-webmcp/
 - **Public repository:** https://github.com/ricardoNP51/equaltrace-webmcp
 - **License:** MIT

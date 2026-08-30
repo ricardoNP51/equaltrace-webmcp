@@ -341,6 +341,144 @@ const ColdOpen = () => {
   );
 };
 
+const B3ColdOpen = () => {
+  const frame = useCurrentFrame();
+  const protections = [
+    "Consequences first",
+    "Exact consent",
+    "Cancellation window",
+    "Recovery path",
+  ];
+  return (
+    <Scene duration={270}>
+      <Header
+        plate="CASE ET-001"
+        title="same fictional account · same deleted outcome"
+        status="4 protections missing"
+        tone="red"
+      />
+      <div
+        style={{
+          position: "absolute",
+          left: 84,
+          top: 142,
+          width: 670,
+          bottom: 146,
+          color: C.ink,
+        }}
+      >
+        <div style={{ ...mono, color: C.green, fontSize: 21, fontWeight: 900 }}>
+          A PERSON RECEIVED
+        </div>
+        <div
+          style={{
+            ...serif,
+            fontSize: 68,
+            lineHeight: 0.98,
+            fontWeight: 700,
+            marginTop: 20,
+          }}
+        >
+          Protection before deletion.
+        </div>
+        <div style={{ marginTop: 34, borderTop: `3px solid ${C.ink}` }}>
+          {protections.map((item, index) => {
+            const p = reveal(frame, 6 + index * 9, 20 + index * 9);
+            return (
+              <div
+                key={item}
+                style={{
+                  ...sans,
+                  display: "grid",
+                  gridTemplateColumns: "46px 1fr",
+                  alignItems: "center",
+                  height: 66,
+                  borderBottom: `1px solid ${C.rule}`,
+                  fontSize: 27,
+                  opacity: p,
+                  transform: `translateX(${(1 - p) * -14}px)`,
+                }}
+              >
+                <div style={{ color: C.green, fontWeight: 900 }}>✓</div>
+                <div>{item}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          left: 805,
+          right: 84,
+          top: 142,
+          bottom: 146,
+          borderLeft: `5px solid ${C.red}`,
+          paddingLeft: 46,
+          color: C.ink,
+        }}
+      >
+        <div style={{ ...mono, color: C.red, fontSize: 21, fontWeight: 900 }}>
+          THE AGENT SKIPPED ALL FOUR
+        </div>
+        <div
+          style={{
+            ...serif,
+            fontSize: 84,
+            lineHeight: 0.96,
+            fontWeight: 700,
+            marginTop: 20,
+          }}
+        >
+          The account was still deleted.
+        </div>
+        <div
+          style={{
+            ...sans,
+            marginTop: 42,
+            paddingTop: 28,
+            borderTop: `3px solid ${C.ink}`,
+            fontSize: 37,
+            lineHeight: 1.15,
+            fontWeight: 800,
+          }}
+        >
+          Same outcome.
+          <br />
+          <span style={{ color: C.red }}>Unequal protection.</span>
+        </div>
+        <div
+          style={{
+            ...mono,
+            position: "absolute",
+            left: 46,
+            bottom: 16,
+            fontSize: 20,
+            color: C.inkSoft,
+          }}
+        >
+          VISUAL 6/6 · ASSISTIVE 6/6 · AGENT 2/6
+        </div>
+      </div>
+      <Subtitle
+        frame={frame}
+        cues={[
+          {
+            from: 6,
+            to: 112,
+            text: "A person sees the consequences, gives exact consent, and gets a recovery path.",
+          },
+          {
+            from: 112,
+            to: 260,
+            text: "The agent deletes the same account without four protections.",
+          },
+        ]}
+      />
+    </Scene>
+  );
+};
+
 const RouteRow: React.FC<{
   frame: number;
   start: number;
@@ -439,10 +577,13 @@ const RouteRow: React.FC<{
   );
 };
 
-const Routes = () => {
+const Routes: React.FC<{ duration?: number; b3?: boolean }> = ({
+  duration = 480,
+  b3 = false,
+}) => {
   const frame = useCurrentFrame();
   return (
-    <Scene duration={480}>
+    <Scene duration={duration}>
       <Header
         plate="PLATE 02 / ROUTES"
         title="one seed · one domain engine"
@@ -470,7 +611,7 @@ const Routes = () => {
         </div>
         <RouteRow
           frame={frame}
-          start={26}
+          start={b3 ? 0 : 26}
           mode="pointer"
           route="Visual"
           score="6/6"
@@ -479,7 +620,7 @@ const Routes = () => {
         />
         <RouteRow
           frame={frame}
-          start={78}
+          start={b3 ? 3 : 78}
           mode="keyboard"
           route="Assistive"
           score="6/6"
@@ -488,7 +629,7 @@ const Routes = () => {
         />
         <RouteRow
           frame={frame}
-          start={130}
+          start={b3 ? 6 : 130}
           mode="native WebMCP"
           route="Agent"
           score="2/6"
@@ -498,25 +639,44 @@ const Routes = () => {
       </div>
       <Subtitle
         frame={frame}
-        cues={[
-          { from: 10, to: 70, text: "One seed. One domain engine." },
-          {
-            from: 70,
-            to: 190,
-            text: "The visual and assistive routes preserve all six protections.",
-          },
-          {
-            from: 190,
-            to: 305,
-            text: "Native WebMCP reaches the same outcome with only two.",
-          },
-        ]}
+        cues={
+          b3
+            ? [
+                {
+                  from: 4,
+                  to: 62,
+                  text: "Same account. Same outcome: deleted.",
+                },
+                {
+                  from: 62,
+                  to: 142,
+                  text: "Visual: six of six. Assistive: six of six.",
+                },
+                { from: 142, to: 260, text: "Native WebMCP: two of six." },
+              ]
+            : [
+                { from: 10, to: 70, text: "One seed. One domain engine." },
+                {
+                  from: 70,
+                  to: 190,
+                  text: "The visual and assistive routes preserve all six protections.",
+                },
+                {
+                  from: 190,
+                  to: 305,
+                  text: "Native WebMCP reaches the same outcome with only two.",
+                },
+              ]
+        }
       />
     </Scene>
   );
 };
 
-const Divergence = () => {
+const Divergence: React.FC<{ duration?: number; b3?: boolean }> = ({
+  duration = 540,
+  b3 = false,
+}) => {
   const frame = useCurrentFrame();
   const zoom = interpolate(frame, [0, 540], [1.03, 1.12], {
     extrapolateLeft: "clamp",
@@ -524,7 +684,7 @@ const Divergence = () => {
     easing: Easing.inOut(Easing.cubic),
   });
   return (
-    <Scene duration={540}>
+    <Scene duration={duration}>
       <Header
         plate="PLATE 03 / BREAK"
         title="recorded runtime evidence"
@@ -616,27 +776,50 @@ const Divergence = () => {
       />
       <Subtitle
         frame={frame}
-        cues={[
-          {
-            from: 12,
-            to: 170,
-            text: "The first break is concrete. The agent commits before consequences are disclosed.",
-          },
-          {
-            from: 170,
-            to: 300,
-            text: "EqualTrace stops there and links the failure to recorded runtime evidence.",
-          },
-        ]}
+        cues={
+          b3
+            ? [
+                {
+                  from: 8,
+                  to: 120,
+                  text: "EqualTrace looks past the green final state.",
+                },
+                {
+                  from: 120,
+                  to: 275,
+                  text: "It finds the first break: the agent committed before consequences were disclosed.",
+                },
+                {
+                  from: 275,
+                  to: 390,
+                  text: "The failure links to recorded runtime evidence.",
+                },
+              ]
+            : [
+                {
+                  from: 12,
+                  to: 170,
+                  text: "The first break is concrete. The agent commits before consequences are disclosed.",
+                },
+                {
+                  from: 170,
+                  to: 300,
+                  text: "EqualTrace stops there and links the failure to recorded runtime evidence.",
+                },
+              ]
+        }
       />
     </Scene>
   );
 };
 
-const Approval = () => {
+const Approval: React.FC<{ duration?: number; b3?: boolean }> = ({
+  duration = 600,
+  b3 = false,
+}) => {
   const frame = useCurrentFrame();
   return (
-    <Scene duration={600}>
+    <Scene duration={duration}>
       <Header
         plate="PLATE 04 / AUTHORITY"
         title="visible human review"
@@ -708,36 +891,54 @@ const Approval = () => {
       />
       <Subtitle
         frame={frame}
-        cues={[
-          {
-            from: 12,
-            to: 115,
-            text: "The agent can stage one exact repair. It cannot approve it.",
-          },
-          {
-            from: 115,
-            to: 280,
-            text: "A person reviews the action, consequence, seed, digest, and expiry.",
-          },
-          {
-            from: 280,
-            to: 365,
-            text: "Before that approval, the repair tool is absent.",
-          },
-        ]}
+        cues={
+          b3
+            ? [
+                {
+                  from: 8,
+                  to: 125,
+                  text: "The agent can propose one bounded repair. It cannot approve it.",
+                },
+                {
+                  from: 125,
+                  to: 330,
+                  text: "A person reviews the exact action, consequence, seed, digest, and expiry.",
+                },
+              ]
+            : [
+                {
+                  from: 12,
+                  to: 115,
+                  text: "The agent can stage one exact repair. It cannot approve it.",
+                },
+                {
+                  from: 115,
+                  to: 280,
+                  text: "A person reviews the action, consequence, seed, digest, and expiry.",
+                },
+                {
+                  from: 280,
+                  to: 365,
+                  text: "Before that approval, the repair tool is absent.",
+                },
+              ]
+        }
       />
     </Scene>
   );
 };
 
-const ToolSurface = () => {
+const ToolSurface: React.FC<{ duration?: number; b3?: boolean }> = ({
+  duration = 600,
+  b3 = false,
+}) => {
   const frame = useCurrentFrame();
-  const phase = frame < 180 ? 0 : frame < 390 ? 1 : 2;
+  const phase = frame < (b3 ? 150 : 180) ? 0 : frame < (b3 ? 330 : 390) ? 1 : 2;
   const labels = ["ABSENT", "AVAILABLE ONCE", "REMOVED"];
   const counts = [4, 5, 4];
   const colors = [C.amber, C.green, C.red];
   return (
-    <Scene duration={600}>
+    <Scene duration={duration}>
       <Header
         plate="PLATE 05 / LIFETIME"
         title="native capability surface"
@@ -851,29 +1052,52 @@ const ToolSurface = () => {
       </div>
       <Subtitle
         frame={frame}
-        cues={[
-          {
-            from: 12,
-            to: 135,
-            text: "Approval changes the native tool surface. Four tools become five.",
-          },
-          {
-            from: 135,
-            to: 235,
-            text: "The bound repair runs once.",
-          },
-          {
-            from: 235,
-            to: 316,
-            text: "Immediately, the surface returns to four and replay is blocked.",
-          },
-        ]}
+        cues={
+          b3
+            ? [
+                {
+                  from: 8,
+                  to: 125,
+                  text: "That decision changes the native tool surface. Four tools become five.",
+                },
+                {
+                  from: 125,
+                  to: 245,
+                  text: "The repair runs once.",
+                },
+                {
+                  from: 245,
+                  to: 430,
+                  text: "Then five becomes four, and replay is blocked.",
+                },
+              ]
+            : [
+                {
+                  from: 12,
+                  to: 135,
+                  text: "Approval changes the native tool surface. Four tools become five.",
+                },
+                {
+                  from: 135,
+                  to: 235,
+                  text: "The bound repair runs once.",
+                },
+                {
+                  from: 235,
+                  to: 316,
+                  text: "Immediately, the surface returns to four and replay is blocked.",
+                },
+              ]
+        }
       />
     </Scene>
   );
 };
 
-const Receipt = () => {
+const Receipt: React.FC<{ duration?: number; b3?: boolean }> = ({
+  duration = 660,
+  b3 = false,
+}) => {
   const frame = useCurrentFrame();
   const items = [
     "disclosure",
@@ -884,7 +1108,7 @@ const Receipt = () => {
     "outcome",
   ];
   return (
-    <Scene duration={660}>
+    <Scene duration={duration}>
       <Header
         plate="PLATE 06 / PROOF"
         title="fresh routes · deterministic receipt"
@@ -960,33 +1184,56 @@ const Receipt = () => {
       </div>
       <Subtitle
         frame={frame}
-        cues={[
-          {
-            from: 12,
-            to: 160,
-            text: "EqualTrace clears the old traces and reruns all three routes.",
-          },
-          {
-            from: 160,
-            to: 250,
-            text: "Six protections now survive every path.",
-          },
-          {
-            from: 250,
-            to: 350,
-            text: "Five consecutive native runs produce the same deterministic receipt.",
-          },
-        ]}
+        cues={
+          b3
+            ? [
+                {
+                  from: 8,
+                  to: 125,
+                  text: "EqualTrace clears the old traces and reruns every route.",
+                },
+                {
+                  from: 125,
+                  to: 240,
+                  text: "All six protections survive.",
+                },
+                {
+                  from: 240,
+                  to: 440,
+                  text: "Five native runs produce the same deterministic receipt.",
+                },
+              ]
+            : [
+                {
+                  from: 12,
+                  to: 160,
+                  text: "EqualTrace clears the old traces and reruns all three routes.",
+                },
+                {
+                  from: 160,
+                  to: 250,
+                  text: "Six protections now survive every path.",
+                },
+                {
+                  from: 250,
+                  to: 350,
+                  text: "Five consecutive native runs produce the same deterministic receipt.",
+                },
+              ]
+        }
       />
     </Scene>
   );
 };
 
-const Close = () => {
+const Close: React.FC<{ duration?: number; b3?: boolean }> = ({
+  duration = 240,
+  b3 = false,
+}) => {
   const frame = useCurrentFrame();
   const p = reveal(frame, 8, 50);
   return (
-    <Scene duration={240}>
+    <Scene duration={duration}>
       <Header
         plate="EQUALTRACE"
         title="runtime protection parity for the agentic web"
@@ -1003,6 +1250,21 @@ const Close = () => {
           transform: `translateY(${(1 - p) * 24}px)`,
         }}
       >
+        {b3 && (
+          <div
+            style={{
+              ...mono,
+              color: C.red,
+              fontSize: 22,
+              fontWeight: 900,
+              letterSpacing: 1.2,
+              marginBottom: 24,
+              textTransform: "uppercase",
+            }}
+          >
+            The agent succeeded. The safety contract failed.
+          </div>
+        )}
         <div
           style={{
             ...serif,
@@ -1074,18 +1336,33 @@ const Close = () => {
       </div>
       <Subtitle
         frame={frame}
-        cues={[
-          {
-            from: 8,
-            to: 110,
-            text: "EqualTrace. Runtime protection parity for the agentic web.",
-          },
-          {
-            from: 110,
-            to: 190,
-            text: "Five native runs. One receipt.",
-          },
-        ]}
+        cues={
+          b3
+            ? [
+                {
+                  from: 8,
+                  to: 105,
+                  text: "EqualTrace. The agent succeeded. The safety contract failed.",
+                },
+                {
+                  from: 105,
+                  to: 250,
+                  text: "Now every route gets the same protections. Provable.",
+                },
+              ]
+            : [
+                {
+                  from: 8,
+                  to: 110,
+                  text: "EqualTrace. Runtime protection parity for the agentic web.",
+                },
+                {
+                  from: 110,
+                  to: 190,
+                  text: "Five native runs. One receipt.",
+                },
+              ]
+        }
       />
     </Scene>
   );
@@ -1099,6 +1376,16 @@ const audioScenes = [
   { from: 1920, duration: 600, file: "v2-scene-05.wav" },
   { from: 2520, duration: 660, file: "v2-scene-06.wav" },
   { from: 3180, duration: 240, file: "v2-scene-07.wav" },
+] as const;
+
+const b3AudioScenes = [
+  { from: 0, duration: 270, file: "b3-scene-01.wav" },
+  { from: 270, duration: 300, file: "b3-scene-02.wav" },
+  { from: 570, duration: 420, file: "b3-scene-03.wav" },
+  { from: 990, duration: 480, file: "b3-scene-04.wav" },
+  { from: 1470, duration: 540, file: "b3-scene-05.wav" },
+  { from: 2010, duration: 540, file: "b3-scene-06.wav" },
+  { from: 2550, duration: 360, file: "b3-scene-07.wav" },
 ] as const;
 
 export const EqualTraceEvidenceCut = () => (
@@ -1133,6 +1420,42 @@ export const EqualTraceEvidenceCut = () => (
     </Sequence>
     <Sequence from={3180} durationInFrames={240}>
       <Close />
+    </Sequence>
+  </AbsoluteFill>
+);
+
+export const EqualTraceB3 = () => (
+  <AbsoluteFill style={{ background: C.paper }}>
+    <Audio src={staticFile("generated/soundbed-b3.wav")} volume={0.11} />
+    {b3AudioScenes.map((scene) => (
+      <Sequence
+        key={scene.file}
+        from={scene.from}
+        durationInFrames={scene.duration}
+      >
+        <Audio src={staticFile(`generated/${scene.file}`)} volume={1} />
+      </Sequence>
+    ))}
+    <Sequence from={0} durationInFrames={270}>
+      <B3ColdOpen />
+    </Sequence>
+    <Sequence from={270} durationInFrames={300}>
+      <Routes duration={300} b3 />
+    </Sequence>
+    <Sequence from={570} durationInFrames={420}>
+      <Divergence duration={420} b3 />
+    </Sequence>
+    <Sequence from={990} durationInFrames={480}>
+      <Approval duration={480} b3 />
+    </Sequence>
+    <Sequence from={1470} durationInFrames={540}>
+      <ToolSurface duration={540} b3 />
+    </Sequence>
+    <Sequence from={2010} durationInFrames={540}>
+      <Receipt duration={540} b3 />
+    </Sequence>
+    <Sequence from={2550} durationInFrames={360}>
+      <Close duration={360} b3 />
     </Sequence>
   </AbsoluteFill>
 );
