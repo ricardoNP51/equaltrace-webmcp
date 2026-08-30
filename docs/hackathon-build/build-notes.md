@@ -1,5 +1,27 @@
 # Hackathon Build Notes
 
+## 2026-08-30 — Build item 10: accessibility, adversarial, and clean-clone release gate
+
+### Implemented
+
+- Added `@axe-core/playwright` checks for the fresh and active workbench, deterministic skip-link focus, reduced-motion validation, 200% text resize, and a synthetic hostile long-evidence layout case.
+- Fixed the real mobile overflow found by the new hostile-content check with workbench-wide defensive wrapping; page-derived text remains inert and no script sink was introduced.
+- Added targeted V8 coverage thresholds over the comparator, repair derivation, shared authority state machine, and dynamic repair lifecycle.
+- Added `evidence/native/manifest.json` and an independent verifier that checks local evidence identity and enforces the future five-run HTTPS release contract when release status becomes complete.
+- Added exact-revision GitHub Actions workflows for CI and GitHub Pages; CI uses locked dependencies and Playwright Chromium.
+
+### Verification evidence
+
+- Working-tree `npm run check` passed: 66 Vitest tests across 14 files; targeted coverage 84.55% statements, 77.41% branches, 97.36% functions, and 86.98% lines; production build; 12 Playwright journeys; receipt verifier; native-evidence verifier.
+- Axe reported zero serious or critical violations in the fresh and active workbench states.
+- The new long hostile token initially expanded the 390px layout to 446px; after the CSS hardening it remained at or below the viewport width and rendered as inert text.
+- A detached clean clone of implementation commit `97ee5b7` passed `npm ci && npm run check` with the same results.
+
+### Gate decision
+
+- Checklist item 10 passed. The clean-clone, accessibility, adversarial layout, coverage, receipt, native-manifest, CI, and Pages foundations are complete.
+- Public HTTPS behavior and five native release runs do not inherit this pass; item 11 remains the next mandatory gate.
+
 ## 2026-08-26 — Guided build onboarding
 
 ### Decisions

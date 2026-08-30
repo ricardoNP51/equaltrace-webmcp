@@ -4,7 +4,7 @@ Last updated: 2026-08-30 (America/La_Paz)
 
 ## Current phase
 
-Phase 1 active — checklist items 1–9 are complete. EqualTrace now completes the full broken-to-repaired winner chain: three real routes prove the bypass, a person authorizes one exact repair, the temporary capability applies once and disappears, every route is recreated from the original seed, and only a complete passing comparison issues a deterministic SHA-256 receipt. Accessibility/adversarial release hardening is next.
+Phase 1 active — checklist items 1–10 are complete. EqualTrace now completes the full broken-to-repaired winner chain and its release gate includes targeted authority coverage, automated axe checks, keyboard/skip-link focus, reduced motion, 200% text resize, long hostile content, three viewports, receipt verification, native-evidence manifest verification, CI, Pages deployment workflow, and a clean-clone pass. Public HTTPS release proof is next.
 
 ## Completed
 
@@ -45,12 +45,15 @@ Phase 1 active — checklist items 1–9 are complete. EqualTrace now completes 
 - [x] Canonical receipt identity excludes volatile time/browser/UI data, includes scenario/repair/route/evidence/assertion/verdict semantics, exports UTF-8 JSON, and survives blocked downloads in visible state.
 - [x] The independent Node verifier validates receipt shape, route/source order, assertion meaning, evidence linkage, and SHA-256 against the committed fixture.
 - [x] Two equivalent native repaired reruns on commit `25c4276f730b981355d7e70c220dbff22abc3c59` produced the same receipt ID `80d69ae946fc941d2f4192f5cfbda980eefa9612124f68c45e11c6a54de6650b`; exact evidence is in `evidence/native/2026-08-30-repaired-rerun-receipt.md`.
+- [x] Implementation commit `97ee5b7` adds targeted coverage thresholds over comparator/authority code, axe-based browser checks, reduced-motion and 200% text-resize checks, hostile long-content overflow protection, a machine-verified native-evidence manifest, and exact-revision CI/Pages workflows.
+- [x] `npm run check` passes in the working tree with 66 Vitest tests, targeted coverage at 84.55% statements / 77.41% branches / 97.36% functions / 86.98% lines, 12 Playwright journeys, zero serious/critical axe findings, production build, receipt verification, and native-evidence verification.
+- [x] A detached clean clone of commit `97ee5b7` passed `npm ci && npm run check` on 2026-08-30.
 
 ## Required after implementation begins and before any “native WebMCP works” claim
 
 - [x] Application scaffold and lockfile created on the continuation PC.
 - [x] Dependencies installed from the committed lockfile.
-- [ ] `npm run check` passes on a clean clone.
+- [x] `npm run check` passes on a clean clone.
 - [x] Stable tools discovered in ChatGPT's built-in browser.
 - [x] Stable tool invocation visibly changes the same page.
 - [x] Commit tool is absent before human approval.
@@ -60,8 +63,8 @@ Phase 1 active — checklist items 1–9 are complete. EqualTrace now completes 
 
 ## Current blockers
 
-- No blocker for build item 10. Clean-clone, accessibility, long-content/zoom, and remaining adversarial release checks are not yet complete.
+- No blocker for build item 11. GitHub authentication and workflow scopes are available; public Pages deployment and five fresh native release runs are not yet complete.
 
 ## Next action
 
-Continue `$build-project` with item 10 in `docs/hackathon-build/checklist.md`: harden accessibility and adversarial states, add the remaining release verification scripts and coverage thresholds, then run the one-command gate from both the working tree and a clean clone.
+Continue `$build-project` with item 11 in `docs/hackathon-build/checklist.md`: freeze the gated release candidate, deploy the exact commit over HTTPS, capture five consecutive fresh native golden runs, verify the public clean-clone instructions, and bind app/repository/evidence/receipt to one release identity.

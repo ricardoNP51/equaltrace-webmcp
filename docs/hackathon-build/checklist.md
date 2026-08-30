@@ -66,7 +66,7 @@
   Acceptance: PRD Story 8.1 and Story 8.2 — a status change alone cannot pass; repeated equivalent runs produce the same receipt identity; meaningful mutation changes it; a reintroduced bypass fails at the correct divergence; no passing receipt exists for incomplete/failed evidence.
   Verify: Run repaired golden-path and regression tests, compare equivalent receipt bytes/hashes, mutate every meaningful receipt class, run `node scripts/verify-receipt.mjs`, and exercise download failure without losing the visible receipt.
 
-- [ ] **10. Harden accessibility, adversarial states, and the one-command release gate**
+- [x] **10. Harden accessibility, adversarial states, and the one-command release gate**
   Spec ref: `spec.md > Risks And Verification` and `spec.md > One-command quality gate`
   What to build: Finish responsive/reduced-motion styling, names/roles/landmarks, focus and live regions, long-text and 200% zoom behavior, unsupported-native guidance, cancellation/recovery states, adversarial authority/evidence cases, receipt/native-evidence verification scripts, CI, and coverage thresholds around comparator and authority code.
   Acceptance: PRD Epic 9 and all listed edge cases — the golden path works by pointer and keyboard; missing evidence remains incomplete; no hostile input, stale approval, fabricated trace, or duplicate call creates a false green; clean reset always recovers safely.
