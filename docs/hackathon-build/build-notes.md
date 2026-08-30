@@ -320,3 +320,34 @@
 
 - Checklist item 8 passed with both automated adversarial coverage and the required native absence/appearance/use/disappearance sequence.
 - Item 9 is now the earliest admissible work: recreate all three isolated routes under the applied policy and issue the deterministic evidence-backed parity receipt.
+
+## 2026-08-30 — Build item 9: repaired rerun and deterministic receipt
+
+### Implemented
+
+- Added `repaired_capture` and `verified` phases. Starting the repaired proof advances the epoch, removes every baseline trace and staged/approved record, and preserves only the applied repair identity and repaired agent policy.
+- Reused the real pointer and keyboard journeys with stable repaired run identities; the native agent tool selects the shared repaired policy and emits its own fresh seven-event trace.
+- Added a receipt builder that independently reruns the comparator, requires outcome parity plus all six semantic assertions, canonicalizes recursively sorted JSON, and hashes the stable body with SHA-256.
+- Bound the receipt to application/scenario identity, original state, requested/final outcome, exact applied repair, three route identities, every evidence ID, all assertion links, and pass verdict while excluding expiry, approval nonce, wall clock, browser, UI, and download state.
+- Added a green judge state, repaired progress/regression guidance, 18 visible evidence links, canonical JSON download, safe retry after download failure, a committed receipt fixture, and an independent Node verifier.
+
+### Verification evidence
+
+- Implementation commit: `25c4276f730b981355d7e70c220dbff22abc3c59`.
+- `npm run check` passed formatting, ESLint, strict TypeScript, 66 Vitest tests across 14 files, production build, 9 Playwright journeys, and independent receipt verification.
+- Receipt coverage compares equivalent canonical bytes/hashes; mutates scenario, repair, route, evidence, assertion, outcome, and verdict classes; rejects incomplete/failed evidence; and rechecks apparently passing input against the comparator.
+- A seeded broken agent policy during repaired capture returned `fail` at `agent / disclosure.consequences` and left both receipt fields null.
+- The Playwright winner path now continues through fresh repaired visual/assistive evidence, repaired agent invocation, pass, receipt issuance, and all 18 evidence links. A component test forces download creation failure and proves the receipt remains visible.
+- `node scripts/verify-receipt.mjs` verified committed fixture identity `30196aeec258f531340ba675f3545536394d7088bc870e56afb01de373451f42` independently of application TypeScript.
+- Two equivalent native reruns in the Codex in-app browser returned the identical receipt ID `80d69ae946fc941d2f4192f5cfbda980eefa9612124f68c45e11c6a54de6650b`. Exact environment, native responses, visible result, and limits are recorded in `evidence/native/2026-08-30-repaired-rerun-receipt.md`.
+
+### Receipt decision
+
+- Native environment metadata stays outside the semantic hash so the same protected action and evidence can reproduce the same receipt across supported clients.
+- `receiptId` is SHA-256 over the canonical body excluding the identity field itself; the independent verifier removes `receiptId`, canonicalizes the remaining body, and recomputes the digest.
+- A passing status value is never sufficient: the builder independently validates route integrity and every required checkpoint before signing the body.
+
+### Gate decision
+
+- Checklist item 9 passed. The complete local winner chain now ends in a fresh, evidence-linked deterministic receipt rather than a policy flag.
+- Item 10 is now the earliest admissible work: accessibility/adversarial hardening, remaining release scripts and coverage thresholds, and the working-tree plus clean-clone gate.

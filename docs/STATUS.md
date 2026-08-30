@@ -1,10 +1,10 @@
 # Project status
 
-Last updated: 2026-08-28 (America/La_Paz)
+Last updated: 2026-08-30 (America/La_Paz)
 
 ## Current phase
 
-Phase 1 active — checklist items 1–8 are complete. EqualTrace now captures real pointer, keyboard/assistive, and native WebMCP routes from one deterministic scenario, proves equal deletion outcome, fails at the agent's first missing disclosure, derives one digest-bound repair, reserves approval for an exact visible human decision, and exposes the approved repair through a native one-use capability that removes itself. The repaired three-route proof and deterministic receipt are next.
+Phase 1 active — checklist items 1–9 are complete. EqualTrace now completes the full broken-to-repaired winner chain: three real routes prove the bypass, a person authorizes one exact repair, the temporary capability applies once and disappears, every route is recreated from the original seed, and only a complete passing comparison issues a deterministic SHA-256 receipt. Accessibility/adversarial release hardening is next.
 
 ## Completed
 
@@ -41,6 +41,10 @@ Phase 1 active — checklist items 1–8 are complete. EqualTrace now captures r
 - [x] `equaltrace_apply_approved_repair` binds the exact authority to repair/digest/scenario/version/seed/epoch/nonce/expiry and atomically applies the repaired agent policy at most once.
 - [x] Automated lifecycle coverage removes authority on use, replay, concurrent calls, cancellation, expiry, reset, revocation, edit, drift, registration failure, and invalidation during pending registration.
 - [x] Native validation on implementation commit `7fc5e8c99161d10f1fdc664dcf56ca1272cfd086` proved four tools before approval, five after approval, one successful apply, immediate return to four, and stale-handle replay rejection.
+- [x] Implementation commit `25c4276f730b981355d7e70c220dbff22abc3c59` clears baseline traces after repair, recreates isolated pointer, keyboard, and repaired WebMCP routes, and permits `verified` only after the comparator passes outcome parity plus all six assertions.
+- [x] Canonical receipt identity excludes volatile time/browser/UI data, includes scenario/repair/route/evidence/assertion/verdict semantics, exports UTF-8 JSON, and survives blocked downloads in visible state.
+- [x] The independent Node verifier validates receipt shape, route/source order, assertion meaning, evidence linkage, and SHA-256 against the committed fixture.
+- [x] Two equivalent native repaired reruns on commit `25c4276f730b981355d7e70c220dbff22abc3c59` produced the same receipt ID `80d69ae946fc941d2f4192f5cfbda980eefa9612124f68c45e11c6a54de6650b`; exact evidence is in `evidence/native/2026-08-30-repaired-rerun-receipt.md`.
 
 ## Required after implementation begins and before any “native WebMCP works” claim
 
@@ -56,8 +60,8 @@ Phase 1 active — checklist items 1–8 are complete. EqualTrace now captures r
 
 ## Current blockers
 
-- No blocker for build item 9. A policy change is not a green verdict; all three routes must be rerun from the same seed before a receipt can exist.
+- No blocker for build item 10. Clean-clone, accessibility, long-content/zoom, and remaining adversarial release checks are not yet complete.
 
 ## Next action
 
-Continue `$build-project` with item 9 in `docs/hackathon-build/checklist.md`: preserve only the applied repair identity, rerun all three isolated routes under the repaired policy, and generate a canonical deterministic parity receipt only from complete passing evidence.
+Continue `$build-project` with item 10 in `docs/hackathon-build/checklist.md`: harden accessibility and adversarial states, add the remaining release verification scripts and coverage thresholds, then run the one-command gate from both the working tree and a clean clone.

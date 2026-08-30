@@ -60,7 +60,7 @@
   Acceptance: PRD Story 7.1 and Story 7.2 — the tool is absent before approval, only the exact tool appears after approval, and it disappears after use, expiry, reset, revocation, edit, drift, cancellation, or failure; replay and concurrency yield at most one success.
   Verify: Run lifecycle tests for pre-approval absence, exact registration, stale closure, wrong digest, use, replay, concurrent calls, cancellation, expiry, reset, revocation, proposal/seed/scenario/intent drift, and registration failure; repeat absence/appearance/use/disappearance in a supported native client.
 
-- [ ] **9. Prove the repaired rerun and deterministic parity receipt**
+- [x] **9. Prove the repaired rerun and deterministic parity receipt**
   Spec ref: `spec.md > Architecture > Receipt generation` and `spec.md > Data Flow > Repaired proof and receipt`
   What to build: Preserve only the applied repair identity, recreate all three isolated routes from the original fixture, capture fresh evidence, require all six groups plus outcome to pass, canonicalize the receipt, hash it with SHA-256, display every evidence link, export JSON, and add the independent Node verifier.
   Acceptance: PRD Story 8.1 and Story 8.2 — a status change alone cannot pass; repeated equivalent runs produce the same receipt identity; meaningful mutation changes it; a reintroduced bypass fails at the correct divergence; no passing receipt exists for incomplete/failed evidence.
