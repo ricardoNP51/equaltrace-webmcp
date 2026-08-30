@@ -1,9 +1,11 @@
 import { compareProtectionParity } from "../core/compare";
 import type { Clock, DigestService } from "../core/digest";
 import { deriveStagedRepair, REPAIR_APPROVAL_WINDOW_MS } from "../core/repair";
+import { buildParityReceipt, canonicalReceiptJson } from "../core/receipt";
 import type {
   AgentPolicy,
   ComparisonResult,
+  ParityReceipt,
   RepairAuthority,
   Route,
   RunSnapshot,
@@ -19,7 +21,9 @@ export type WorkbenchPhase =
   | "baseline_failed"
   | "repair_staged"
   | "repair_approved"
-  | "repair_applied";
+  | "repair_applied"
+  | "repaired_capture"
+  | "verified";
 export type EvidenceProvenance = "recorded" | "native" | "simulated";
 export type NativeSupport =
   "unknown" | "unsupported" | "registration_failed" | "available";
@@ -68,6 +72,9 @@ export type WorkbenchSnapshot = {
   readonly appliedRepair: RepairAuthority | null;
   readonly agentPolicy: AgentPolicy;
   readonly repairCapability: RepairCapabilityState;
+  readonly receipt: ParityReceipt | null;
+  readonly receiptJson: string | null;
+  readonly receiptError: string | null;
 };
 
 export type WorkbenchDependencies = {
@@ -181,6 +188,9 @@ export class WorkbenchStore {
       appliedRepair: null,
       agentPolicy: "broken-agent",
       repairCapability: absentCapability(),
+      receipt: null,
+      receiptJson: null,
+      receiptError: null,
     });
   }
 
@@ -205,6 +215,9 @@ export class WorkbenchStore {
       appliedRepair: null,
       agentPolicy: "broken-agent",
       repairCapability: absentCapability("reset"),
+      receipt: null,
+      receiptJson: null,
+      receiptError: null,
     });
   }
 
@@ -213,16 +226,17 @@ export class WorkbenchStore {
   }
 
   recordRun(run: RunSnapshot, provenance: EvidenceProvenance, epoch: number) {
-    if (this.snapshot.phase !== "baseline_capture") {
+    if (
+      this.snapshot.phase !== "baseline_capture" &&
+      this.snapshot.phase !== "repaired_capture"
+    ) {
       throw new Error(
-        "Begin or reset the baseline before recording route evidence.",
+        "Begin or reset a baseline, or begin a repaired capture, before recording route evidence.",
       );
     }
 
     if (epoch !== this.snapshot.epoch) {
-      throw new Error(
-        "Stale route evidence cannot enter the current baseline.",
-      );
+      throw new Error("Stale route evidence cannot enter the current capture.");
     }
 
     this.assertCompatibleRun(run);
@@ -239,7 +253,7 @@ export class WorkbenchStore {
 
     if (this.snapshot.routeEvidence[run.route]) {
       throw new Error(
-        `${run.route} evidence is already recorded for this baseline.`,
+        `${run.route} evidence is already recorded for this capture.`,
       );
     }
 
@@ -248,6 +262,9 @@ export class WorkbenchStore {
       ...this.snapshot,
       routeEvidence: { ...this.snapshot.routeEvidence, [run.route]: entry },
       comparison: null,
+      receipt: null,
+      receiptJson: null,
+      receiptError: null,
       nativeInvoked: this.snapshot.nativeInvoked || provenance === "native",
     });
   }
@@ -263,7 +280,8 @@ export class WorkbenchStore {
     if (
       this.snapshot.phase === "repair_staged" ||
       this.snapshot.phase === "repair_approved" ||
-      this.snapshot.phase === "repair_applied"
+      this.snapshot.phase === "repair_applied" ||
+      this.snapshot.phase === "verified"
     ) {
       throw new Error("Repair review must be resolved before another audit.");
     }
@@ -279,13 +297,133 @@ export class WorkbenchStore {
       scenario: this.scenario,
       runs,
     });
+    const repairedCapture = this.snapshot.phase === "repaired_capture";
     this.publish({
       ...this.snapshot,
-      phase:
-        comparison.status === "fail" ? "baseline_failed" : "baseline_capture",
+      phase: repairedCapture
+        ? "repaired_capture"
+        : comparison.status === "fail"
+          ? "baseline_failed"
+          : "baseline_capture",
       comparison,
+      receipt: null,
+      receiptJson: null,
+      receiptError: null,
     });
     return comparison;
+  }
+
+  beginRepairedRerun(epoch: number) {
+    if (epoch !== this.snapshot.epoch) {
+      throw new Error("A stale transition cannot begin the repaired rerun.");
+    }
+    const repeatableFailure =
+      this.snapshot.phase === "repaired_capture" &&
+      this.snapshot.comparison?.status === "fail";
+    if (
+      this.snapshot.phase !== "repair_applied" &&
+      this.snapshot.phase !== "verified" &&
+      !repeatableFailure
+    ) {
+      throw new Error(
+        "An applied repair is required before the repaired rerun.",
+      );
+    }
+    if (
+      !this.snapshot.appliedRepair ||
+      this.snapshot.agentPolicy !== "repaired-agent"
+    ) {
+      throw new Error("The repaired policy identity is unavailable.");
+    }
+
+    this.publish({
+      ...this.snapshot,
+      phase: "repaired_capture",
+      epoch: this.snapshot.epoch + 1,
+      routeEvidence: {},
+      comparison: null,
+      nativeInvoked: false,
+      stagedRepair: null,
+      approvedRepair: null,
+      repairCapability: absentCapability("used"),
+      receipt: null,
+      receiptJson: null,
+      receiptError: null,
+    });
+  }
+
+  async issueParityReceipt(
+    epoch: number,
+    signal?: AbortSignal,
+  ): Promise<ParityReceipt> {
+    if (epoch !== this.snapshot.epoch) {
+      throw new Error("A stale request cannot issue a parity receipt.");
+    }
+    if (
+      this.snapshot.phase !== "repaired_capture" ||
+      this.snapshot.comparison?.status !== "pass" ||
+      !this.snapshot.appliedRepair
+    ) {
+      throw new Error(
+        "A complete passing repaired comparison is required before receipt issuance.",
+      );
+    }
+
+    const receiptSnapshot = this.snapshot;
+    const comparison = receiptSnapshot.comparison!;
+    const appliedRepair = receiptSnapshot.appliedRepair!;
+    const runs = {} as Record<Route, RunSnapshot>;
+    for (const route of ["visual", "assistive", "agent"] as const) {
+      const evidence = receiptSnapshot.routeEvidence[route];
+      if (!evidence) {
+        throw new Error(`Receipt evidence is missing the ${route} route.`);
+      }
+      runs[route] = evidence.run;
+    }
+
+    try {
+      const receipt = await buildParityReceipt({
+        scenario: this.scenario,
+        runs,
+        comparison,
+        appliedRepair,
+        digestService: this.dependencies.digestService,
+      });
+      if (signal?.aborted) {
+        throw signal.reason instanceof Error
+          ? signal.reason
+          : new DOMException("Receipt issuance was cancelled.", "AbortError");
+      }
+      if (this.snapshot !== receiptSnapshot) {
+        throw new Error("Evidence changed while the receipt was being issued.");
+      }
+      this.publish({
+        ...this.snapshot,
+        phase: "verified",
+        receipt,
+        receiptJson: canonicalReceiptJson(receipt),
+        receiptError: null,
+      });
+      return receipt;
+    } catch (error) {
+      if (this.snapshot === receiptSnapshot) {
+        this.publish({
+          ...this.snapshot,
+          receiptError:
+            error instanceof Error ? error.message : "Receipt issuance failed.",
+        });
+      }
+      throw error;
+    }
+  }
+
+  async auditAndIssueRepairedReceipt(
+    epoch: number,
+    signal?: AbortSignal,
+  ): Promise<ParityReceipt | null> {
+    const comparison = this.audit(epoch);
+    if (comparison.status !== "pass") return null;
+    return this.issueParityReceipt(epoch, signal);
   }
 
   async stageRepair(
@@ -577,6 +715,9 @@ export class WorkbenchStore {
         appliedRepair: authority,
         agentPolicy: "repaired-agent",
         repairCapability: absentCapability("used"),
+        receipt: null,
+        receiptJson: null,
+        receiptError: null,
       });
       return authority;
     } finally {

@@ -68,14 +68,22 @@ export function createStableTools(
         comparison: snapshot.comparison?.status ?? "not_run",
         nativeSupport: snapshot.nativeSupport,
         repairReview:
-          snapshot.phase === "repair_applied"
-            ? "applied"
-            : snapshot.phase === "repair_approved"
-              ? "human_approved"
-              : snapshot.phase === "repair_staged"
-                ? "awaiting_human"
-                : "not_staged",
+          snapshot.phase === "verified"
+            ? "verified"
+            : snapshot.phase === "repaired_capture"
+              ? "repaired_rerun"
+              : snapshot.phase === "repair_applied"
+                ? "applied"
+                : snapshot.phase === "repair_approved"
+                  ? "human_approved"
+                  : snapshot.phase === "repair_staged"
+                    ? "awaiting_human"
+                    : "not_staged",
         repairCapability: snapshot.repairCapability,
+        receipt:
+          snapshot.phase === "verified" && snapshot.receipt
+            ? { status: "issued", receiptId: snapshot.receipt.receiptId }
+            : { status: "not_issued" },
       });
     },
   };
@@ -133,11 +141,17 @@ export function createStableTools(
       parseEmptyInput(input);
       assertNotAborted(signal);
       const snapshot = store.getSnapshot();
+      const repaired = snapshot.phase === "repaired_capture";
       const comparison = store.audit(snapshot.epoch);
+      const receipt =
+        repaired && comparison.status === "pass"
+          ? await store.issueParityReceipt(snapshot.epoch, signal)
+          : null;
       return response({
         status: comparison.status,
         outcomeParity: comparison.outcomeParity,
         firstDivergence: comparison.firstDivergence,
+        receiptId: receipt?.receiptId ?? null,
       });
     },
   };

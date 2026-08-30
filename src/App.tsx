@@ -3,6 +3,8 @@ import { FirstDivergencePanel } from "./components/FirstDivergencePanel";
 import { HumanRouteJourney } from "./components/HumanRouteJourney";
 import { NextActionPanel } from "./components/NextActionPanel";
 import { RepairCenter } from "./components/RepairCenter";
+import { ReceiptPanel } from "./components/ReceiptPanel";
+import { RerunPanel } from "./components/RerunPanel";
 import { RouteSummaryGrid } from "./components/RouteSummaryGrid";
 import { ScenarioHeader } from "./components/ScenarioHeader";
 import { VerdictHero } from "./components/VerdictHero";
@@ -18,7 +20,10 @@ type AppProps = {
 export function App({ store = workbenchStore }: AppProps) {
   const snapshot = useWorkbench(store);
   const isPreview = snapshot.phase === "preview";
-  const baselineActive = snapshot.phase === "baseline_capture";
+  const captureActive =
+    snapshot.phase === "baseline_capture" ||
+    snapshot.phase === "repaired_capture";
+  const repairedCapture = snapshot.phase === "repaired_capture";
   const allRoutesRecorded = ROUTES.every(
     (route) => snapshot.routeEvidence[route] !== undefined,
   );
@@ -45,12 +50,13 @@ export function App({ store = workbenchStore }: AppProps) {
 
           <RouteSummaryGrid snapshot={snapshot} />
 
-          {baselineActive && (
+          {captureActive && (
             <div className="human-journeys" aria-label="Human route capture">
               <HumanRouteJourney
                 key={`visual-${snapshot.epoch}`}
                 route="visual"
                 scenario={snapshot.scenario}
+                runCycle={repairedCapture ? "repaired" : "baseline"}
                 onComplete={(run) =>
                   store.recordRun(run, "recorded", snapshot.epoch)
                 }
@@ -59,6 +65,7 @@ export function App({ store = workbenchStore }: AppProps) {
                 key={`assistive-${snapshot.epoch}`}
                 route="assistive"
                 scenario={snapshot.scenario}
+                runCycle={repairedCapture ? "repaired" : "baseline"}
                 onComplete={(run) =>
                   store.recordRun(run, "recorded", snapshot.epoch)
                 }
@@ -66,29 +73,45 @@ export function App({ store = workbenchStore }: AppProps) {
             </div>
           )}
 
-          {!isPreview && snapshot.comparison?.status !== "fail" && (
-            <div className="audit-control">
-              <div>
-                <p className="control-title">Run the semantic comparison</p>
-                <p className="action-help">
-                  {allRoutesRecorded
-                    ? "All three isolated routes are ready. The audit compares ordered protections, not screenshots."
-                    : "Complete both human routes and invoke the agent Site tool to unlock the audit."}
-                </p>
+          {!isPreview &&
+            (snapshot.phase === "baseline_capture" || repairedCapture) &&
+            snapshot.comparison?.status !== "fail" && (
+              <div className="audit-control">
+                <div>
+                  <p className="control-title">Run the semantic comparison</p>
+                  <p className="action-help">
+                    {allRoutesRecorded
+                      ? repairedCapture
+                        ? "All three fresh repaired routes are ready. Passing will issue the deterministic receipt."
+                        : "All three isolated routes are ready. The audit compares ordered protections, not screenshots."
+                      : "Complete both human routes and invoke the agent Site tool to unlock the audit."}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  disabled={!allRoutesRecorded}
+                  onClick={() => {
+                    if (repairedCapture) {
+                      void store
+                        .auditAndIssueRepairedReceipt(snapshot.epoch)
+                        .catch(() => {});
+                    } else {
+                      store.audit(snapshot.epoch);
+                    }
+                  }}
+                >
+                  {repairedCapture
+                    ? "Verify repaired evidence and issue receipt"
+                    : "Audit baseline evidence"}
+                </button>
               </div>
-              <button
-                type="button"
-                disabled={!allRoutesRecorded}
-                onClick={() => store.audit(snapshot.epoch)}
-              >
-                Audit baseline evidence
-              </button>
-            </div>
-          )}
+            )}
         </section>
 
         <FirstDivergencePanel snapshot={snapshot} />
         <RepairCenter snapshot={snapshot} store={store} />
+        <RerunPanel snapshot={snapshot} store={store} />
+        <ReceiptPanel snapshot={snapshot} />
         <NextActionPanel snapshot={snapshot} />
         <EvidenceDrawer snapshot={snapshot} />
 

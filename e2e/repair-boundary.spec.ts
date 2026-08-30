@@ -127,4 +127,70 @@ test("staging stays agent-bounded while exact approval stays visible and human-o
   await expect(
     page.getByRole("heading", { name: /repair applied exactly once/i }),
   ).toBeVisible();
+
+  await page
+    .getByRole("button", { name: /begin fresh repaired rerun/i })
+    .click();
+  await page
+    .getByRole("button", { name: /review visual route consequences/i })
+    .click();
+  await page
+    .getByRole("button", { name: /consent to delete fictional account/i })
+    .first()
+    .click();
+  await page
+    .getByRole("button", { name: /delete fictional account/i })
+    .first()
+    .click();
+
+  const repairedAssistiveReview = page.getByRole("button", {
+    name: /review keyboard route consequences/i,
+  });
+  await repairedAssistiveReview.focus();
+  await page.keyboard.press("Enter");
+  await page.keyboard.press("Enter");
+  await page.keyboard.press("Enter");
+
+  const verified = await page.evaluate(async () => {
+    const { workbenchStore } = await import("/src/state/initialState.ts");
+    const port = Reflect.get(globalThis, "__equalTraceTestPort") as {
+      invoke(
+        name: string,
+        input: unknown,
+      ): Promise<{
+        content: readonly { text: string }[];
+      }>;
+    };
+    const scenario = workbenchStore.getSnapshot().scenario;
+    await port.invoke("equaltrace_run_agent_route", {
+      scenarioId: scenario.id,
+      scenarioVersion: scenario.version,
+      seed: scenario.seed,
+    });
+    const audit = await port.invoke("equaltrace_run_audit", {});
+    return {
+      audit: JSON.parse(audit.content[0]!.text) as Record<string, unknown>,
+      snapshot: workbenchStore.getSnapshot(),
+    };
+  });
+
+  expect(verified.audit).toMatchObject({
+    status: "pass",
+    outcomeParity: true,
+    receiptId: verified.snapshot.receipt?.receiptId,
+  });
+  expect(verified.snapshot).toMatchObject({
+    phase: "verified",
+    comparison: { status: "pass", outcomeParity: true },
+    receipt: { verdict: "pass" },
+  });
+  await expect(
+    page.getByRole("heading", {
+      name: /same deletion. same protections. proven/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /verified proof is portable/i }),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: /evidence/i })).toHaveCount(18);
 });

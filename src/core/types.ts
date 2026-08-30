@@ -130,3 +130,43 @@ export type RepairAuthority = {
 };
 
 export type AgentPolicy = "broken-agent" | "repaired-agent";
+
+export type ReceiptRoute = {
+  readonly route: Route;
+  readonly runId: string;
+  readonly source: TraceSource;
+  readonly evidenceIds: readonly string[];
+};
+
+export type ReceiptAssertion = {
+  readonly order: number;
+  readonly invariant: Invariant;
+  readonly checkpoint: Checkpoint;
+  readonly passed: true;
+  readonly evidenceIds: readonly string[];
+};
+
+export type ParityReceiptBody = {
+  readonly schemaVersion: "1.0.0";
+  readonly applicationVersion: string;
+  readonly scenario: {
+    readonly id: string;
+    readonly version: string;
+    readonly seed: string;
+    readonly requestedOutcome: "account_deleted";
+    readonly initialState: AccountState;
+  };
+  readonly finalOutcome: "account_deleted";
+  readonly outcomeParity: true;
+  readonly routes: readonly ReceiptRoute[];
+  readonly assertions: readonly ReceiptAssertion[];
+  readonly repair: {
+    readonly repairId: string;
+    readonly repairDigest: string;
+  };
+  readonly verdict: "pass";
+};
+
+export type ParityReceipt = ParityReceiptBody & {
+  readonly receiptId: string;
+};

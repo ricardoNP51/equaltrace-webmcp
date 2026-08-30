@@ -9,6 +9,10 @@ type VerdictHeroProps = {
 function provenanceLabel(snapshot: WorkbenchSnapshot) {
   if (snapshot.phase === "preview")
     return "Fixture preview · not current evidence";
+  if (snapshot.phase === "verified")
+    return snapshot.routeEvidence.agent?.provenance === "native"
+      ? "Verified rerun · native agent evidence"
+      : "Verified rerun · simulated agent evidence";
   const agent = snapshot.routeEvidence.agent;
   if (agent?.provenance === "native")
     return "Current session · native agent evidence";
@@ -20,17 +24,24 @@ function provenanceLabel(snapshot: WorkbenchSnapshot) {
 export function VerdictHero({ snapshot, onReset }: VerdictHeroProps) {
   const isPreview = snapshot.phase === "preview";
   const failed = snapshot.comparison?.status === "fail";
-  const capture = snapshot.phase === "baseline_capture";
-  const title = failed
-    ? "Same deletion. Unequal protection."
-    : capture
-      ? "Prove whether every path preserves the same protections."
-      : "The agent got the right result. It skipped the protections.";
-  const explanation = failed
-    ? "All three routes deleted the same fictional account, but the agent committed before receiving the consequence disclosure required on both human routes."
-    : capture
-      ? "Record the pointer, keyboard, and WebMCP routes from one deterministic seed. EqualTrace will fail closed until all three are comparable."
-      : "This known broken fixture reaches the requested outcome on every route. The agent path starts with deletion, while people must first see consequences and give exact consent.";
+  const verified = snapshot.phase === "verified";
+  const capture =
+    snapshot.phase === "baseline_capture" ||
+    snapshot.phase === "repaired_capture";
+  const title = verified
+    ? "Same deletion. Same protections. Proven."
+    : failed
+      ? "Same deletion. Unequal protection."
+      : capture
+        ? "Prove whether every path preserves the same protections."
+        : "The agent got the right result. It skipped the protections.";
+  const explanation = verified
+    ? "Fresh pointer, keyboard, and WebMCP evidence preserved every required protection and the requested outcome. A deterministic receipt now binds the proof."
+    : failed
+      ? "All three routes deleted the same fictional account, but the agent committed before receiving the consequence disclosure required on both human routes."
+      : capture
+        ? "Record the pointer, keyboard, and WebMCP routes from one deterministic seed. EqualTrace will fail closed until all three are comparable."
+        : "This known broken fixture reaches the requested outcome on every route. The agent path starts with deletion, while people must first see consequences and give exact consent.";
 
   return (
     <header className="hero" aria-labelledby="page-title">
@@ -43,7 +54,15 @@ export function VerdictHero({ snapshot, onReset }: VerdictHeroProps) {
         </a>
         <span
           className="provenance"
-          data-state={isPreview ? "preview" : failed ? "fail" : "recorded"}
+          data-state={
+            verified
+              ? "pass"
+              : isPreview
+                ? "preview"
+                : failed
+                  ? "fail"
+                  : "recorded"
+          }
         >
           {provenanceLabel(snapshot)}
         </span>
@@ -69,25 +88,41 @@ export function VerdictHero({ snapshot, onReset }: VerdictHeroProps) {
 
         <aside
           className="verdict-card"
-          data-state={failed ? "fail" : isPreview ? "preview" : "pending"}
+          data-state={
+            verified
+              ? "pass"
+              : failed
+                ? "fail"
+                : isPreview
+                  ? "preview"
+                  : "pending"
+          }
           aria-label="Current verdict"
         >
           <div className="verdict-card-heading">
             <span className="icon-shell">
-              <StatusIcon name={failed || isPreview ? "alert" : "pending"} />
+              <StatusIcon
+                name={
+                  verified ? "check" : failed || isPreview ? "alert" : "pending"
+                }
+              />
             </span>
             <span>
-              {isPreview
-                ? "Known bypass"
-                : failed
-                  ? "Protection failure"
-                  : "Audit pending"}
+              {verified
+                ? "Protection parity verified"
+                : isPreview
+                  ? "Known bypass"
+                  : failed
+                    ? "Protection failure"
+                    : "Audit pending"}
             </span>
           </div>
           <p className="verdict-statement">
-            {capture
-              ? "Evidence is still incomplete."
-              : "Outcome passed. Protection parity failed."}
+            {verified
+              ? "Outcome and all protections passed."
+              : capture
+                ? "Evidence is still incomplete."
+                : "Outcome passed. Protection parity failed."}
           </p>
           <div className="verdict-facts">
             <div>
@@ -95,8 +130,14 @@ export function VerdictHero({ snapshot, onReset }: VerdictHeroProps) {
               <strong>{capture ? "Pending" : "Deleted on 3/3 routes"}</strong>
             </div>
             <div>
-              <span>First gap</span>
-              <strong>{capture ? "Not audited" : "Disclosure missing"}</strong>
+              <span>{verified ? "Protections" : "First gap"}</span>
+              <strong>
+                {verified
+                  ? "6/6 on 3/3 routes"
+                  : capture
+                    ? "Not audited"
+                    : "Disclosure missing"}
+              </strong>
             </div>
           </div>
           {isPreview && (

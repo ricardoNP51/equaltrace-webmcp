@@ -49,7 +49,32 @@ export function NextActionPanel({
     title = "Repair applied once. Capability removed.";
     copy =
       "The shared agent policy is repaired and the approval can no longer be replayed. A complete three-route rerun is still required before any green verdict.";
-    detail = "Next gate: rerun all three routes and issue the parity receipt.";
+    detail = "Begin the fresh repaired rerun above.";
+  } else if (snapshot.phase === "repaired_capture" && missing.length > 0) {
+    title = `${missing.length} fresh repaired route${missing.length === 1 ? "" : "s"} still required`;
+    copy =
+      "Old baseline traces were removed. Only evidence recreated after the applied repair can unlock verification.";
+    detail = routeInstruction[missing[0]!];
+  } else if (
+    snapshot.phase === "repaired_capture" &&
+    snapshot.comparison?.status === "fail"
+  ) {
+    title = "Regression found. No receipt issued.";
+    copy =
+      "The repaired proof failed at the recorded first divergence; a status label cannot override the comparator.";
+    detail =
+      "Inspect the evidence, correct the regression, then restart the repaired proof.";
+  } else if (snapshot.phase === "repaired_capture") {
+    title = "Fresh repaired evidence is ready";
+    copy =
+      "Run the repaired audit. EqualTrace will independently validate every route before hashing a receipt.";
+    detail = "Use Verify repaired evidence and issue receipt above.";
+  } else if (snapshot.phase === "verified") {
+    title = "Winner chain complete: repaired parity is proven";
+    copy =
+      "The green verdict is backed by fresh evidence and a canonical portable receipt, not by applied policy state alone.";
+    detail =
+      "Download the receipt or repeat the equivalent proof to confirm determinism.";
   }
 
   return (

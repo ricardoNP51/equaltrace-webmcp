@@ -19,6 +19,7 @@ type HumanRouteJourneyProps = {
   readonly route: HumanRoute;
   readonly scenario: ScenarioDefinition;
   readonly onComplete: (run: RunSnapshot) => void;
+  readonly runCycle?: "baseline" | "repaired";
 };
 
 const routeName: Readonly<Record<HumanRoute, string>> = {
@@ -29,19 +30,21 @@ const routeName: Readonly<Record<HumanRoute, string>> = {
 function makeSession(
   route: HumanRoute,
   scenario: ScenarioDefinition,
+  runCycle: "baseline" | "repaired",
 ): HumanRouteSession {
   return route === "visual"
-    ? createVisualRouteSession(scenario)
-    : createAssistiveRouteSession(scenario);
+    ? createVisualRouteSession(scenario, runCycle)
+    : createAssistiveRouteSession(scenario, runCycle);
 }
 
 export function HumanRouteJourney({
   route,
   scenario,
   onComplete,
+  runCycle = "baseline",
 }: HumanRouteJourneyProps) {
   const [session] = useState<HumanRouteSession>(() =>
-    makeSession(route, scenario),
+    makeSession(route, scenario, runCycle),
   );
   const [step, setStep] = useState<HumanRouteStep>("ready");
   const [announcement, setAnnouncement] = useState(

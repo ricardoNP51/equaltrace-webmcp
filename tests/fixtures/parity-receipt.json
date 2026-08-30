@@ -1,0 +1,131 @@
+{
+  "applicationVersion": "0.1.0",
+  "assertions": [
+    {
+      "checkpoint": "disclosure.consequences",
+      "evidenceIds": [
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-repaired-visual:event:01",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-repaired-assistive:event:01",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:01"
+      ],
+      "invariant": "disclosure",
+      "order": 1,
+      "passed": true
+    },
+    {
+      "checkpoint": "consent.exact",
+      "evidenceIds": [
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-repaired-visual:event:02",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-repaired-assistive:event:02",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:02"
+      ],
+      "invariant": "consent",
+      "order": 2,
+      "passed": true
+    },
+    {
+      "checkpoint": "feedback.complete",
+      "evidenceIds": [
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-repaired-visual:event:04",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-repaired-assistive:event:04",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:04"
+      ],
+      "invariant": "feedback",
+      "order": 3,
+      "passed": true
+    },
+    {
+      "checkpoint": "reversibility.cancel_window",
+      "evidenceIds": [
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-repaired-visual:event:05",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-repaired-assistive:event:05",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:05"
+      ],
+      "invariant": "reversibility",
+      "order": 4,
+      "passed": true
+    },
+    {
+      "checkpoint": "recovery.guidance",
+      "evidenceIds": [
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-repaired-visual:event:06",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-repaired-assistive:event:06",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:06"
+      ],
+      "invariant": "recovery",
+      "order": 5,
+      "passed": true
+    },
+    {
+      "checkpoint": "outcome.account_deleted",
+      "evidenceIds": [
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-repaired-visual:event:07",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-repaired-assistive:event:07",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:07"
+      ],
+      "invariant": "outcome",
+      "order": 6,
+      "passed": true
+    }
+  ],
+  "finalOutcome": "account_deleted",
+  "outcomeParity": true,
+  "receiptId": "30196aeec258f531340ba675f3545536394d7088bc870e56afb01de373451f42",
+  "repair": {
+    "repairDigest": "6a8e249b57bca0e40533e799654ef059b979293215c7a80e8bfa13a782cddecb",
+    "repairId": "repair-disclosure-equaltrace-golden-01"
+  },
+  "routes": [
+    {
+      "evidenceIds": [
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-repaired-visual:event:01",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-repaired-visual:event:02",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-repaired-visual:event:03",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-repaired-visual:event:04",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-repaired-visual:event:05",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-repaired-visual:event:06",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-repaired-visual:event:07"
+      ],
+      "route": "visual",
+      "runId": "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-repaired-visual",
+      "source": "pointer"
+    },
+    {
+      "evidenceIds": [
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-repaired-assistive:event:01",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-repaired-assistive:event:02",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-repaired-assistive:event:03",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-repaired-assistive:event:04",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-repaired-assistive:event:05",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-repaired-assistive:event:06",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-repaired-assistive:event:07"
+      ],
+      "route": "assistive",
+      "runId": "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-repaired-assistive",
+      "source": "keyboard"
+    },
+    {
+      "evidenceIds": [
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:01",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:02",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:03",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:04",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:05",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:06",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:07"
+      ],
+      "route": "agent",
+      "runId": "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent",
+      "source": "webmcp"
+    }
+  ],
+  "scenario": {
+    "id": "fictional-cloud-account-deletion",
+    "initialState": { "accountId": "ACCT-DEMO-017", "status": "active" },
+    "requestedOutcome": "account_deleted",
+    "seed": "equaltrace-golden-01",
+    "version": "1.0.0"
+  },
+  "schemaVersion": "1.0.0",
+  "verdict": "pass"
+}

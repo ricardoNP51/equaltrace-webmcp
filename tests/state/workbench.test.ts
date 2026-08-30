@@ -2,6 +2,30 @@ import { describe, expect, it, vi } from "vitest";
 
 import { buildFixtureRun } from "../../src/fixtures/accountDeletion";
 import { createWorkbenchStore } from "../../src/state/initialState";
+import { FakeClock } from "../../src/test/fakeClock";
+import { FakeDigestService } from "../../src/test/fakeDigest";
+
+async function appliedStore() {
+  const store = createWorkbenchStore({
+    clock: new FakeClock(1_800_000_000_000),
+    digestService: new FakeDigestService(),
+  });
+  store.reset();
+  const epoch = store.getSnapshot().epoch;
+  store.recordRun(buildFixtureRun("visual", "protected"), "recorded", epoch);
+  store.recordRun(buildFixtureRun("assistive", "protected"), "recorded", epoch);
+  store.recordRun(buildFixtureRun("agent", "broken-agent"), "simulated", epoch);
+  store.audit(epoch);
+  const repair = await store.stageRepair(epoch);
+  const authority = store.approveRepairFromHumanInteraction(repair, epoch);
+  store.reportRepairCapabilityRegistered(authority, "simulated");
+  store.applyApprovedRepairFromCapability(
+    authority,
+    repair,
+    new AbortController().signal,
+  );
+  return store;
+}
 
 describe("WorkbenchStore", () => {
   it("starts in an immutable honest preview", () => {
@@ -109,5 +133,80 @@ describe("WorkbenchStore", () => {
       comparison: null,
       nativeInvoked: false,
     });
+  });
+
+  it("recreates fresh repaired routes and issues a receipt only after a passing rerun", async () => {
+    const store = await appliedStore();
+    const appliedRepair = store.getSnapshot().appliedRepair;
+    const oldEpoch = store.getSnapshot().epoch;
+
+    store.beginRepairedRerun(oldEpoch);
+    const epoch = store.getSnapshot().epoch;
+    expect(store.getSnapshot()).toMatchObject({
+      phase: "repaired_capture",
+      epoch: oldEpoch + 1,
+      routeEvidence: {},
+      stagedRepair: null,
+      approvedRepair: null,
+      appliedRepair,
+      agentPolicy: "repaired-agent",
+    });
+
+    store.recordRun(buildFixtureRun("visual", "protected"), "recorded", epoch);
+    store.recordRun(
+      buildFixtureRun("assistive", "protected"),
+      "recorded",
+      epoch,
+    );
+    store.recordRun(
+      buildFixtureRun("agent", "repaired-agent"),
+      "simulated",
+      epoch,
+    );
+    const receipt = await store.auditAndIssueRepairedReceipt(epoch);
+
+    expect(receipt).not.toBeNull();
+    expect(store.getSnapshot()).toMatchObject({
+      phase: "verified",
+      comparison: { status: "pass", outcomeParity: true },
+      receipt: { receiptId: receipt!.receiptId, verdict: "pass" },
+    });
+    expect(store.getSnapshot().receiptJson).toContain(receipt!.receiptId);
+  });
+
+  it("fails at the repaired regression and never creates a passing receipt", async () => {
+    const store = await appliedStore();
+    store.beginRepairedRerun(store.getSnapshot().epoch);
+    const epoch = store.getSnapshot().epoch;
+    store.recordRun(buildFixtureRun("visual", "protected"), "recorded", epoch);
+    store.recordRun(
+      buildFixtureRun("assistive", "protected"),
+      "recorded",
+      epoch,
+    );
+    store.recordRun(
+      buildFixtureRun("agent", "broken-agent"),
+      "simulated",
+      epoch,
+    );
+
+    const receipt = await store.auditAndIssueRepairedReceipt(epoch);
+
+    expect(receipt).toBeNull();
+    expect(store.getSnapshot()).toMatchObject({
+      phase: "repaired_capture",
+      comparison: {
+        status: "fail",
+        firstDivergence: {
+          route: "agent",
+          checkpoint: "disclosure.consequences",
+        },
+      },
+      receipt: null,
+      receiptJson: null,
+    });
+    await expect(store.issueParityReceipt(epoch)).rejects.toThrow(
+      /complete passing/i,
+    );
   });
 });

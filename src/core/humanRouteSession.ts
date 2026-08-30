@@ -73,21 +73,28 @@ class DeterministicHumanRouteSession implements HumanRouteSession {
 function createSession(
   scenario: ScenarioDefinition,
   route: HumanRoute,
+  runCycle: "baseline" | "repaired" = "baseline",
 ): HumanRouteSession {
   const source = route === "visual" ? "pointer" : "keyboard";
   const context = createRunContext(
     scenario,
     route,
     source,
-    `current-baseline-${route}`,
+    `current-${runCycle}-${route}`,
   );
   return new DeterministicHumanRouteSession(route, context);
 }
 
-export function createVisualRouteSession(scenario: ScenarioDefinition) {
-  return createSession(scenario, "visual");
+export function createVisualRouteSession(
+  scenario: ScenarioDefinition,
+  runCycle: "baseline" | "repaired" = "baseline",
+) {
+  return createSession(scenario, "visual", runCycle);
 }
 
-export function createAssistiveRouteSession(scenario: ScenarioDefinition) {
-  return createSession(scenario, "assistive");
+export function createAssistiveRouteSession(
+  scenario: ScenarioDefinition,
+  runCycle: "baseline" | "repaired" = "baseline",
+) {
+  return createSession(scenario, "assistive", runCycle);
 }
