@@ -11,3 +11,7 @@ test-results/
 *.log
 .DS_Store
 Thumbs.db
+submission-video/.venv/
+submission-video/models/
+submission-video/public/generated/
+submission-video/out/

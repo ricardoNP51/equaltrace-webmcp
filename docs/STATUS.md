@@ -4,7 +4,7 @@ Last updated: 2026-08-30 (America/La_Paz)
 
 ## Current phase
 
-Phase 1 guided build complete — checklist items 1–12 are complete. Release `challenge-v1.0.0` is live over HTTPS from exact commit `20ccacc499fcb8f7fed126f10af38e820c95b335`; five consecutive public native golden runs reproduced the complete lifecycle and receipt. The Devpost handoff draft, exact judge instructions, four release screenshots, AI disclosure, official judging map, and recording-ready demo script are prepared. Video publication and Devpost submission remain external gates.
+Phase 1 guided build complete — checklist items 1–12 are complete. Release `challenge-v1.0.0` is live over HTTPS from exact commit `20ccacc499fcb8f7fed126f10af38e820c95b335`; five consecutive public native golden runs reproduced the complete lifecycle and receipt. The Devpost handoff draft, exact judge instructions, four release screenshots, AI disclosure, official judging map, demo script, and a presenter-free 2:30 submission-video render are prepared. Human review, public video publication, and Devpost submission remain external gates.
 
 ## Completed
 
@@ -56,6 +56,8 @@ Phase 1 guided build complete — checklist items 1–12 are complete. Release `
 - [x] Live Devpost requirements and judging criteria were fetched on 2026-08-30 and mapped to `devpost-submission.md`, including every required custom submission answer.
 - [x] Four public-release screenshots are indexed under `evidence/submission/`, and `docs/DEMO_SCRIPT.md` provides a sub-three-minute recording plan aligned to the exact native winner path.
 - [x] The video path was replayed natively on the public release after the item 12 draft; the temporary capability disappeared after use and the final receipt matched the five-run release identity.
+- [x] A presenter-free English demo video was composed from the frozen public-release screenshots, local Kokoro narration, original synthesized sound design, and explicit capability-lifecycle animation. The reproducible Remotion source is under `submission-video/`; the local 1920×1080 H.264/AAC render is 2:30, measures -16.1 LUFS with a -1.5 dBFS true peak, and passes `npm run verify`.
+- [x] Video research and tool-selection rationale are recorded in `docs/VIDEO_RESEARCH_2026-08-30.md`. The composition does not claim that its explanatory lifecycle animation is new native-browser evidence; the five-run frozen evidence remains the native acceptance record.
 
 ## Required after implementation begins and before any “native WebMCP works” claim
 
@@ -71,8 +73,8 @@ Phase 1 guided build complete — checklist items 1–12 are complete. Release `
 
 ## Current blockers
 
-- Build implementation is unblocked and complete. Remaining external gates are recording/uploading the public narrated YouTube video, confirming personal submission-field answers, and explicit final authorization before Devpost submission.
+- Build implementation is unblocked and complete. Remaining external gates are watching/listening to the local video end-to-end, uploading the accepted render to a public YouTube URL, confirming personal submission-field answers, and explicit final authorization before Devpost submission.
 
 ## Next action
 
-When the participant considers the release ready, run `$prepare-submission` using `devpost-submission.md` and `docs/DEMO_SCRIPT.md`. Do not submit without explicit final confirmation.
+Review `submission-video/out/equaltrace-demo-final.mp4` end-to-end. If accepted, upload that exact render publicly, record the URL in the submission materials, and run `$prepare-submission`. Do not submit without explicit final confirmation.

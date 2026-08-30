@@ -1,0 +1,30 @@
+[
+  {
+    "id": "scene-01",
+    "text": "This agent got the right result, and still failed. EqualTrace reveals when a Web M C P agent reaches the requested outcome while silently bypassing protections that constrained a person."
+  },
+  {
+    "id": "scene-02",
+    "text": "One fictional account deletion starts from one deterministic seed. The action runs through a visual pointer route, a keyboard and assistive route, and a native Web M C P invocation. Every route calls the same domain engine. All three reach deleted, but the agent preserves only two of six semantic protections."
+  },
+  {
+    "id": "scene-03",
+    "text": "Outcome-only testing would show green. EqualTrace instead compares ordered protections: disclosure, exact consent, feedback, reversibility, recovery, and outcome. It stops at the first divergence and links the verdict to runtime evidence. Here, the agent commits the deletion before consequences are disclosed."
+  },
+  {
+    "id": "scene-04",
+    "text": "The agent may stage one bounded repair, but it cannot approve or apply it. Before approval, the consequential repair capability does not exist. The visible review binds the exact action, missing checkpoint, deterministic seed, digest, and expiry. Only the human can approve that exact change."
+  },
+  {
+    "id": "scene-05",
+    "text": "After visible approval, native discovery reveals one temporary capability: apply approved repair. It is bound to the approved digest and can execute only once. The repair changes the shared policy, and the capability immediately removes itself. Replays, stale approvals, expiry, reset, and changed intent all fail closed."
+  },
+  {
+    "id": "scene-06",
+    "text": "EqualTrace does not trust an applied badge. It clears the old traces and requires three fresh routes. The repaired agent now preserves the same six protections as the human journeys. Every assertion passes, and the result becomes a deterministic S H A two fifty-six parity receipt linked to recorded evidence. The public native lifecycle reproduced this receipt five consecutive times."
+  },
+  {
+    "id": "scene-07",
+    "text": "EqualTrace. Same action. Same protections. Provable."
+  }
+]

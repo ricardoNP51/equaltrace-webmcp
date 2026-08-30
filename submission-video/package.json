@@ -1,0 +1,24 @@
+{
+  "name": "equaltrace-submission-video",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "soundbed": "node scripts/generate-soundbed.mjs",
+    "render:draft": "remotion render src/index.ts EqualTraceLaunch out/equaltrace-demo-draft.mp4 --codec h264 --crf 24 --scale 0.6666666666666666",
+    "render:final": "remotion render src/index.ts EqualTraceLaunch out/equaltrace-demo-final-raw.mp4 --codec h264 --crf 18 --audio-codec aac --pixel-format yuv420p && node scripts/normalize-video.mjs",
+    "verify": "node scripts/verify-video.mjs out/equaltrace-demo-final.mp4"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.518",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.518"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.10",
+    "@types/react-dom": "19.2.3",
+    "typescript": "5.9.3"
+  }
+}
