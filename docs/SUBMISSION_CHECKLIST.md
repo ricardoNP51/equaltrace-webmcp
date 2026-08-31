@@ -13,7 +13,7 @@
 - [x] Public HTTPS URL loads without authentication.
 - [x] Native WebMCP tools are discoverable in the recorded supported client.
 - [x] Golden flow resets deterministically.
-- [ ] Deploy the Forensic Ledger branch and recapture the final video so the public application and selected video match exactly; editorial cursor and labels are already disclosed.
+- [x] Forensic Ledger is deployed from exact commit `936146e8a0e18c1c3b1130f48528444cb88bf00f`; the final video uses public captures from that revision and discloses editorial cursor, labels, and cuts.
 - [x] Fresh-session smoke test passes.
 
 ## Demo video
@@ -26,7 +26,7 @@
 - [x] Human approval and tool lifetime visible.
 - [x] Repair rerun and receipt visible.
 - [x] No copyrighted music or unauthorized marks.
-- [x] Local Forensic Ledger candidate is labeled as a branch capture and does not claim public-release validation.
+- [x] Public Forensic Ledger candidate identifies the public build and exact short commit; its native evidence claim is backed by the supported-client session under `evidence/native/2026-08-31-forensic-ledger-public/`.
 
 ## Description
 

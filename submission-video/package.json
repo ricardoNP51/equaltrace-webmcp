@@ -22,11 +22,13 @@
     "render:live": "remotion render src/index.ts EqualTraceLiveFinal out/equaltrace-demo-final-live-raw.mp4 --codec h264 --crf 18 --audio-codec aac --pixel-format yuv420p && node scripts/normalize-video.mjs out/equaltrace-demo-final-live-raw.mp4 out/equaltrace-demo-final-live.mp4",
     "render:forensic:draft": "remotion render src/index.ts EqualTraceLiveFinal out/equaltrace-demo-forensic-ledger-draft.mp4 --codec h264 --crf 24 --scale 0.6666666666666666",
     "render:forensic": "remotion render src/index.ts EqualTraceLiveFinal out/equaltrace-demo-forensic-ledger-raw.mp4 --codec h264 --crf 18 --audio-codec aac --pixel-format yuv420p && node scripts/normalize-video.mjs out/equaltrace-demo-forensic-ledger-raw.mp4 out/equaltrace-demo-forensic-ledger.mp4",
+    "render:forensic:public": "remotion render src/index.ts EqualTraceLiveFinal out/equaltrace-demo-forensic-ledger-public-raw.mp4 --codec h264 --crf 18 --audio-codec aac --pixel-format yuv420p && node scripts/normalize-video.mjs out/equaltrace-demo-forensic-ledger-public-raw.mp4 out/equaltrace-demo-forensic-ledger-public.mp4",
     "verify": "node scripts/verify-video.mjs out/equaltrace-demo-final.mp4",
     "verify:v2": "node scripts/verify-video.mjs out/equaltrace-demo-v2.mp4",
     "verify:b3": "node scripts/verify-video.mjs out/equaltrace-demo-b3.mp4",
     "verify:live": "node scripts/verify-video.mjs out/equaltrace-demo-final-live.mp4",
-    "verify:forensic": "node scripts/verify-video.mjs out/equaltrace-demo-forensic-ledger.mp4"
+    "verify:forensic": "node scripts/verify-video.mjs out/equaltrace-demo-forensic-ledger.mp4",
+    "verify:forensic:public": "node scripts/verify-video.mjs out/equaltrace-demo-forensic-ledger-public.mp4"
   },
   "dependencies": {
     "@fontsource/newsreader": "^5.3.0",

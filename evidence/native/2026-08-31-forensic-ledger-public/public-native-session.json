@@ -1,0 +1,109 @@
+{
+  "capturedAt": "2026-08-31T00:15:46.393Z",
+  "publicUrl": "https://ricardonp51.github.io/equaltrace-webmcp/?release=936146e8a0e18c1c3b1130f48528444cb88bf00f",
+  "release": "challenge-v1.0.0",
+  "commit": "936146e8a0e18c1c3b1130f48528444cb88bf00f",
+  "origin": "https://ricardonp51.github.io",
+  "supportedClient": "Codex in-app browser WebMCP capability",
+  "lifecycle": {
+    "beforeApproval": [
+      "equaltrace_get_status",
+      "equaltrace_run_agent_route",
+      "equaltrace_run_audit",
+      "equaltrace_stage_repair"
+    ],
+    "afterVisibleApproval": [
+      "equaltrace_get_status",
+      "equaltrace_run_agent_route",
+      "equaltrace_run_audit",
+      "equaltrace_stage_repair",
+      "equaltrace_apply_approved_repair"
+    ],
+    "afterUse": [
+      "equaltrace_get_status",
+      "equaltrace_run_agent_route",
+      "equaltrace_run_audit",
+      "equaltrace_stage_repair"
+    ],
+    "final": [
+      "equaltrace_get_status",
+      "equaltrace_run_agent_route",
+      "equaltrace_run_audit",
+      "equaltrace_stage_repair"
+    ]
+  },
+  "baselineAgent": {
+    "status": "recorded",
+    "evidenceProvenance": "native",
+    "outcome": "deleted",
+    "evidenceIds": [
+      "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-baseline-agent:event:01",
+      "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-baseline-agent:event:02",
+      "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-baseline-agent:event:03"
+    ]
+  },
+  "stage": {
+    "status": "staged",
+    "repair": {
+      "repairId": "repair-1.0.0-disclosure.consequences",
+      "targetScenarioId": "fictional-cloud-account-deletion",
+      "targetScenarioVersion": "1.0.0",
+      "targetToolName": "equaltrace_run_agent_route",
+      "seed": "equaltrace-golden-01",
+      "requestedOutcome": "account_deleted",
+      "addsCheckpoints": ["disclosure.consequences"],
+      "evidenceIds": [
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:visual:current-baseline-visual:event:01",
+        "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:assistive:current-baseline-assistive:event:01"
+      ],
+      "repairDigest": "5cd22df014d91689792f353f02db08bcc05fd83de24c8f2d6ef5327de785a18a",
+      "approvalEpoch": 3,
+      "expiresAt": 1788135432921
+    }
+  },
+  "apply": {
+    "status": "applied",
+    "repairId": "repair-1.0.0-disclosure.consequences",
+    "repairDigest": "5cd22df014d91689792f353f02db08bcc05fd83de24c8f2d6ef5327de785a18a",
+    "policy": "repaired-agent",
+    "capability": "removed_after_use"
+  },
+  "repairedAgent": {
+    "status": "recorded",
+    "evidenceProvenance": "native",
+    "outcome": "deleted",
+    "evidenceIds": [
+      "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:01",
+      "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:02",
+      "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:03",
+      "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:04",
+      "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:05",
+      "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:06",
+      "fictional-cloud-account-deletion:1.0.0:equaltrace-golden-01:agent:current-repaired-agent:event:07"
+    ]
+  },
+  "finalStatus": {
+    "phase": "verified",
+    "scenario": {
+      "id": "fictional-cloud-account-deletion",
+      "version": "1.0.0",
+      "seed": "equaltrace-golden-01"
+    },
+    "completedRoutes": ["visual", "assistive", "agent"],
+    "comparison": "pass",
+    "nativeSupport": "available",
+    "repairReview": "verified",
+    "repairCapability": {
+      "status": "absent",
+      "provenance": null,
+      "authorityNonce": null,
+      "reason": "used",
+      "error": null
+    },
+    "receipt": {
+      "status": "issued",
+      "receiptId": "3edf6503b77b0391a2fff20f31d664286a5db9c72d253ea6b0342db0aec44728"
+    }
+  },
+  "consoleWarningsAndErrors": []
+}

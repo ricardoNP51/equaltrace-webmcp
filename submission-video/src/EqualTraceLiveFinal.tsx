@@ -175,7 +175,7 @@ const CaptureStamp: React.FC<{
 );
 
 const SourceLine: React.FC<{ text?: string }> = ({
-  text = "LOCAL BRANCH · SUPPORTED CLIENT CAPTURE · 2026-08-30",
+  text = "PUBLIC BUILD · NATIVE SUPPORTED-CLIENT SESSION · 2026-08-31",
 }) => (
   <div
     style={{
@@ -382,8 +382,8 @@ const HookScene = () => {
     <Scene duration={240}>
       <Shot from={0} to={240} src="01-preview.jpg" zoom={1.015} dim={0.02} />
       <CaptureStamp
-        plate="EQUALTRACE / FORENSIC LEDGER CUT"
-        status="fictional deletion · branch candidate"
+        plate="EQUALTRACE / FORENSIC LEDGER RELEASE"
+        status="fictional deletion · public release"
         tone="cyan"
       />
       <EditorialCursor
@@ -947,7 +947,7 @@ const CloseScene = () => {
             letterSpacing: 1.5,
           }}
         >
-          EQUALTRACE / FORENSIC LEDGER BRANCH CANDIDATE
+          EQUALTRACE / VERIFIED ON THE PUBLIC BUILD
         </div>
         <div
           style={{
@@ -973,8 +973,7 @@ const CloseScene = () => {
             fontSize: 22,
           }}
         >
-          local supported-client proof · public recapture required after
-          deployment
+          ricardonp51.github.io/equaltrace-webmcp · commit 936146e8a0e1
         </div>
       </div>
       <Subtitles
