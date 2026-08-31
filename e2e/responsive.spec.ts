@@ -17,7 +17,7 @@ for (const viewport of viewports) {
     await page.goto("./");
 
     await expect(page.getByRole("heading", { level: 1 })).toContainText(
-      "right result",
+      "outcome passed",
     );
     await expect(
       page.getByText("Fixture preview · not current evidence"),

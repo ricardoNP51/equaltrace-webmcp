@@ -186,11 +186,15 @@ test("staging stays agent-bounded while exact approval stays visible and human-o
   });
   await expect(
     page.getByRole("heading", {
-      name: /same deletion. same protections. proven/i,
+      name: /outcome passed.*safety contract holds/i,
     }),
   ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: /verified proof is portable/i }),
   ).toBeVisible();
-  await expect(page.getByRole("link", { name: /evidence/i })).toHaveCount(18);
+  await expect(
+    page.getByRole("link", {
+      name: /^(visual|assistive|agent) evidence$/i,
+    }),
+  ).toHaveCount(18);
 });

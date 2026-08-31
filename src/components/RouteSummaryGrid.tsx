@@ -1,13 +1,45 @@
-import type { Route } from "../core/types";
+import type { Checkpoint, Route } from "../core/types";
 import { ROUTES } from "../core/types";
 import type { WorkbenchSnapshot } from "../state/WorkbenchStore";
 import { displayEvidence, protectionCoverage } from "./judgeEvidence";
 import { StatusIcon } from "./StatusIcon";
 
-const metadata: Record<Route, { name: string; source: string }> = {
-  visual: { name: "Visual", source: "Pointer interaction" },
-  assistive: { name: "Assistive", source: "Keyboard interaction" },
-  agent: { name: "Agent", source: "WebMCP invocation" },
+const metadata: Record<
+  Route,
+  { icon: "agent" | "assistive" | "visual"; name: string; source: string }
+> = {
+  visual: { icon: "visual", name: "Visual", source: "Pointer interaction" },
+  assistive: {
+    icon: "assistive",
+    name: "Assistive",
+    source: "Keyboard interaction",
+  },
+  agent: { icon: "agent", name: "WebMCP Agent", source: "Native invocation" },
+};
+
+const checkpointOrder: readonly Checkpoint[] = [
+  "outcome.account_deleted",
+  "disclosure.consequences",
+  "consent.exact",
+  "feedback.complete",
+  "reversibility.cancel_window",
+  "recovery.guidance",
+];
+
+const checkpointCopy: Record<Checkpoint, { label: string; pass: string }> = {
+  "commit.delete": { label: "Commit", pass: "Committed" },
+  "consent.exact": { label: "Consent", pass: "Exact consent captured" },
+  "disclosure.consequences": {
+    label: "Disclosure",
+    pass: "Consequences shown",
+  },
+  "feedback.complete": { label: "Feedback", pass: "Confirmation shown" },
+  "outcome.account_deleted": { label: "Outcome", pass: "Completed" },
+  "recovery.guidance": { label: "Recovery", pass: "Recovery path shown" },
+  "reversibility.cancel_window": {
+    label: "Reversibility",
+    pass: "Undo available",
+  },
 };
 
 function evidenceLabel(route: Route, provenance: string, exists: boolean) {
@@ -25,51 +57,83 @@ export function RouteSummaryGrid({
   readonly snapshot: WorkbenchSnapshot;
 }) {
   const evidence = displayEvidence(snapshot);
+  const coverages = Object.fromEntries(
+    ROUTES.map((route) => {
+      const entry = evidence[route];
+      return [route, entry ? protectionCoverage(snapshot, entry.run) : null];
+    }),
+  ) as Record<Route, { covered: number; total: number } | null>;
+
+  function hasCheckpoint(route: Route, checkpoint: Checkpoint) {
+    return Boolean(
+      evidence[route]?.run.events.some(
+        (event) => event.checkpoint === checkpoint,
+      ),
+    );
+  }
+
   return (
-    <div className="route-grid">
-      {ROUTES.map((route, index) => {
-        const entry = evidence[route];
-        const coverage = entry ? protectionCoverage(snapshot, entry.run) : null;
-        const isBroken =
-          route === "agent" &&
-          Boolean(entry) &&
-          (coverage?.covered ?? 0) < (coverage?.total ?? 0);
-        return (
-          <article
-            className="route-card"
-            data-state={entry ? (isBroken ? "fail" : "complete") : "pending"}
-            key={route}
-          >
-            <div className="route-card-topline">
-              <span className="route-number">0{index + 1}</span>
-              <span className="icon-shell">
-                <StatusIcon
-                  name={entry ? (isBroken ? "alert" : "check") : "pending"}
-                />
+    <div
+      className="route-ledger"
+      role="table"
+      aria-label="Route protection ledger"
+    >
+      <div className="ledger-row ledger-head" role="row">
+        <div className="ledger-checkpoint" role="columnheader">
+          Checkpoint
+        </div>
+        {ROUTES.map((route) => {
+          const entry = evidence[route];
+          const coverage = coverages[route];
+          const broken = Boolean(coverage && coverage.covered < coverage.total);
+          return (
+            <div
+              className="ledger-route-head"
+              data-state={entry ? (broken ? "fail" : "complete") : "pending"}
+              key={route}
+              role="columnheader"
+            >
+              <span className="ledger-route-name">
+                <StatusIcon name={metadata[route].icon} />
+                {metadata[route].name}
               </span>
+              <strong>
+                {coverage ? `${coverage.covered}/${coverage.total}` : "—"}
+              </strong>
+              <small>
+                {evidenceLabel(route, entry?.provenance ?? "", Boolean(entry))}
+              </small>
             </div>
-            <p className="route-source">{metadata[route].source}</p>
-            <h3>{metadata[route].name} route</h3>
-            <p className="route-status">
-              {evidenceLabel(route, entry?.provenance ?? "", Boolean(entry))}
-            </p>
-            <div className="route-metrics">
-              <span>
-                Outcome{" "}
-                <strong>
-                  {entry ? entry.run.accountState.status : "pending"}
-                </strong>
-              </span>
-              <span>
-                Protections{" "}
-                <strong>
-                  {coverage ? `${coverage.covered}/${coverage.total}` : "—"}
-                </strong>
-              </span>
-            </div>
-          </article>
-        );
-      })}
+          );
+        })}
+      </div>
+
+      {checkpointOrder.map((checkpoint) => (
+        <div className="ledger-row" key={checkpoint} role="row">
+          <div className="ledger-checkpoint" role="rowheader">
+            <span>{checkpointCopy[checkpoint].label}</span>
+            <code>{checkpoint}</code>
+          </div>
+          {ROUTES.map((route) => {
+            const exists = hasCheckpoint(route, checkpoint);
+            return (
+              <div
+                className="ledger-cell"
+                data-state={exists ? "pass" : "missing"}
+                key={route}
+                role="cell"
+              >
+                <span>
+                  {exists ? checkpointCopy[checkpoint].pass : "Missing"}
+                </span>
+                <span className="ledger-status-icon">
+                  <StatusIcon name={exists ? "check" : "alert"} />
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      ))}
     </div>
   );
 }

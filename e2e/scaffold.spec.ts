@@ -6,7 +6,7 @@ test("the static workbench exposes an honest starting state", async ({
   await page.goto("./");
 
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "right result",
+    "outcome passed",
   );
   await expect(
     page.getByText("Fixture preview · not current evidence"),
@@ -45,7 +45,11 @@ test("a simulated port updates the shared page but never claims native evidence"
   });
 
   expect(toolResult).toContain('"evidenceProvenance":"simulated"');
-  await expect(page.getByText("simulated evidence recorded")).toBeVisible();
-  await expect(page.getByText("native evidence recorded")).toHaveCount(0);
+  await expect(
+    page.getByText("Current session · simulated agent evidence"),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Current session · native agent evidence"),
+  ).toHaveCount(0);
   await expect(page.getByText("Native WebMCP unavailable here")).toBeVisible();
 });

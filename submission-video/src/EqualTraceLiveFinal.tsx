@@ -1,4 +1,9 @@
 import type { CSSProperties, ReactNode } from "react";
+import { CursorClick } from "@phosphor-icons/react";
+import "@fontsource/newsreader/latin-700.css";
+import "@fontsource/source-sans-3/latin-400.css";
+import "@fontsource/source-sans-3/latin-600.css";
+import "@fontsource/source-sans-3/latin-700.css";
 import {
   AbsoluteFill,
   Audio,
@@ -15,21 +20,28 @@ const W = 1920;
 const H = 1080;
 
 const C = {
-  ink: "#06111b",
-  white: "#f4f8fb",
-  cyan: "#5ad8f5",
-  green: "#54dda1",
-  amber: "#f3bd5b",
-  red: "#ff6f61",
-  muted: "#9fb3c3",
+  paper: "#f3f1e9",
+  panel: "#fbfaf5",
+  ink: "#11110f",
+  white: "#fbfaf5",
+  cyan: "#0b66ce",
+  green: "#0b66ce",
+  amber: "#8c6416",
+  red: "#c7372f",
+  muted: "#64635e",
+  line: "#bebcb2",
 };
 
 const sans: CSSProperties = {
-  fontFamily: "Arial, Helvetica, sans-serif",
+  fontFamily: '"Source Sans 3", Arial, sans-serif',
+};
+
+const serif: CSSProperties = {
+  fontFamily: '"Newsreader", Georgia, serif',
 };
 
 const mono: CSSProperties = {
-  fontFamily: 'Consolas, "Courier New", monospace',
+  fontFamily: '"Source Sans 3", Arial, sans-serif',
 };
 
 type Cue = { from: number; to: number; text: string };
@@ -50,7 +62,7 @@ const Scene: React.FC<{ duration: number; children: ReactNode }> = ({
   return (
     <AbsoluteFill
       style={{
-        background: C.ink,
+        background: C.paper,
         opacity: fadeFor(frame, duration),
         overflow: "hidden",
       }}
@@ -59,10 +71,10 @@ const Scene: React.FC<{ duration: number; children: ReactNode }> = ({
       <AbsoluteFill
         style={{
           pointerEvents: "none",
-          opacity: 0.12,
+          opacity: 0.18,
           backgroundImage:
-            "repeating-linear-gradient(0deg, rgba(255,255,255,.11) 0, rgba(255,255,255,.11) 1px, transparent 1px, transparent 4px)",
-          mixBlendMode: "soft-light",
+            "linear-gradient(rgba(17,17,15,.035) 1px, transparent 1px)",
+          backgroundSize: "100% 54px",
         }}
       />
     </AbsoluteFill>
@@ -90,19 +102,19 @@ const LiveShot: React.FC<{
 }) => {
   const scale = zoom + (frame / Math.max(duration, 1)) * drift;
   return (
-    <AbsoluteFill style={{ background: "#02070d" }}>
+    <AbsoluteFill style={{ background: C.paper }}>
       <Img
-        src={staticFile(`live-final/${src}`)}
+        src={staticFile(`forensic-final/${src}`)}
         style={{
           width: "100%",
           height: "100%",
-          objectFit: "cover",
+          objectFit: "contain",
           transform: `translate(${panX}px, ${panY}px) scale(${scale})`,
           transformOrigin: "center center",
         }}
       />
       {dim > 0 && (
-        <AbsoluteFill style={{ background: `rgba(2,7,13,${dim})` }} />
+        <AbsoluteFill style={{ background: `rgba(243,241,233,${dim})` }} />
       )}
     </AbsoluteFill>
   );
@@ -150,11 +162,11 @@ const CaptureStamp: React.FC<{
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
-      color: C.white,
+      color: C.ink,
       fontSize: 18,
       letterSpacing: 1.5,
       textTransform: "uppercase",
-      textShadow: "0 2px 8px #000",
+      textShadow: "0 1px 0 rgba(255,255,255,.8)",
     }}
   >
     <span>{plate}</span>
@@ -163,7 +175,7 @@ const CaptureStamp: React.FC<{
 );
 
 const SourceLine: React.FC<{ text?: string }> = ({
-  text = "PUBLIC BUILD · NATIVE BROWSER SESSION · 2026-08-30",
+  text = "LOCAL BRANCH · SUPPORTED CLIENT CAPTURE · 2026-08-30",
 }) => (
   <div
     style={{
@@ -176,7 +188,8 @@ const SourceLine: React.FC<{ text?: string }> = ({
       fontSize: 14,
       letterSpacing: 1.1,
       textTransform: "uppercase",
-      textShadow: "0 1px 5px #000",
+      background: "rgba(251,250,245,.9)",
+      padding: "5px 8px",
     }}
   >
     {text}
@@ -206,8 +219,9 @@ const Subtitles: React.FC<{ frame: number; cues: Cue[] }> = ({
         bottom: 54,
         zIndex: 40,
         padding: "14px 24px 16px",
-        color: C.white,
-        background: "rgba(2,7,13,.88)",
+        color: C.ink,
+        background: "rgba(251,250,245,.96)",
+        border: `1px solid ${C.line}`,
         borderTop: `3px solid ${C.cyan}`,
         fontSize: 30,
         lineHeight: 1.25,
@@ -267,7 +281,7 @@ const EditorialCursor: React.FC<{
         width: 48,
         height: 58,
         zIndex: 45,
-        filter: "drop-shadow(0 3px 4px rgba(0,0,0,.8))",
+        filter: "drop-shadow(0 2px 2px rgba(17,17,15,.22))",
       }}
     >
       {pulse > 0 && (
@@ -285,15 +299,7 @@ const EditorialCursor: React.FC<{
           }}
         />
       )}
-      <svg width="48" height="58" viewBox="0 0 48 58">
-        <path
-          d="M4 2 L4 44 L15 34 L24 54 L34 49 L24 30 L40 29 Z"
-          fill="#ffffff"
-          stroke="#071019"
-          strokeWidth="3"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <CursorClick size={46} weight="fill" color={C.ink} />
       {label && (
         <div
           style={{
@@ -302,8 +308,8 @@ const EditorialCursor: React.FC<{
             left: 38,
             top: 38,
             whiteSpace: "nowrap",
-            color: C.white,
-            background: "rgba(2,7,13,.92)",
+            color: C.ink,
+            background: "rgba(251,250,245,.96)",
             padding: "7px 10px",
             fontSize: 14,
             borderLeft: `3px solid ${C.amber}`,
@@ -335,7 +341,8 @@ const ScoreBand: React.FC<{ frame: number; repaired?: boolean }> = ({
         zIndex: 28,
         display: "grid",
         gridTemplateColumns: "repeat(3, 1fr)",
-        background: "rgba(2,7,13,.93)",
+        background: "rgba(251,250,245,.97)",
+        border: `1px solid ${C.line}`,
         borderTop: `4px solid ${repaired ? C.green : C.red}`,
         opacity: reveal,
         transform: `translateY(${(1 - reveal) * 18}px)`,
@@ -346,7 +353,7 @@ const ScoreBand: React.FC<{ frame: number; repaired?: boolean }> = ({
           key={label}
           style={{
             padding: "16px 22px",
-            borderRight: index < 2 ? "1px solid #304252" : undefined,
+            borderRight: index < 2 ? `1px solid ${C.line}` : undefined,
             display: "flex",
             alignItems: "baseline",
             justifyContent: "space-between",
@@ -373,20 +380,18 @@ const HookScene = () => {
   const frame = useCurrentFrame();
   return (
     <Scene duration={240}>
-      <Shot from={0} to={74} src="01-hero.png" zoom={1.02} dim={0.08} />
-      <Shot from={74} to={142} src="02-reset-in-view.png" zoom={1.01} />
-      <Shot from={142} to={240} src="04-baseline-started.png" zoom={1.01} />
+      <Shot from={0} to={240} src="01-preview.jpg" zoom={1.015} dim={0.02} />
       <CaptureStamp
-        plate="EQUALTRACE / LIVE EVIDENCE CUT"
-        status="fictional deletion · public release"
+        plate="EQUALTRACE / FORENSIC LEDGER CUT"
+        status="fictional deletion · branch candidate"
         tone="cyan"
       />
       <EditorialCursor
         frame={frame}
         points={[
-          { frame: 76, x: 1150, y: 250 },
-          { frame: 118, x: 294, y: 708 },
-          { frame: 132, x: 294, y: 708 },
+          { frame: 76, x: 1120, y: 250 },
+          { frame: 118, x: 212, y: 564 },
+          { frame: 132, x: 212, y: 564 },
         ]}
         clickAt={120}
       />
@@ -415,23 +420,13 @@ const BaselineScene = () => {
   const frame = useCurrentFrame();
   return (
     <Scene duration={420}>
-      <Shot from={0} to={92} src="05-three-routes-ready.png" zoom={1.01} />
-      <Shot
-        from={92}
-        to={185}
-        src="08-visual-consequences-open.png"
-        zoom={1.01}
-      />
-      <Shot
-        from={185}
-        to={265}
-        src="09-visual-consent-recorded.png"
-        zoom={1.01}
-      />
+      <Shot from={0} to={92} src="02-routes-ready-crop.png" zoom={1.01} />
+      <Shot from={92} to={185} src="02-routes-ready-crop.png" zoom={1.01} />
+      <Shot from={185} to={265} src="02-routes-ready-crop.png" zoom={1.01} />
       <Shot
         from={265}
         to={420}
-        src="13-human-routes-complete.png"
+        src="02-routes-ready-crop.png"
         zoom={1.01}
         dim={frame > 338 ? 0.22 : 0}
       />
@@ -457,8 +452,8 @@ const BaselineScene = () => {
             right: 88,
             top: 88,
             zIndex: 35,
-            color: C.white,
-            background: "#071019",
+            color: C.ink,
+            background: C.panel,
             border: `3px solid ${C.cyan}`,
             padding: "16px 22px",
             fontSize: 26,
@@ -503,7 +498,7 @@ const DivergenceScene = () => {
   return (
     <Scene duration={270}>
       <LiveShot
-        src="15-baseline-audit-failed.png"
+        src="03-divergence.jpg"
         frame={frame}
         duration={270}
         zoom={1.06}
@@ -539,8 +534,8 @@ const DivergenceScene = () => {
           width: 430,
           zIndex: 36,
           padding: "20px 24px",
-          color: C.white,
-          background: "rgba(2,7,13,.95)",
+          color: C.ink,
+          background: "rgba(251,250,245,.96)",
           borderLeft: `6px solid ${C.red}`,
           fontSize: 22,
           lineHeight: 1.45,
@@ -574,16 +569,11 @@ const ApprovalScene = () => {
   const frame = useCurrentFrame();
   return (
     <Scene duration={390}>
-      <Shot
-        from={0}
-        to={166}
-        src="17-approval-boundary-absent.png"
-        zoom={1.01}
-      />
+      <Shot from={0} to={166} src="03-divergence.jpg" zoom={1.01} />
       <Shot
         from={166}
         to={390}
-        src="17b-approval-boundary-renewed.png"
+        src="04-repair-applied.jpg"
         zoom={1}
         drift={0.015}
         panX={330}
@@ -606,7 +596,7 @@ const ApprovalScene = () => {
             zIndex: 35,
             padding: "12px 16px",
             color: C.amber,
-            background: "rgba(2,7,13,.94)",
+            background: "rgba(251,250,245,.96)",
             borderLeft: `5px solid ${C.amber}`,
             fontSize: 18,
             fontWeight: 900,
@@ -635,7 +625,7 @@ const ApprovalScene = () => {
             zIndex: 35,
             padding: "14px 18px",
             color: C.green,
-            background: "rgba(2,7,13,.94)",
+            background: "rgba(251,250,245,.96)",
             borderLeft: `5px solid ${C.green}`,
             fontSize: 20,
             fontWeight: 900,
@@ -694,7 +684,7 @@ const NativeToolPanel: React.FC<{ phase: 0 | 1 | 2; frame: number }> = ({
     "native-tools-after-use.txt",
   ];
   return (
-    <AbsoluteFill style={{ background: "#03080d", color: C.white }}>
+    <AbsoluteFill style={{ background: C.paper, color: C.ink }}>
       <div
         style={{
           ...mono,
@@ -759,10 +749,10 @@ const NativeToolPanel: React.FC<{ phase: 0 | 1 | 2; frame: number }> = ({
                     display: "grid",
                     gridTemplateColumns: "70px 1fr auto",
                     alignItems: "center",
-                    borderBottom: "1px solid #20313f",
+                    borderBottom: `1px solid ${C.line}`,
                     opacity: p,
                     transform: `translateX(${(1 - p) * 14}px)`,
-                    color: apply ? C.green : C.white,
+                    color: apply ? C.green : C.ink,
                     fontSize: 25,
                   }}
                 >
@@ -851,24 +841,12 @@ const RerunScene = () => {
   const frame = useCurrentFrame();
   return (
     <Scene duration={480}>
-      <Shot
-        from={0}
-        to={145}
-        src="24-repaired-human-routes-complete.png"
-        zoom={1}
-        panX={330}
-      />
-      <Shot
-        from={145}
-        to={292}
-        src="25-repaired-agent-native.png"
-        zoom={1}
-        panX={330}
-      />
+      <Shot from={0} to={145} src="05-verified.jpg" zoom={1} panX={330} />
+      <Shot from={145} to={292} src="05-verified.jpg" zoom={1} panX={330} />
       <Shot
         from={292}
         to={480}
-        src="26-parity-receipt-16x9.png"
+        src="06-receipt.jpg"
         zoom={1.02}
         drift={0.035}
         panY={-18}
@@ -894,7 +872,7 @@ const RerunScene = () => {
             top: 118,
             zIndex: 35,
             color: C.green,
-            background: "rgba(2,7,13,.94)",
+            background: "rgba(251,250,245,.96)",
             borderLeft: `5px solid ${C.green}`,
             padding: "16px 20px",
             fontSize: 19,
@@ -941,12 +919,12 @@ const CloseScene = () => {
   return (
     <Scene duration={270}>
       <LiveShot
-        src="26-parity-receipt-16x9.png"
+        src="06-receipt.jpg"
         frame={frame}
         duration={270}
         zoom={1.05}
         drift={0.02}
-        dim={0.74}
+        dim={0.82}
       />
       <div
         style={{
@@ -955,7 +933,7 @@ const CloseScene = () => {
           right: 112,
           top: 160,
           zIndex: 35,
-          color: C.white,
+          color: C.ink,
           opacity: p,
           transform: `translateY(${(1 - p) * 24}px)`,
         }}
@@ -969,15 +947,15 @@ const CloseScene = () => {
             letterSpacing: 1.5,
           }}
         >
-          EQUALTRACE / VERIFIED ON THE PUBLIC BUILD
+          EQUALTRACE / FORENSIC LEDGER BRANCH CANDIDATE
         </div>
         <div
           style={{
-            ...sans,
+            ...serif,
             marginTop: 32,
-            fontSize: 92,
+            fontSize: 88,
             lineHeight: 0.98,
-            fontWeight: 900,
+            fontWeight: 700,
             letterSpacing: -3,
           }}
         >
@@ -995,7 +973,8 @@ const CloseScene = () => {
             fontSize: 22,
           }}
         >
-          ricardonp51.github.io/equaltrace-webmcp
+          local supported-client proof · public recapture required after
+          deployment
         </div>
       </div>
       <Subtitles
@@ -1028,7 +1007,7 @@ const liveAudio = [
 ] as const;
 
 export const EqualTraceLiveFinal = () => (
-  <AbsoluteFill style={{ background: C.ink, width: W, height: H }}>
+  <AbsoluteFill style={{ background: C.paper, width: W, height: H }}>
     <Audio src={staticFile("generated/soundbed-live.wav")} volume={0.105} />
     {liveAudio.map((audio) => (
       <Sequence

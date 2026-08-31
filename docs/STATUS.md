@@ -4,7 +4,7 @@ Last updated: 2026-08-30 (America/La_Paz)
 
 ## Current phase
 
-Phase 1 guided build and the Final Live Evidence Cut sprint are complete. Release `challenge-v1.0.0` is live over HTTPS from exact commit `20ccacc499fcb8f7fed126f10af38e820c95b335`; five consecutive public native golden runs reproduced the complete lifecycle and receipt. The Devpost handoff draft, exact judge instructions, release screenshots, AI disclosure, official judging map, demo script, and a presenter-free 1:20 live-evidence documentary are prepared. Human audiovisual review, public video publication, and Devpost submission remain external gates.
+Phase 1 guided build, the tagged public release, and the Forensic Ledger branch redesign are complete. Release `challenge-v1.0.0` remains live over HTTPS from exact commit `20ccacc499fcb8f7fed126f10af38e820c95b335`; five consecutive public native golden runs reproduced the complete lifecycle and receipt. The current continuation branch now applies the selected editorial evidence system across the responsive product and a new presenter-free 1:20 video candidate. Local supported-client QA reproduced the complete native lifecycle on the redesigned branch. Deployment of this visual branch, fresh public native recapture, human audiovisual review, public video publication, and Devpost submission remain external gates.
 
 ## Completed
 
@@ -66,6 +66,9 @@ Phase 1 guided build and the Final Live Evidence Cut sprint are complete. Releas
 - [x] A fresh public-release capture for `EqualTraceLiveFinal` recorded baseline `6/6 · 6/6 · 2/6`, failure at `disclosure.consequences`, an expired fail-closed approval window, the same repair restaged and visibly approved, fresh native discovery `4 → 5 → 4`, one successful repair application, fresh repaired `6/6 · 6/6 · 6/6`, and receipt `3edf6503b77b0391a2fff20f31d664286a5db9c72d253ea6b0342db0aec44728`.
 - [x] The Final Live Evidence Cut uses the real page states and captured native text/JSON as its primary material. Its cursor, zooms, labels, cuts, subtitles, and native-output layout are explicitly editorial; it does not present page registration state as native discovery.
 - [x] The preferred local candidate at `submission-video/out/equaltrace-demo-final-live.mp4` verifies as 1920×1080 H.264/AAC, 80.1 seconds, -16.2 LUFS, -1.5 dBFS true peak, and 39,318,970 bytes. SHA-256 is `711e0ab79a66e87b9b4c42dad5395725b3f09aae44f6e2570e73859b8bd93511`; the audit is `docs/VIDEO_FINAL_LIVE_AUDIT_2026-08-30.md`.
+- [x] The selected `Forensic Ledger` direction now governs the branch UI: warm paper, Newsreader editorial display type, Source Sans 3 interface type, square evidence surfaces, blue verified states, red missing states, and a responsive semantic route ledger. The exact source-to-implementation comparison and breakpoint QA pass in `design-qa.md`.
+- [x] Local supported-client validation on the redesigned branch reproduced broken agent evidence, baseline failure at `disclosure.consequences`, visible exact approval, native capability discovery `4 → 5 → 4`, one repair application, fresh three-route `6/6`, and deterministic receipt `3edf6503b77b0391a2fff20f31d664286a5db9c72d253ea6b0342db0aec44728` with no browser warnings/errors.
+- [x] `submission-video/out/equaltrace-demo-forensic-ledger.mp4` applies the same Forensic Ledger system to the 1:20 evidence cut. It verifies as 1920×1080 H.264/AAC, 80.1 seconds, -16.2 LUFS, -1.5 dBFS true peak, and 42,822,827 bytes. SHA-256 is `d8db3a399aa2b2043140ec74ce1d5686918b4da3f08b18db5205917902d61ec1`; the audit is `docs/VIDEO_FORENSIC_LEDGER_AUDIT_2026-08-30.md`.
 
 ## Required after implementation begins and before any “native WebMCP works” claim
 

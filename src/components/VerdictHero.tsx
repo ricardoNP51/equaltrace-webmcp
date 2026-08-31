@@ -28,20 +28,21 @@ export function VerdictHero({ snapshot, onReset }: VerdictHeroProps) {
   const capture =
     snapshot.phase === "baseline_capture" ||
     snapshot.phase === "repaired_capture";
+  const showBrokenHeadline = !verified && !capture;
   const title = verified
-    ? "Same deletion. Same protections. Proven."
+    ? "The outcome passed. The safety contract holds."
     : failed
-      ? "Same deletion. Unequal protection."
+      ? "The outcome passed. The safety contract failed."
       : capture
         ? "Prove whether every path preserves the same protections."
-        : "The agent got the right result. It skipped the protections.";
+        : "The outcome passed. The safety contract failed.";
   const explanation = verified
     ? "Fresh pointer, keyboard, and WebMCP evidence preserved every required protection and the requested outcome. A deterministic receipt now binds the proof."
     : failed
       ? "All three routes deleted the same fictional account, but the agent committed before receiving the consequence disclosure required on both human routes."
       : capture
         ? "Record the pointer, keyboard, and WebMCP routes from one deterministic seed. EqualTrace will fail closed until all three are comparable."
-        : "This known broken fixture reaches the requested outcome on every route. The agent path starts with deletion, while people must first see consequences and give exact consent.";
+        : "EqualTrace audits the same consequential action through visual, assistive, and WebMCP agent routes. Every route reaches the requested outcome; the agent skips required protections before commitment.";
 
   return (
     <header className="hero" aria-labelledby="page-title">
@@ -70,15 +71,35 @@ export function VerdictHero({ snapshot, onReset }: VerdictHeroProps) {
 
       <div className="hero-grid">
         <div className="hero-copy">
-          <p className="kicker">
-            Protection parity for consequential WebMCP actions
-          </p>
-          <h1 id="page-title">{title}</h1>
+          <p className="kicker">Independent protection parity audit</p>
+          <h1 id="page-title">
+            {showBrokenHeadline ? (
+              <>
+                The outcome passed.
+                <br />
+                The safety contract failed.
+              </>
+            ) : (
+              title
+            )}
+          </h1>
+          <div className="hero-scenario">
+            <span className="icon-shell">
+              <StatusIcon name="shield" />
+            </span>
+            <span>
+              <small>Scenario</small>
+              <strong>Delete workspace account</strong>
+            </span>
+          </div>
           <p className="lede">{explanation}</p>
           <div className="hero-actions">
             <button type="button" onClick={onReset}>
               {isPreview ? "Reset and begin baseline" : "Reset baseline"}
             </button>
+            <a className="button-link" href="#routes-title">
+              Inspect evidence
+            </a>
             <p className="action-help">
               Fictional account deletion. Deterministic, local-only, and safe to
               reset.
@@ -111,18 +132,18 @@ export function VerdictHero({ snapshot, onReset }: VerdictHeroProps) {
               {verified
                 ? "Protection parity verified"
                 : isPreview
-                  ? "Known bypass"
+                  ? "First divergence"
                   : failed
-                    ? "Protection failure"
+                    ? "First divergence"
                     : "Audit pending"}
             </span>
           </div>
           <p className="verdict-statement">
             {verified
-              ? "Outcome and all protections passed."
+              ? "Outcome passed. Protection parity verified."
               : capture
                 ? "Evidence is still incomplete."
-                : "Outcome passed. Protection parity failed."}
+                : "Disclosure · consequences missing"}
           </p>
           <div className="verdict-facts">
             <div>

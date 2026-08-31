@@ -14,7 +14,7 @@ describe("judge-first evidence experience", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /right result.*skipped the protections/i,
+        name: /outcome passed.*safety contract failed/i,
       }),
     ).toBeInTheDocument();
     expect(
@@ -60,7 +60,7 @@ describe("judge-first evidence experience", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /same deletion.*unequal protection/i,
+        name: /outcome passed.*safety contract failed/i,
       }),
     ).toBeInTheDocument();
     expect(

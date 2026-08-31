@@ -75,14 +75,18 @@ describe("repaired proof and receipt UI", () => {
 
     expect(
       screen.getByRole("heading", {
-        name: /same deletion. same protections. proven/i,
+        name: /outcome passed.*safety contract holds/i,
       }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { name: /verified proof is portable/i }),
     ).toBeInTheDocument();
     expect(screen.getByText(/6\/6 passed/i)).toBeInTheDocument();
-    expect(screen.getAllByRole("link", { name: /evidence/i })).toHaveLength(18);
+    expect(
+      screen.getAllByRole("link", {
+        name: /^(visual|assistive|agent) evidence$/i,
+      }),
+    ).toHaveLength(18);
   });
 
   it("keeps the verified receipt visible when browser download creation fails", async () => {

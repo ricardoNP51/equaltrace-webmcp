@@ -41,8 +41,10 @@ export function App({ store = workbenchStore }: AppProps) {
         <section className="workbench-section" aria-labelledby="routes-title">
           <div className="section-heading">
             <div>
-              <p className="section-label">Comparable routes</p>
-              <h2 id="routes-title">Same action. Three paths. One standard.</h2>
+              <p className="section-label">Forensic route ledger</p>
+              <h2 id="routes-title">
+                Same action. Three routes. One protection contract.
+              </h2>
             </div>
             <span className="status-pill" data-tone="neutral">
               Semantic protection parity

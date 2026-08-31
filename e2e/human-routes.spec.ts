@@ -48,6 +48,10 @@ test("the assistive journey completes keyboard-only with deterministic focus", a
   await page.keyboard.press("Enter");
 
   await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("link", { name: /inspect evidence/i }),
+  ).toBeFocused();
+  await page.keyboard.press("Tab");
   await expect(page.getByRole("button", { name: /reset seed/i })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(
