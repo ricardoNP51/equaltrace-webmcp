@@ -4,7 +4,7 @@ Last updated: 2026-08-30 (America/La_Paz)
 
 ## Current phase
 
-Phase 1 guided build, the original tagged release, the Forensic Ledger redesign, the matching public demo video, and the Devpost submission draft are complete. GitHub Pages serves the redesigned application from exact commit `936146e8a0e18c1c3b1130f48528444cb88bf00f`; quality run `33343667007` and Pages run `33343667031` both passed for that revision. A fresh supported-client session on the public origin reproduced stable native discovery without warnings, while the recorded public proof covers `4 → 5 → 4`, fresh repaired parity, and receipt. The final 1:20 video is anonymously playable at `https://youtu.be/IqdVB8k5CNA`. Devpost authentication, challenge registration, open submission status, and official requirements are verified. Only confirmation of the proposed personal fields and explicit final submission authorization remain.
+Phase 1 guided build, the original tagged release, the Forensic Ledger redesign, the matching public demo video, and the Devpost submission are complete. GitHub Pages serves the redesigned application from exact commit `936146e8a0e18c1c3b1130f48528444cb88bf00f`; quality run `33343667007` and Pages run `33343667031` both passed for that revision. The final 1:20 video is anonymously playable at `https://youtu.be/IqdVB8k5CNA`. EqualTrace was submitted to The WebMCP Challenge as Devpost submission `1162569` and verified live at `https://devpost.com/software/equaltrace` with a non-null `submitted_at` value.
 
 ## Completed
 
@@ -73,7 +73,8 @@ Phase 1 guided build, the original tagged release, the Forensic Ledger redesign,
 - [x] Fresh public supported-client validation on that exact commit observed the consequential capability only after visible approval and removed it after one use (`4 → 5 → 4`), then reproduced fresh `6/6 · 6/6 · 6/6`, receipt `3edf6503b77b0391a2fff20f31d664286a5db9c72d253ea6b0342db0aec44728`, and zero console warnings/errors. Evidence is under `evidence/native/2026-08-31-forensic-ledger-public/`.
 - [x] `submission-video/out/equaltrace-demo-forensic-ledger-public.mp4` replaces all local branch captures and labels with public-release evidence from commit `936146e8a0e18c1c3b1130f48528444cb88bf00f`. It verifies as 1920×1080 H.264/AAC, 80.1 seconds, -16.2 LUFS, -1.5 dBFS true peak, and 44,082,668 bytes. SHA-256 is `f110a1dce505e4b080630669dab427e8c835514ac73a2615bb2fc3cad63639e7`; the audit is `docs/VIDEO_FORENSIC_PUBLIC_AUDIT_2026-08-30.md`.
 - [x] The exact YouTube URL `https://youtu.be/IqdVB8k5CNA` was verified anonymously: playback status is `OK`, the unlisted video is link-accessible, duration is approximately 80 seconds, and its description links to the live app and public repository. The visually ambiguous lowercase-`l` URL returns 404, so the uppercase-`I` URL is canonical.
-- [x] Live Devpost preflight confirms authentication as `RicardoNP5 01`, registration for The WebMCP Challenge, open submissions, the 2026-09-03 20:00 UTC deadline, all twelve required custom fields, and the four official judging criteria. The prepared draft remains local and nothing has been submitted.
+- [x] Live Devpost preflight confirmed authentication as `RicardoNP5 01`, registration for The WebMCP Challenge, open submissions, the 2026-09-03 20:00 UTC deadline, all twelve required custom fields, and the four official judging criteria before the authorized write.
+- [x] After explicit participant confirmation, Devpost project `1408921` / submission `1162569` was created and submitted with the approved video, app, repository, description, testing instructions, and custom-field answers. Live readback reports project state `published`, the WebMCP entry, and `submitted_at` `2026-08-30T20:53:50.237-04:00`.
 
 ## Required after implementation begins and before any “native WebMCP works” claim
 
@@ -89,8 +90,8 @@ Phase 1 guided build, the original tagged release, the Forensic Ledger redesign,
 
 ## Current blockers
 
-- Build implementation, public Forensic Ledger deployment, public native evidence, matching final video publication, and the Devpost-ready draft are complete. Remaining external gates are confirming the proposed personal submission-field answers and explicit final authorization before Devpost submission.
+- No submission blocker remains. EqualTrace is live, publicly documented, and verified as submitted to The WebMCP Challenge.
 
 ## Next action
 
-Confirm the proposed personal fields in `devpost-submission.md` (Individual, Bolivia, no organization, New, Significant learning, Yes to AI career value), then run `$submit-project`. Do not submit without explicit final confirmation.
+Open `https://devpost.com/software/equaltrace` as a judge and polish the gallery or thumbnail if desired before the 2026-09-03 20:00 UTC deadline. Re-run `$submit-project` only to verify live status after any manual Devpost edits.

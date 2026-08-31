@@ -18,12 +18,13 @@
     "ai_usage": "OpenAI Codex assisted with product planning, implementation, testing, adversarial review, accessibility checks, debugging, native browser validation, video production, and submission preparation. The running product calls no model API and its gates are deterministic.",
     "codex_usage": "Codex helped implement the shared three-route engine, fail-closed repair authority, deterministic receipt verification, native supported-client validation, public release evidence, and the presenter-free demo video while keeping simulated and native claims separate."
   },
-  "current_stage": "prepare-submission",
+  "current_stage": "submit-project",
   "completed_stages": [
     "start-hackathon",
     "review",
     "resources",
-    "prepare-submission"
+    "prepare-submission",
+    "submit-project"
   ],
   "rules_acknowledged": true,
   "learning": {
@@ -42,7 +43,11 @@
   },
   "submission": {
     "draft_file": "devpost-submission.md",
-    "status": "drafting"
+    "status": "submitted",
+    "project_id": 1408921,
+    "submission_id": 1162569,
+    "project_slug": "equaltrace",
+    "url": "https://devpost.com/software/equaltrace"
   },
-  "next_command": "submit-project"
+  "next_command": "hackathon-map"
 }

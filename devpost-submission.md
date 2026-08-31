@@ -1,6 +1,10 @@
 # EqualTrace
 
-Status: **Devpost-ready draft; not submitted**
+Status: **Submitted to The WebMCP Challenge and verified live on Devpost**
+
+Public project page: https://devpost.com/software/equaltrace
+
+Devpost project `1408921`, submission `1162569`, submitted at `2026-08-30T20:53:50.237-04:00`.
 
 Official requirements snapshot: The WebMCP Challenge submission requirements, judging criteria, dates, and latest announcement fetched from Devpost on 2026-08-30. Submissions close 2026-09-03 at 20:00 UTC / 16:00 America/La_Paz.
 
@@ -166,7 +170,7 @@ Confirm the personal field answers during `$prepare-submission`; do not silently
 - The live application returns HTTP 200 anonymously and a fresh supported-client session discovers the four stable native tools without console warnings or errors.
 - The GitHub repository is public, exposes the MIT license, and both exact-revision quality and Pages workflows succeeded for deployed commit `936146e8a0e18c1c3b1130f48528444cb88bf00f`.
 - The YouTube video is anonymously playable at the exact uppercase-`I` URL and is under the official three-minute limit.
-- No Devpost project has been created, updated, or submitted during preparation.
+- Devpost project `equaltrace` was submitted to The WebMCP Challenge and verified live with a non-null `submitted_at` value.
 
 ## Evidence and Media
 
@@ -178,6 +182,6 @@ Confirm the personal field answers during `$prepare-submission`; do not silently
 - Public native receipt identity: `3edf6503b77b0391a2fff20f31d664286a5db9c72d253ea6b0342db0aec44728`
 - Recording-ready script: `docs/DEMO_SCRIPT.md`
 
-## Remaining External Gate
+## Post-submission Status
 
-Confirm the proposed personal fields (Individual, Bolivia, no organization, New, Significant learning, and Yes to AI career value), then give explicit authorization for the final Devpost submission step. No project has been created, updated, or submitted on Devpost by this document.
+The approved personal fields were submitted as Individual, Bolivia, no organization, New, Significant learning, and Yes to AI career value. Devpost returned status `Submitted`, and a subsequent live project read confirmed the published page and The WebMCP Challenge entry. The project page remains editable until the official deadline.

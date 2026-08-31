@@ -42,3 +42,4 @@
 - [x] Public `main` equals deployed commit `936146e8a0e18c1c3b1130f48528444cb88bf00f`; the local continuation commit equals its remote branch.
 - [x] Release tag points to the deployed application commit.
 - [x] Live URL, repository, and video opened from fresh anonymous/supported-client sessions.
+- [x] Devpost live readback confirms public project `equaltrace`, published state, The WebMCP Challenge entry, and non-null submission timestamp.
