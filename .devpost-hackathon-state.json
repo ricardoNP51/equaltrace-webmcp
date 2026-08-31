@@ -15,14 +15,15 @@
   "project": {
     "name": "EqualTrace",
     "summary": "A verifier that detects when an agent reaches the correct outcome while bypassing protections that constrain the equivalent human action, then supports human-authorized repair and proves parity on rerun.",
-    "ai_usage": "",
-    "codex_usage": ""
+    "ai_usage": "OpenAI Codex assisted with product planning, implementation, testing, adversarial review, accessibility checks, debugging, native browser validation, video production, and submission preparation. The running product calls no model API and its gates are deterministic.",
+    "codex_usage": "Codex helped implement the shared three-route engine, fail-closed repair authority, deterministic receipt verification, native supported-client validation, public release evidence, and the presenter-free demo video while keeping simulated and native claims separate."
   },
-  "current_stage": "resources",
+  "current_stage": "prepare-submission",
   "completed_stages": [
     "start-hackathon",
     "review",
-    "resources"
+    "resources",
+    "prepare-submission"
   ],
   "rules_acknowledged": true,
   "learning": {
@@ -41,7 +42,7 @@
   },
   "submission": {
     "draft_file": "devpost-submission.md",
-    "status": "not-started"
+    "status": "drafting"
   },
-  "next_command": "prepare-submission"
+  "next_command": "submit-project"
 }

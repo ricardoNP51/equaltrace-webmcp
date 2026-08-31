@@ -18,7 +18,7 @@
 
 ## Demo video
 
-- [ ] Public YouTube URL.
+- [x] Publicly accessible YouTube URL: https://youtu.be/IqdVB8k5CNA
 - [x] Less than three minutes.
 - [x] Clear audio (-16.2 LUFS, -1.5 dBFS true peak).
 - [x] Risk visible within 20 seconds.
@@ -39,6 +39,6 @@
 ## Final proof
 
 - [x] Tagged release clean clone passed `npm ci && npm run check`.
-- [ ] Local handoff commit equals remote `main` after final push.
+- [x] Public `main` equals deployed commit `936146e8a0e18c1c3b1130f48528444cb88bf00f`; the local continuation commit equals its remote branch.
 - [x] Release tag points to the deployed application commit.
-- [ ] Live URL, repository, and video opened from a fresh session.
+- [x] Live URL, repository, and video opened from fresh anonymous/supported-client sessions.
